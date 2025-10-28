@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EBIC Services: BIM & VDC Services, Reality Capture & Scan-to-BIM, Training & Development, and Software Development & AI Automation for the AEC industry.">
+    <title>Our Services | EBIC - BIM & IT Consultation</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/images/logo-black.png">
+
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        .services-hero {
+            background: linear-gradient(135deg, #004c99 0%, #0066cc 100%);
+            color: white;
+            padding: 8rem 0 4rem;
+            margin-top: var(--header-height);
+        }
+        .service-detail {
+            padding: 6rem 0;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+        .service-detail:nth-child(even) {
+            background: var(--color-gray-100);
+        }
+        .service-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-8);
+            align-items: start;
+        }
+        .service-categories {
+            margin: var(--space-6) 0;
+        }
+        .service-category {
+            margin-bottom: var(--space-5);
+            padding: var(--space-4);
+            background: white;
+            border-radius: var(--border-radius-md);
+            border-left: 4px solid var(--color-accent);
+        }
+        .service-category h4 {
+            margin-bottom: var(--space-3);
+            color: var(--color-accent);
+        }
+        .service-features {
+            list-style: none;
+            margin: var(--space-3) 0;
+        }
+        .service-features li {
+            padding: var(--space-2) 0 var(--space-2) var(--space-6);
+            position: relative;
+        }
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+            font-weight: bold;
+            font-size: var(--font-size-xl);
+        }
+        @media (max-width: 767px) {
+            .service-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header" role="banner">
+        <nav class="main-nav" role="navigation" aria-label="Main navigation">
+            <div class="container nav-container">
+                <div class="logo">
+                    <a href="../index.html" aria-label="EBIC - Ehrig BIM & IT Consultation, Inc. Home">
+                        <img src="../assets/images/logo-main.png" alt="EBIC - Ehrig BIM & IT Consultation, Inc." class="site-logo">
+                    </a>
+                </div>
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link active">Services</a></li>
+                    <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="contact.html" class="nav-link btn-primary">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="services-hero">
+            <div class="container">
+                <h1>Our Services</h1>
+                <p style="font-size: var(--font-size-xl); max-width: 800px;">Your Trusted Partner in Digital Construction Technology. Transparent, reliable, and cost-effective solutions with extensive experience across design, construction, and as-built documentation.</p>
+            </div>
+        </section>
+
+        <section id="bim-vdc" class="service-detail">
+            <div class="container">
+                <div class="service-content">
+                    <div>
+                        <h2>BIM & VDC Services</h2>
+                        <p>Comprehensive Building Information Modeling and Virtual Design & Construction services tailored to your project's needs. Our unique perspective across contractor, designer, owner, and IT roles ensures we understand your challenges from all angles.</p>
+                        
+                        <div class="service-categories">
+                            <div class="service-category">
+                                <h4>Design Services</h4>
+                                <ul class="service-features">
+                                    <li>Revit Family Creation (4D/5D embedded data, parametric design)</li>
+                                    <li>Revit Template Development (project-specific, sector-tailored standards)</li>
+                                    <li>Model Health Reports (error resolution, orphaned families, system repair)</li>
+                                    <li>Navisworks Clash Reports (conflict detection, pre-construction issue resolution)</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="service-category">
+                                <h4>Contractor Services</h4>
+                                <ul class="service-features">
+                                    <li>LOD 500 Modeling (manufacturer specifications, shop drawing integration)</li>
+                                    <li>VDC Coordination (RFI identification, content remodeling, as-built updates)</li>
+                                    <li>2D Backflow to Client (shop drawing backgrounds, coordination sets)</li>
+                                    <li>Multi-subcontractor coordination (proven with 8+ subcontractors on Tampa Airport MTCE)</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="service-category">
+                                <h4>Owner Services</h4>
+                                <ul class="service-features">
+                                    <li>Constructability Review (system integration analysis, space requirements verification)</li>
+                                    <li>Change Order Prevention & Reduction (pre-construction conflict resolution)</li>
+                                    <li>Model-Derived QTO (accurate quantity takeoffs from BIM models)</li>
+                                    <li>Project lifecycle support from design through facility management</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <a href="contact.html" class="btn btn-primary">Request BIM/VDC Services</a>
+                    </div>
+                    <div>
+                        <img src="../assets/images/placeholder-bim.jpg" alt="BIM & VDC coordination workspace" style="width: 100%; border-radius: var(--border-radius-lg); margin-bottom: var(--space-4);">
+                        <div style="background: var(--color-gray-100); padding: var(--space-4); border-radius: var(--border-radius-md);">
+                            <h4 style="margin-bottom: var(--space-3);">Key Capabilities</h4>
+                            <ul style="margin: 0; padding-left: var(--space-5);">
+                                <li>Expert Revit modeling and coordination</li>
+                                <li>Navisworks coordination reviews</li>
+                                <li>BIM 360 project collaboration</li>
+                                <li>Multi-discipline clash detection</li>
+                                <li>Construction documentation support</li>
+                                <li>Model quality assurance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reality-capture" class="service-detail">
+            <div class="container">
+                <div class="service-content">
+                    <div>
+                        <img src="../assets/images/placeholder-scan.jpg" alt="FARO laser scanning in progress" style="width: 100%; border-radius: var(--border-radius-lg); margin-bottom: var(--space-4);">
+                        <div style="background: var(--color-gray-100); padding: var(--space-4); border-radius: var(--border-radius-md);">
+                            <h4 style="margin-bottom: var(--space-3);">Project Experience</h4>
+                            <p style="margin: 0;"><strong>30+ Reality Capture Projects</strong> including:</p>
+                            <ul style="margin: var(--space-3) 0 0; padding-left: var(--space-5);">
+                                <li>Kennedy Space Center facilities</li>
+                                <li>USAF Stadium complex</li>
+                                <li>Military installations (Pacific region)</li>
+                                <li>Commercial and industrial facilities</li>
+                                <li>Historical building documentation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>Reality Capture & Scan-to-BIM</h2>
+                        <p>Precision FARO laser scanning services delivering millimeter-accurate as-built documentation. We transform point cloud data into fast, actionable information that drives better project decisions and outcomes.</p>
+                        
+                        <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">Our Services</h4>
+                        <ul class="service-features">
+                            <li>FARO Laser Scanning (high-accuracy point cloud capture)</li>
+                            <li>Point Cloud Processing (fast, actionable data delivery)</li>
+                            <li>As-Built Documentation (millimeter accuracy for renovations and retrofits)</li>
+                            <li>CSV Survey Points Integration (seamless data workflow)</li>
+                            <li>Scan-to-Revit Coordination (accurate BIM model development)</li>
+                            <li>Clash Detection with Design Models (identify conflicts early)</li>
+                            <li>Industrial Facility Mapping (complex mechanical and process systems)</li>
+                            <li>Historical Building Documentation (preservation and renovation support)</li>
+                        </ul>
+                        
+                        <div style="background: var(--color-accent-light); padding: var(--space-4); border-radius: var(--border-radius-md); margin: var(--space-4) 0;">
+                            <p style="margin: 0; font-weight: 600;">Fast turnaround times with actionable data that helps you make informed decisions quickly.</p>
+                        </div>
+                        
+                        <a href="contact.html" class="btn btn-primary">Request Scanning Quote</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="training" class="service-detail">
+            <div class="container">
+                <div class="service-content">
+                    <div>
+                        <h2>Training & Development</h2>
+                        <p>Expert training programs designed to build your team's skills and optimize BIM workflows. Our training is based on real-world experience across design, construction, and owner perspectives, ensuring practical knowledge that translates directly to your projects.</p>
+                        
+                        <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">Training Programs</h4>
+                        <ul class="service-features">
+                            <li>Expert Revit Training (from fundamentals to advanced parametric design)</li>
+                            <li>Navisworks Training (clash detection, 4D sequencing, coordination workflows)</li>
+                            <li>BIM Workflow Development (customized processes for your organization)</li>
+                            <li>Team Skill Building (cross-discipline collaboration strategies)</li>
+                            <li>Project-Specific Training (tailored to your current projects and standards)</li>
+                            <li>Best Practices Implementation (industry standards and proven methodologies)</li>
+                        </ul>
+                        
+                        <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">Why Choose EBIC Training?</h4>
+                        <ul class="service-features">
+                            <li>Instructors with 18+ years of hands-on BIM experience</li>
+                            <li>Understanding from contractor, designer, and owner perspectives</li>
+                            <li>Customized curriculum based on your specific needs</li>
+                            <li>Practical, project-based learning approach</li>
+                            <li>Ongoing support beyond initial training sessions</li>
+                        </ul>
+                        
+                        <a href="contact.html" class="btn btn-primary">Discuss Training Needs</a>
+                    </div>
+                    <div>
+                        <img src="../assets/images/placeholder-training.jpg" alt="BIM training session" style="width: 100%; border-radius: var(--border-radius-lg); margin-bottom: var(--space-4);">
+                        <div style="background: var(--color-gray-100); padding: var(--space-4); border-radius: var(--border-radius-md);">
+                            <h4 style="margin-bottom: var(--space-3);">Training Formats</h4>
+                            <ul style="margin: 0; padding-left: var(--space-5);">
+                                <li>On-site training at your facility</li>
+                                <li>Remote/virtual training sessions</li>
+                                <li>Hybrid training programs</li>
+                                <li>One-on-one coaching</li>
+                                <li>Group workshops</li>
+                                <li>Project-embedded training</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="software-ai" class="service-detail">
+            <div class="container">
+                <div class="service-content">
+                    <div>
+                        <img src="../assets/images/placeholder-ai.jpg" alt="AI automation and custom development" style="width: 100%; border-radius: var(--border-radius-lg); margin-bottom: var(--space-4);">
+                        <div style="background: var(--color-gray-100); padding: var(--space-4); border-radius: var(--border-radius-md);">
+                            <h4 style="margin-bottom: var(--space-3);">Technology Stack</h4>
+                            <ul style="margin: 0; padding-left: var(--space-5);">
+                                <li>Revit API (C#/.NET development)</li>
+                                <li>Dynamo scripting and custom nodes</li>
+                                <li>Python automation</li>
+                                <li>Model Context Protocol (MCP)</li>
+                                <li>Enterprise AI orchestration</li>
+                                <li>Cloud infrastructure integration</li>
+                                <li>Database and data processing</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>Software Development & AI Automation</h2>
+                        <p>Custom software development and AI-powered automation solutions that optimize BIM workflows and unlock new capabilities. Our open-source philosophy drives transparent, reliable, and cost-effective solutions tailored to your specific needs.</p>
+                        
+                        <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">Development Services</h4>
+                        <ul class="service-features">
+                            <li>Custom Revit Development (plugins, add-ins, parametric tools)</li>
+                            <li>AI-Powered Workflow Automation (eliminate repetitive tasks)</li>
+                            <li>Enterprise BIM Solutions (scalable systems for large organizations)</li>
+                            <li>Process Optimization Tools (streamline your unique workflows)</li>
+                            <li>API Development and Integration (connect BIM with other systems)</li>
+                            <li>Data Processing and Analytics (extract insights from BIM data)</li>
+                            <li>Cloud Infrastructure Development (modern, scalable architecture)</li>
+                        </ul>
+                        
+                        <div style="background: var(--color-accent-light); padding: var(--space-4); border-radius: var(--border-radius-md); margin: var(--space-4) 0;">
+                            <p style="margin: 0; font-weight: 600;">87 MCP Tools: Our comprehensive Model Context Protocol ecosystem demonstrates our capability to build sophisticated, integrated solutions for complex technical challenges.</p>
+                        </div>
+                        
+                        <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">Why Choose EBIC for Development?</h4>
+                        <ul class="service-features">
+                            <li>Deep understanding of BIM workflows from contractor, designer, and owner perspectives</li>
+                            <li>Open-source philosophy ensures transparent, maintainable solutions</li>
+                            <li>Proven track record with enterprise-scale implementations</li>
+                            <li>Focus on practical, production-ready solutions</li>
+                            <li>Ongoing support and continuous improvement</li>
+                        </ul>
+                        
+                        <a href="contact.html" class="btn btn-primary">Explore Custom Solutions</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Elevate Your Project?</h2>
+                    <p>Let's discuss how our comprehensive services can add value to your next initiative.</p>
+                    <div style="margin-top: var(--space-4);">
+                        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-2);"><strong>Ehrig BIM & IT Consultation, Inc.</strong></p>
+                        <p>403 South Edgemon Avenue, Winter Springs, FL 32708</p>
+                        <p>(407) 234-3445</p>
+                    </div>
+                    <a href="contact.html" class="btn btn-primary btn-large" style="margin-top: var(--space-4);">Get Started Today</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <img src="../assets/images/logo-main.png" alt="EBIC - Ehrig BIM & IT Consultation, Inc." class="footer-logo">
+                    <p>Ehrig BIM & IT Consultation, Inc.</p>
+                    <p class="footer-tagline">Your Trusted Partner in Digital Construction Technology</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">403 South Edgemon Avenue<br>Winter Springs, FL 32708<br>(407) 234-3445</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html#bim-vdc">BIM & VDC Services</a></li>
+                        <li><a href="services.html#reality-capture">Reality Capture</a></li>
+                        <li><a href="services.html#training">Training & Development</a></li>
+                        <li><a href="services.html#software-ai">Software & AI</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Connect</h4>
+                    <p>Professional consultation for AEC industry leaders</p>
+                    <a href="contact.html" class="btn btn-outline">Contact Us</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EBIC - Ehrig BIM & IT Consultation, Inc. All rights reserved.</p>
+                <p class="footer-meta">Founded March 2020 | 18 Years Industry Experience</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

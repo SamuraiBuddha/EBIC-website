@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EBIC Portfolio - 75+ major projects across aviation, entertainment, government, and commercial sectors. 18 years of BIM/VDC expertise with focus on airport infrastructure.">
+    <meta name="keywords" content="EBIC Portfolio, Orlando International Airport, Tampa Airport, Universal Epic Universe, Kennedy Space Center, BIM Projects, VDC Coordination">
+    <meta name="author" content="EBIC - Ehrig BIM & IT Consultation, Inc.">
+    
+    <title>Our Portfolio | EBIC - 75+ Major Projects Across Aviation & Infrastructure</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="../assets/css/styles.css" as="style">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/images/logo-black.png">
+    
+    <style>
+        /* Portfolio Page Specific Styles */
+        .portfolio-hero {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-secondary) 100%);
+            padding: calc(var(--header-height) + var(--space-12)) 0 var(--space-12);
+            color: var(--color-white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portfolio-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('../assets/images/hero-pattern.svg') center/cover;
+            opacity: 0.05;
+        }
+        
+        .portfolio-hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .portfolio-hero h1 {
+            color: var(--color-white);
+            margin-bottom: var(--space-4);
+        }
+        
+        .portfolio-hero .tagline {
+            font-size: var(--font-size-xl);
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto var(--space-8);
+        }
+        
+        /* Portfolio Stats */
+        .portfolio-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--space-5);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .portfolio-stat {
+            text-align: center;
+            padding: var(--space-5);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-lg);
+            backdrop-filter: blur(10px);
+        }
+        
+        .portfolio-stat-number {
+            font-size: var(--font-size-4xl);
+            font-weight: 700;
+            color: var(--color-secondary);
+            display: block;
+            margin-bottom: var(--space-2);
+        }
+        
+        .portfolio-stat-label {
+            font-size: var(--font-size-sm);
+            opacity: 0.95;
+        }
+        
+        /* Filter Navigation */
+        .portfolio-filters {
+            background: var(--color-white);
+            padding: var(--space-6) 0;
+            border-bottom: 1px solid var(--color-gray-200);
+            position: sticky;
+            top: var(--header-height);
+            z-index: 100;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: var(--space-3);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: var(--space-3) var(--space-5);
+            background: var(--color-white);
+            border: 2px solid var(--color-gray-300);
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            color: var(--color-gray-700);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: var(--color-white);
+        }
+        
+        /* Project Sections */
+        .projects-section {
+            padding: var(--space-10) 0;
+        }
+        
+        .projects-section:nth-child(even) {
+            background: var(--color-gray-100);
+        }
+        
+        .category-header {
+            text-align: center;
+            margin-bottom: var(--space-8);
+        }
+        
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto var(--space-4);
+            color: var(--color-primary);
+        }
+        
+        /* Enhanced Project Cards */
+        .project-showcase {
+            display: grid;
+            gap: var(--space-8);
+        }
+        
+        .project-detail-card {
+            background: var(--color-white);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition-base);
+        }
+        
+        .project-detail-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .project-header {
+            position: relative;
+            height: 300px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .project-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('../assets/images/hero-pattern.svg') center/cover;
+            opacity: 0.1;
+        }
+        
+        .project-header-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: var(--color-white);
+            padding: var(--space-6);
+        }
+        
+        .project-category-badge {
+            display: inline-block;
+            padding: var(--space-2) var(--space-4);
+            background: var(--color-secondary);
+            color: var(--color-white);
+            font-size: var(--font-size-xs);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: var(--border-radius);
+            margin-bottom: var(--space-3);
+        }
+        
+        .project-title {
+            font-size: var(--font-size-3xl);
+            color: var(--color-white);
+            margin-bottom: var(--space-2);
+        }
+        
+        .project-subtitle {
+            font-size: var(--font-size-base);
+            opacity: 0.9;
+        }
+        
+        .project-body {
+            padding: var(--space-6);
+        }
+        
+        .project-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+            padding: var(--space-5);
+            background: var(--color-gray-100);
+            border-radius: var(--border-radius);
+            margin-bottom: var(--space-5);
+        }
+        
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .meta-label {
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-gray-500);
+            margin-bottom: var(--space-1);
+        }
+        
+        .meta-value {
+            font-size: var(--font-size-base);
+            font-weight: 700;
+            color: var(--color-dark);
+        }
+        
+        .project-description {
+            margin-bottom: var(--space-5);
+        }
+        
+        .project-description h4 {
+            color: var(--color-primary);
+            margin-bottom: var(--space-3);
+            font-size: var(--font-size-lg);
+        }
+        
+        .project-description p {
+            color: var(--color-gray-700);
+            line-height: 1.8;
+        }
+        
+        .project-highlights {
+            margin-bottom: var(--space-5);
+        }
+        
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+        }
+        
+        .highlight-item {
+            padding: var(--space-4);
+            background: var(--color-gray-100);
+            border-left: 3px solid var(--color-primary);
+            border-radius: var(--border-radius);
+        }
+        
+        .highlight-item h5 {
+            font-size: var(--font-size-sm);
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: var(--space-2);
+        }
+        
+        .highlight-item ul {
+            margin: 0;
+            padding-left: var(--space-5);
+            font-size: var(--font-size-sm);
+            color: var(--color-gray-700);
+        }
+        
+        .highlight-item ul li {
+            margin-bottom: var(--space-1);
+        }
+        
+        .project-features {
+            margin-top: var(--space-5);
+        }
+        
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--space-3);
+            list-style: none;
+        }
+        
+        .features-list li {
+            padding: var(--space-3);
+            background: var(--color-white);
+            border: 1px solid var(--color-gray-200);
+            border-radius: var(--border-radius);
+            font-size: var(--font-size-sm);
+            color: var(--color-gray-700);
+            position: relative;
+            padding-left: var(--space-6);
+        }
+        
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: var(--space-3);
+            color: var(--color-accent);
+            font-weight: bold;
+        }
+        
+        /* Awards and Recognition */
+        .project-awards {
+            padding: var(--space-5);
+            background: linear-gradient(135deg, var(--color-secondary) 0%, #ff8c5f 100%);
+            color: var(--color-white);
+            border-radius: var(--border-radius);
+            margin-top: var(--space-5);
+        }
+        
+        .project-awards h4 {
+            color: var(--color-white);
+            margin-bottom: var(--space-3);
+        }
+        
+        .awards-list {
+            list-style: none;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+        
+        .awards-list li {
+            padding-left: var(--space-6);
+            position: relative;
+        }
+        
+        .awards-list li::before {
+            content: '🏆';
+            position: absolute;
+            left: 0;
+            font-size: var(--font-size-lg);
+        }
+        
+        /* Sector-specific styling */
+        .aviation-section .project-category-badge {
+            background: #0066cc;
+        }
+        
+        .entertainment-section .project-category-badge {
+            background: #9b59b6;
+        }
+        
+        .government-section .project-category-badge {
+            background: #27ae60;
+        }
+        
+        .commercial-section .project-category-badge {
+            background: #2c3e50;
+        }
+        
+        /* Compact Project Cards (for multiple similar projects) */
+        .compact-projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--space-6);
+        }
+        
+        .compact-card {
+            background: var(--color-white);
+            padding: var(--space-5);
+            border-radius: var(--border-radius-lg);
+            border-top: 4px solid var(--color-primary);
+            box-shadow: var(--shadow-base);
+            transition: all var(--transition-base);
+        }
+        
+        .compact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .compact-card h3 {
+            color: var(--color-primary);
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--space-3);
+        }
+        
+        .compact-meta {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+            margin-bottom: var(--space-4);
+            padding-bottom: var(--space-4);
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+        
+        .compact-meta-item {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray-600);
+        }
+        
+        .compact-meta-item strong {
+            color: var(--color-dark);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 767px) {
+            .project-title {
+                font-size: var(--font-size-2xl);
+            }
+            
+            .project-header {
+                height: 250px;
+            }
+            
+            .highlight-grid,
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .portfolio-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header & Navigation -->
+    <header class="site-header" role="banner">
+        <nav class="main-nav" role="navigation" aria-label="Main navigation">
+            <div class="container nav-container">
+                <div class="logo">
+                    <a href="../index.html" aria-label="EBIC - Ehrig BIM & IT Consultation, Inc. Home">
+                        <img src="../assets/images/logo-main.png" alt="EBIC - Ehrig BIM & IT Consultation, Inc." class="site-logo">
+                    </a>
+                </div>
+                
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
+                
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="contact.html" class="nav-link btn-primary">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        
+        <!-- Portfolio Hero -->
+        <section class="portfolio-hero" role="region" aria-label="Portfolio hero section">
+            <div class="container">
+                <div class="portfolio-hero-content">
+                    <h1>Our Portfolio</h1>
+                    <p class="tagline">18 years of digital construction excellence across 75+ major projects. Aviation sector dominance with deep expertise in airport infrastructure, entertainment venues, and critical government facilities.</p>
+                    
+                    <div class="portfolio-stats">
+                        <div class="portfolio-stat">
+                            <span class="portfolio-stat-number">75+</span>
+                            <span class="portfolio-stat-label">Projects Completed</span>
+                        </div>
+                        <div class="portfolio-stat">
+                            <span class="portfolio-stat-number">18</span>
+                            <span class="portfolio-stat-label">Years Experience</span>
+                        </div>
+                        <div class="portfolio-stat">
+                            <span class="portfolio-stat-number">45</span>
+                            <span class="portfolio-stat-label">Trade Models (Orlando Airport)</span>
+                        </div>
+                        <div class="portfolio-stat">
+                            <span class="portfolio-stat-number">$2.8B</span>
+                            <span class="portfolio-stat-label">Largest Single Project</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Navigation -->
+        <section class="portfolio-filters" role="region" aria-label="Portfolio category filters">
+            <div class="container">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="aviation">Aviation</button>
+                    <button class="filter-btn" data-filter="entertainment">Entertainment & Hospitality</button>
+                    <button class="filter-btn" data-filter="government">Government & Defense</button>
+                    <button class="filter-btn" data-filter="commercial">Commercial</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Aviation Sector Projects -->
+        <section class="projects-section aviation-section" id="aviation" role="region" aria-label="Aviation sector projects">
+            <div class="container">
+                <div class="category-header">
+                    <div class="category-icon" aria-hidden="true">
+                        <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M30 10 L50 25 L40 30 L30 50 L20 30 L10 25 Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="30" cy="30" r="3" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h2>Aviation Sector</h2>
+                    <p class="section-subtitle">Industry-leading expertise in airport infrastructure and aviation facilities</p>
+                </div>
+                
+                <div class="project-showcase">
+                    
+                    <!-- Orlando International Airport Terminal C -->
+                    <article class="project-detail-card">
+                        <div class="project-header" style="background-image: linear-gradient(rgba(0, 74, 173, 0.85), rgba(0, 74, 173, 0.85)), url('../assets/images/projects/Orlando-Airport-Terminal-C.jpg'); background-size: cover; background-position: center;">
+                            <div class="project-header-content">
+                                <span class="project-category-badge">Aviation - Major Hub</span>
+                                <h3 class="project-title">Orlando International Airport Terminal C</h3>
+                                <p class="project-subtitle">Grand Conceptor Award-Winning $2.8B Infrastructure Program</p>
+                            </div>
+                        </div>
+
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Project Value</span>
+                                    <span class="meta-value">$2.8 Billion</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Size</span>
+                                    <span class="meta-value">1.8M Square Feet</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Completion</span>
+                                    <span class="meta-value">September 2022</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Experience Period</span>
+                                    <span class="meta-value">2018-2020 (Pre-EBIC)</span>
+                                </div>
+                            </div>
+
+                            <div class="project-description">
+                                <h4>Project Overview</h4>
+                                <p><strong>Pre-EBIC Experience (2018-2020 at SimRobotics):</strong> Orlando International Airport's South Terminal Complex Project, one of the most ambitious airport infrastructure programs in the United States. Jordan held multiple leadership positions at SimRobotics including Director of Operations, Chief Modeler, QA/QC Admin, IT Admin, Hardware/Software Consultant, and BIM Manager. In BIM Manager capacity, led coordination team of 4 BIM specialists managing 45 trade models across three interconnected buildings for Turner-Kiewit Joint Venture (Landside) and Hensel Phelps (Airside). EBIC was founded in March 2020; this experience reflects Jordan's prior professional work that informs EBIC's current capabilities.</p>
+                            </div>
+
+                            <div class="project-highlights">
+                                <h4>Experience & Scope</h4>
+                                <div class="highlight-grid">
+                                    <div class="highlight-item">
+                                        <h5>Leadership Roles</h5>
+                                        <ul>
+                                            <li>Director of Operations</li>
+                                            <li>Chief Modeler & BIM Manager</li>
+                                            <li>QA/QC Admin & IT Admin</li>
+                                            <li>Hardware/Software Consultant</li>
+                                            <li>Team of 4 BIM specialists</li>
+                                            <li>45 trade models coordinated</li>
+                                        </ul>
+                                    </div>
+                                    <div class="highlight-item">
+                                        <h5>Systems Coordinated</h5>
+                                        <ul>
+                                            <li>Concrete foundations & elevated slabs</li>
+                                            <li>Metal cladding & curtain wall</li>
+                                            <li>Atrium skylight systems</li>
+                                            <li>Tarmac fuel distribution system</li>
+                                        </ul>
+                                    </div>
+                                    <div class="highlight-item">
+                                        <h5>Specialty Systems</h5>
+                                        <ul>
+                                            <li>Runway drainage & grading</li>
+                                            <li>Emergency Fuel Shut Off (EFSO)</li>
+                                            <li>Boarding pier foundations</li>
+                                            <li>Bird netting infrastructure</li>
+                                        </ul>
+                                    </div>
+                                    <div class="highlight-item">
+                                        <h5>Interior Systems</h5>
+                                        <ul>
+                                            <li>Gyp wall framing systems</li>
+                                            <li>Acoustical ceiling tiles</li>
+                                            <li>Miscellaneous metals</li>
+                                            <li>Masonry construction</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="project-features">
+                                <h4>Terminal Features & Technology</h4>
+                                <ul class="features-list">
+                                    <li>1,000-foot Boulevard with natural light and retail</li>
+                                    <li>Automated TSA screening systems</li>
+                                    <li>Facial recognition technology integration</li>
+                                    <li>LEED v4 sustainable design certification</li>
+                                    <li>Multimodal terminal connectivity</li>
+                                    <li>15 new gates with modern amenities</li>
+                                    <li>Advanced baggage handling systems</li>
+                                    <li>Integrated building automation</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="project-awards">
+                                <h4>Awards & Recognition</h4>
+                                <ul class="awards-list">
+                                    <li>2024 Grand Conceptor Award</li>
+                                    <li>Engineering Excellence Grand Award</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Tampa International Airport Projects -->
+                    <article class="project-detail-card">
+                        <div class="project-header" style="background-image: linear-gradient(rgba(0, 74, 173, 0.85), rgba(0, 74, 173, 0.85)), url('../assets/images/projects/TPA-CUP-Exterior-Sunset-Placeholder-Sky-Replaced-but-No-Exterior-lighting.jpg'); background-size: cover; background-position: center;">
+                            <div class="project-header-content">
+                                <span class="project-category-badge">Aviation - Multiple Programs</span>
+                                <h3 class="project-title">Tampa International Airport</h3>
+                                <p class="project-subtitle">MTCE Police & Maintenance Building + Bombardier Office Fitout</p>
+                            </div>
+                        </div>
+                        
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Program Value</span>
+                                    <span class="meta-value">$326M MTCE Expansion</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Completion</span>
+                                    <span class="meta-value">2025</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Contractor</span>
+                                    <span class="meta-value">Hensel Phelps Design-Build</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Designer</span>
+                                    <span class="meta-value">HNTB</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-description">
+                                <h4>Project Overview</h4>
+                                <p>Multiple concurrent projects supporting Tampa International Airport's $326 million Main Terminal Curbside Expansion program. EBIC provided specialized BIM modeling services for the MTCE Police & Maintenance Building working with Acclaim on concrete coordination, plus comprehensive special accessories modeling including doors, restroom hardware, fire safety equipment, and medical devices.</p>
+                            </div>
+
+                            <div class="project-highlights">
+                                <h4>EBIC Deliverables</h4>
+                                <div class="highlight-grid">
+                                    <div class="highlight-item">
+                                        <h5>MTCE Building - Concrete</h5>
+                                        <ul>
+                                            <li>Concrete work coordination</li>
+                                            <li>Collaboration with Acclaim</li>
+                                            <li>Foundation systems</li>
+                                            <li>Vertical concrete elements</li>
+                                        </ul>
+                                    </div>
+                                    <div class="highlight-item">
+                                        <h5>Special Accessories</h5>
+                                        <ul>
+                                            <li>Door hardware & scheduling</li>
+                                            <li>Restroom accessories</li>
+                                            <li>Fire extinguisher locations</li>
+                                            <li>AED/defibrillator placement</li>
+                                        </ul>
+                                    </div>
+                                    <div class="highlight-item">
+                                        <h5>Facility Components</h5>
+                                        <ul>
+                                            <li>Police Headquarters</li>
+                                            <li>Maintenance facility systems</li>
+                                            <li>Central Utility Plant</li>
+                                            <li>Support infrastructure</li>
+                                        </ul>
+                                    </div>
+                                    <div class="highlight-item">
+                                        <h5>Bombardier Fitout</h5>
+                                        <ul>
+                                            <li>Scan-to-BIM as-built documentation</li>
+                                            <li>Post-retrofit reality capture</li>
+                                            <li>LOD 500 modeling all trades</li>
+                                            <li>Gomez Construction coordination</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="project-description">
+                                <h4>Additional Scope - Bombardier Office</h4>
+                                <p>Concurrent with MTCE work, provided comprehensive Scan-to-BIM as-built documentation for Bombardier office fitout located in APM maintenance bay within parking garage. Post-retrofit reality capture and full LOD 500 modeling of all trades involved, coordinated through Gomez Construction under Hensel Phelps oversight, demonstrating EBIC's versatility across both large infrastructure and specialized interior work.</p>
+                            </div>
+                        </div>
+                    </article>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Entertainment & Hospitality Sector -->
+        <section class="projects-section entertainment-section" id="entertainment" role="region" aria-label="Entertainment and hospitality projects">
+            <div class="container">
+                <div class="category-header">
+                    <div class="category-icon" aria-hidden="true">
+                        <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="30" cy="30" r="20" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M30 15 L35 25 L45 25 L37 32 L40 42 L30 36 L20 42 L23 32 L15 25 L25 25 Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h2>Entertainment & Hospitality</h2>
+                    <p class="section-subtitle">World-class theme parks and entertainment destinations</p>
+                </div>
+                
+                <div class="project-showcase">
+                    
+                    <!-- Universal Studios Epic Universe -->
+                    <article class="project-detail-card">
+                        <div class="project-header" style="background-image: linear-gradient(rgba(0, 74, 173, 0.85), rgba(0, 74, 173, 0.85)), url('../assets/images/projects/Chronos_Tower_Front_Epic_Universe.jpg'); background-size: cover; background-position: center;">
+                            <div class="project-header-content">
+                                <span class="project-category-badge">Entertainment - Theme Park</span>
+                                <h3 class="project-title">Universal Studios Epic Universe</h3>
+                                <p class="project-subtitle">750-Acre Next-Generation Theme Park Complex</p>
+                            </div>
+                        </div>
+                        
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Site Area</span>
+                                    <span class="meta-value">750+ Acres</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Opening</span>
+                                    <span class="meta-value">May 22, 2025</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Project Period</span>
+                                    <span class="meta-value">2022-2025</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">General Contractors</span>
+                                    <span class="meta-value">Hensel Phelps, Yates, DPR</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-description">
+                                <h4>Project Overview</h4>
+                                <p>Three-year engagement on Universal's most ambitious theme park development. EBIC worked as subcontractor to Southeast Mechanical and Phillips & Jordan Civil Contractors, providing specialized MEP and civil underground BIM coordination across three themed lands managed by separate general contractors (Hensel Phelps, Yates Construction, and DPR Construction).</p>
+                            </div>
+
+                            <div class="project-highlights">
+                                <h4>Contractor Hierarchy & EBIC Scope</h4>
+                                <div class="highlight-grid">
+                                    <div class="highlight-item">
+                                        <h5>How to Train Your Dragon Land</h5>
+                                        <ul>
+                                            <li>General Contractor: Hensel Phelps</li>
+                                            <li>Subcontractor: Southeast Mechanical</li>
+                                            <li>EBIC Scope: Chilled water piping</li>
+                                        </ul>
+                                    </div>
+                                    <div class="highlight-item">
+                                        <h5>Celestial Park</h5>
+                                        <ul>
+                                            <li>General Contractor: Yates Construction</li>
+                                            <li>Subcontractor: Phillips & Jordan Civil</li>
+                                            <li>EBIC Scope: Sanitary, Storm, Potable, FDC</li>
+                                        </ul>
+                                    </div>
+                                    <div class="highlight-item">
+                                        <h5>Universal Helios Grand Hotel</h5>
+                                        <ul>
+                                            <li>General Contractor: DPR Construction</li>
+                                            <li>Subcontractor: Southeast Mechanical</li>
+                                            <li>EBIC Scope: 10-story hotel chilled water piping</li>
+                                        </ul>
+                                    </div>
+                                    <div class="highlight-item">
+                                        <h5>Civil Underground - Dragon Land</h5>
+                                        <ul>
+                                            <li>General Contractor: Hensel Phelps</li>
+                                            <li>Subcontractor: Phillips & Jordan Civil</li>
+                                            <li>EBIC Scope: Sanitary/Storm/Potable/FDC</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="project-features">
+                                <h4>Project Characteristics & Delivery Structure</h4>
+                                <ul class="features-list">
+                                    <li>Three general contractors (Hensel Phelps, Yates, DPR) managing separate lands/buildings</li>
+                                    <li>EBIC worked FOR Southeast Mechanical and Phillips & Jordan Civil subcontractors</li>
+                                    <li>Phased delivery across 3-year timeline (2022-2025)</li>
+                                    <li>Complex MEP system integration across themed lands</li>
+                                    <li>Underground utility coordination beneath themed environments</li>
+                                    <li>Hotel and entertainment venue mechanical systems</li>
+                                    <li>Civil infrastructure for Celestial Park and Dragon Land</li>
+                                    <li>Multi-trade clash detection and resolution</li>
+                                    <li>Fast-track design-build coordination with multiple GC teams</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Government & Defense Sector -->
+        <section class="projects-section government-section" id="government" role="region" aria-label="Government and defense projects">
+            <div class="container">
+                <div class="category-header">
+                    <div class="category-icon" aria-hidden="true">
+                        <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="15" y="15" width="30" height="30" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M30 10 L35 15 L30 20 L25 15 Z" fill="currentColor"/>
+                            <circle cx="30" cy="30" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h2>Government & Defense</h2>
+                    <p class="section-subtitle">Trusted partner for sensitive federal and military facilities</p>
+                </div>
+                
+                <div class="project-showcase">
+                    
+                    <!-- NASA Kennedy Space Center -->
+                    <article class="project-detail-card">
+                        <div class="project-header" style="background-image: linear-gradient(rgba(0, 74, 173, 0.85), rgba(0, 74, 173, 0.85)), url('../assets/images/hero-pattern.svg'); background-size: cover; background-position: center;">
+                            <div class="project-header-content">
+                                <span class="project-category-badge">Government - NASA</span>
+                                <h3 class="project-title">Kennedy Space Center</h3>
+                                <p class="project-subtitle">Vehicle Assembly Building High Bay Door Reality Capture</p>
+                            </div>
+                        </div>
+                        
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Client</span>
+                                    <span class="meta-value">NASA</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Facility</span>
+                                    <span class="meta-value">Vehicle Assembly Building</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Services</span>
+                                    <span class="meta-value">Laser Scanning + BIM</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Security Level</span>
+                                    <span class="meta-value">Federal Facility</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-description">
+                                <h4>Project Overview</h4>
+                                <p>Precision reality capture and BIM modeling services for NASA's iconic Vehicle Assembly Building high bay door systems. FARO laser scanning technology deployed to capture millimeter-accurate as-built conditions of this critical aerospace infrastructure. BIM models developed to support facility management and future renovation planning for one of the world's most recognizable space program structures.</p>
+                            </div>
+                            
+                            <div class="project-highlights">
+                                <h4>EBIC Deliverables</h4>
+                                <div class="highlight-grid">
+                                    <div class="highlight-item">
+                                        <h5>Reality Capture</h5>
+                                        <ul>
+                                            <li>FARO laser scanning of massive door systems</li>
+                                            <li>Point cloud processing and registration</li>
+                                            <li>Millimeter-accuracy documentation</li>
+                                            <li>As-built condition assessment</li>
+                                        </ul>
+                                    </div>
+                                    <div class="highlight-item">
+                                        <h5>BIM Modeling</h5>
+                                        <ul>
+                                            <li>Scan-to-BIM conversion</li>
+                                            <li>High bay door system modeling</li>
+                                            <li>Structural support documentation</li>
+                                            <li>Facility management integration</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Military Installations -->
+                    <div class="compact-projects">
+                        
+                        <article class="compact-card">
+                            <h3>Lockheed Martin Facilities</h3>
+                            <div class="compact-meta">
+                                <div class="compact-meta-item">
+                                    <strong>Client:</strong> Lockheed Martin
+                                </div>
+                                <div class="compact-meta-item">
+                                    <strong>Services:</strong> VDC Coordination
+                                </div>
+                                <div class="compact-meta-item">
+                                    <strong>Sector:</strong> Aerospace & Defense
+                                </div>
+                            </div>
+                            <p>VDC coordination services for classified aerospace and defense facility projects. Demonstrated capability to work within secure environments and maintain strict confidentiality requirements while delivering mission-critical BIM coordination services.</p>
+                        </article>
+                        
+                        <article class="compact-card">
+                            <h3>Pacific Military Installations</h3>
+                            <div class="compact-meta">
+                                <div class="compact-meta-item">
+                                    <strong>Locations:</strong> Okinawa, Rota, Saipan, Tinian
+                                </div>
+                                <div class="compact-meta-item">
+                                    <strong>Services:</strong> BIM + Reality Capture
+                                </div>
+                                <div class="compact-meta-item">
+                                    <strong>Projects:</strong> 8+ Military Sites
+                                </div>
+                            </div>
+                            <p>Extensive experience coordinating BIM and reality capture services across multiple Pacific region military installations. International project coordination demonstrating capability for complex logistics, security protocols, and cross-border technical collaboration.</p>
+                        </article>
+                        
+                        <article class="compact-card">
+                            <h3>Tyndall Air Force Base</h3>
+                            <div class="compact-meta">
+                                <div class="compact-meta-item">
+                                    <strong>Client:</strong> U.S. Air Force
+                                </div>
+                                <div class="compact-meta-item">
+                                    <strong>Services:</strong> BIM Coordination
+                                </div>
+                                <div class="compact-meta-item">
+                                    <strong>Scope:</strong> Base Infrastructure
+                                </div>
+                            </div>
+                            <p>BIM coordination services supporting Air Force infrastructure projects at Tyndall AFB. Experience with military construction standards, security requirements, and coordination with federal construction management teams.</p>
+                        </article>
+                        
+                        <article class="compact-card">
+                            <h3>USAF Stadium Complex</h3>
+                            <div class="compact-meta">
+                                <div class="compact-meta-item">
+                                    <strong>Client:</strong> U.S. Air Force
+                                </div>
+                                <div class="compact-meta-item">
+                                    <strong>Services:</strong> Comprehensive Laser Scanning
+                                </div>
+                                <div class="compact-meta-item">
+                                    <strong>Scans:</strong> 903 High-Resolution Scans
+                                </div>
+                            </div>
+                            <p>Massive reality capture project documenting entire USAF stadium complex through 903 individual laser scans. Comprehensive point cloud data supporting facility management, renovation planning, and as-built documentation for this large-scale sports and events facility.</p>
+                        </article>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Commercial Sector -->
+        <section class="projects-section commercial-section" id="commercial" role="region" aria-label="Commercial sector projects">
+            <div class="container">
+                <div class="category-header">
+                    <div class="category-icon" aria-hidden="true">
+                        <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="15" y="10" width="30" height="40" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <line x1="20" y1="20" x2="25" y2="20" stroke="currentColor" stroke-width="2"/>
+                            <line x1="35" y1="20" x2="40" y2="20" stroke="currentColor" stroke-width="2"/>
+                            <line x1="20" y1="30" x2="25" y2="30" stroke="currentColor" stroke-width="2"/>
+                            <line x1="35" y1="30" x2="40" y2="30" stroke="currentColor" stroke-width="2"/>
+                            <line x1="20" y1="40" x2="25" y2="40" stroke="currentColor" stroke-width="2"/>
+                            <line x1="35" y1="40" x2="40" y2="40" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h2>Commercial</h2>
+                    <p class="section-subtitle">Corporate office and banking facilities</p>
+                </div>
+                
+                <div class="project-showcase">
+                    
+                    <div class="compact-projects">
+                        
+                        <article class="compact-card">
+                            <h3>HSBC Banking Tenant Fitout</h3>
+                            <div class="compact-meta">
+                                <div class="compact-meta-item">
+                                    <strong>Client:</strong> HSBC (Hong Kong and Shanghai Banking Corporation)
+                                </div>
+                                <div class="compact-meta-item">
+                                    <strong>Location:</strong> New York City
+                                </div>
+                                <div class="compact-meta-item">
+                                    <strong>Services:</strong> BIM Coordination
+                                </div>
+                                <div class="compact-meta-item">
+                                    <strong>Type:</strong> Commercial Banking Office
+                                </div>
+                            </div>
+                            <p>BIM coordination services for HSBC tenant fitout project in New York City. Comprehensive tenant improvement work for commercial banking office space, coordinating MEP systems, interior architecture, and specialized banking infrastructure requirements.</p>
+                        </article>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Summary Statistics -->
+        <section class="stats-section" role="region" aria-label="Portfolio statistics">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Experience Across the AEC Industry</h2>
+                    <p class="section-subtitle">Proven track record delivering complex projects on time and on budget</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">75+</div>
+                        <div class="stat-label">Major Projects Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">18</div>
+                        <div class="stat-label">Years Industry Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">45</div>
+                        <div class="stat-label">Trade Models (Single Project)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">30+</div>
+                        <div class="stat-label">Reality Capture Projects</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8+</div>
+                        <div class="stat-label">Military Installations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">903</div>
+                        <div class="stat-label">USAF Stadium Scans</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="cta-section" role="region" aria-label="Call to action">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Start Your Next Project?</h2>
+                    <p>18 years of experience across aviation, entertainment, government, and commercial sectors. Let's discuss how our expertise can benefit your next initiative.</p>
+                    <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; margin-top: var(--space-8);">
+                        <a href="contact.html" class="btn btn-secondary btn-large">Contact Us</a>
+                        <a href="services.html" class="btn btn-outline btn-large" style="border-color: white; color: white;">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <img src="../assets/images/logo-main.png" alt="EBIC - Ehrig BIM & IT Consultation, Inc." class="footer-logo">
+                    <p>Ehrig BIM & IT Consultation, Inc.</p>
+                    <p class="footer-tagline">Your Trusted Partner in Digital Construction Technology</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">403 South Edgemon Avenue<br>Winter Springs, FL 32708<br>(407) 234-3445</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html#bim-vdc">BIM & VDC Services</a></li>
+                        <li><a href="services.html#reality-capture">Reality Capture</a></li>
+                        <li><a href="services.html#training">Training & Development</a></li>
+                        <li><a href="services.html#software-ai">Software & AI</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Connect</h4>
+                    <p>Professional consultation for AEC industry leaders</p>
+                    <a href="contact.html" class="btn btn-outline">Contact Us</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 EBIC - Ehrig BIM & IT Consultation, Inc. All rights reserved.</p>
+                <p class="footer-meta">Founded March 2020 | 18 Years Industry Experience</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Simple filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const sections = {
+                'aviation': document.querySelector('.aviation-section'),
+                'entertainment': document.querySelector('.entertainment-section'),
+                'government': document.querySelector('.government-section'),
+                'commercial': document.querySelector('.commercial-section')
+            };
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active state
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Show/hide sections
+                    if (filter === 'all') {
+                        Object.values(sections).forEach(section => {
+                            if (section) section.style.display = 'block';
+                        });
+                    } else {
+                        Object.entries(sections).forEach(([key, section]) => {
+                            if (section) {
+                                section.style.display = key === filter ? 'block' : 'none';
+                            }
+                        });
+                    }
+                    
+                    // Smooth scroll to first visible section
+                    const firstVisibleSection = filter === 'all' 
+                        ? sections.aviation 
+                        : sections[filter];
+                    
+                    if (firstVisibleSection) {
+                        firstVisibleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

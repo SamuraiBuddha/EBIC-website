@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact EBIC for BIM coordination, reality capture, and program management services. Professional consultation for AEC projects.">
+    <title>Contact Us | EBIC - BIM & IT Consultation</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/images/logo-black.png">
+
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        .contact-hero {
+            background: linear-gradient(135deg, #004c99 0%, #0066cc 100%);
+            color: white;
+            padding: 8rem 0 4rem;
+            margin-top: var(--header-height);
+            text-align: center;
+        }
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-10);
+            padding: var(--space-12) 0;
+        }
+        .contact-form {
+            background: white;
+            padding: var(--space-8);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+        }
+        .form-group {
+            margin-bottom: var(--space-5);
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: var(--space-2);
+            font-weight: 600;
+            color: var(--color-gray-700);
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: var(--space-3);
+            border: 2px solid var(--color-gray-200);
+            border-radius: var(--border-radius);
+            font-family: var(--font-primary);
+            font-size: var(--font-size-base);
+            transition: border-color var(--transition-base);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .contact-info {
+            padding: var(--space-6);
+        }
+        .info-card {
+            background: var(--color-gray-100);
+            padding: var(--space-6);
+            border-radius: var(--border-radius-lg);
+            margin-bottom: var(--space-6);
+            border-left: 4px solid var(--color-primary);
+        }
+        .info-card h3 {
+            color: var(--color-primary);
+            margin-bottom: var(--space-3);
+        }
+        @media (max-width: 767px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: var(--space-6);
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header" role="banner">
+        <nav class="main-nav" role="navigation" aria-label="Main navigation">
+            <div class="container nav-container">
+                <div class="logo">
+                    <a href="../index.html" aria-label="EBIC - Ehrig BIM & IT Consultation, Inc. Home">
+                        <img src="../assets/images/logo-main.png" alt="EBIC - Ehrig BIM & IT Consultation, Inc." class="site-logo">
+                    </a>
+                </div>
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="contact.html" class="nav-link btn-primary active">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="contact-hero">
+            <div class="container">
+                <h1>Get In Touch</h1>
+                <p style="font-size: var(--font-size-xl); max-width: 700px; margin: 0 auto;">Ready to transform your project? Let's discuss how our 18 years of expertise can bring value to your next venture.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="container contact-container">
+                <div class="contact-form">
+                    <h2>Send Us a Message</h2>
+                    <form action="#" method="post" data-validate>
+                        <div class="form-group">
+                            <label for="name">Full Name <span style="color: var(--color-secondary);">*</span></label>
+                            <input type="text" id="name" name="name" required aria-required="true">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address <span style="color: var(--color-secondary);">*</span></label>
+                            <input type="email" id="email" name="email" required aria-required="true">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company">Company/Organization</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="service">Service Interest <span style="color: var(--color-secondary);">*</span></label>
+                            <select id="service" name="service" required aria-required="true">
+                                <option value="">Select a service</option>
+                                <option value="bim">BIM Coordination</option>
+                                <option value="reality-capture">Reality Capture / Scan-to-BIM</option>
+                                <option value="program-management">Program Management</option>
+                                <option value="ai-software">AI & Software Development</option>
+                                <option value="consultation">General Consultation</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="project">Project Type</label>
+                            <select id="project" name="project">
+                                <option value="">Select project type</option>
+                                <option value="aviation">Aviation / Airport</option>
+                                <option value="government">Government / Military</option>
+                                <option value="commercial">Commercial</option>
+                                <option value="industrial">Industrial</option>
+                                <option value="technology">Technology / Research</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message <span style="color: var(--color-secondary);">*</span></label>
+                            <textarea id="message" name="message" required aria-required="true" placeholder="Tell us about your project and how we can help..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+
+                <div class="contact-info">
+                    <h2>Contact Information</h2>
+                    
+                    <div class="info-card">
+                        <h3>Business Inquiries</h3>
+                        <p>For project consultations, service quotes, and partnership opportunities.</p>
+                        <p style="margin-top: var(--space-3);"><strong>Response time:</strong> Within 24 hours</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Service Areas</h3>
+                        <p><strong>Primary Focus:</strong></p>
+                        <ul style="margin: var(--space-2) 0 var(--space-2) var(--space-5);">
+                            <li>Aviation & Airport Infrastructure</li>
+                            <li>Government & Military Facilities</li>
+                            <li>Commercial Development</li>
+                            <li>Industrial & Manufacturing</li>
+                            <li>Technology & Research Facilities</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Technical Capabilities</h3>
+                        <p><strong>Specializations:</strong></p>
+                        <ul style="margin: var(--space-2) 0 0 var(--space-5);">
+                            <li>Autodesk Revit & BIM 360</li>
+                            <li>FARO Laser Scanning</li>
+                            <li>Enterprise AI Orchestration</li>
+                            <li>3D Printing & Fabrication</li>
+                            <li>Custom Software Development</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Why Choose EBIC?</h3>
+                        <ul style="margin: var(--space-2) 0 0 var(--space-5);">
+                            <li>18 years of industry excellence</li>
+                            <li>75+ major projects completed</li>
+                            <li>30+ reality capture projects</li>
+                            <li>Proven track record with airports, military, and commercial sectors</li>
+                            <li>Cutting-edge AI and automation capabilities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <img src="../assets/images/logo-main.png" alt="EBIC - Ehrig BIM & IT Consultation, Inc." class="footer-logo">
+                    <p>Ehrig BIM & IT Consultation, Inc.</p>
+                    <p class="footer-tagline">Transforming the Built Environment</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html#bim">BIM Coordination</a></li>
+                        <li><a href="services.html#reality-capture">Reality Capture</a></li>
+                        <li><a href="services.html#program-management">Program Management</a></li>
+                        <li><a href="services.html#ai-software">AI & Software</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Connect</h4>
+                    <p>Professional consultation for AEC industry leaders</p>
+                    <a href="contact.html" class="btn btn-outline">Contact Us</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EBIC - Ehrig BIM & IT Consultation, Inc. All rights reserved.</p>
+                <p class="footer-meta">Founded March 2020 | 18 Years Industry Experience</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
