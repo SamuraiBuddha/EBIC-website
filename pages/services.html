@@ -52,13 +52,67 @@
             padding: var(--space-2) 0 var(--space-2) var(--space-6);
             position: relative;
         }
-        .service-features li::before {
+        /* BIM/VDC - Checkmarks (quality control theme) */
+        #bim-vdc .service-features li::before {
             content: '✓';
             position: absolute;
             left: 0;
             color: var(--color-accent);
             font-weight: bold;
             font-size: var(--font-size-xl);
+        }
+        /* Reality Capture - Arrows (scanning/process theme) */
+        #reality-capture .service-features li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #00aa88;
+            font-weight: bold;
+            font-size: var(--font-size-xl);
+        }
+        /* Training - Numbers (learning progression) */
+        #training .service-features {
+            counter-reset: training-counter;
+        }
+        #training .service-features li::before {
+            counter-increment: training-counter;
+            content: counter(training-counter) '.';
+            position: absolute;
+            left: 0;
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: var(--font-size-lg);
+        }
+        /* Software/AI - Triangles (innovation theme) */
+        #software-ai .service-features li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #764ba2;
+            font-weight: bold;
+            font-size: var(--font-size-xl);
+        }
+        /* Icon grid for capabilities */
+        .capability-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-3);
+            margin: var(--space-3) 0 0;
+        }
+        .capability-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2);
+            background: white;
+            border-radius: var(--border-radius-sm);
+        }
+        .capability-icon {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-accent);
+            flex-shrink: 0;
         }
         @media (max-width: 767px) {
             .service-content {
@@ -145,14 +199,32 @@
                         <img src="../assets/images/projects/Pics/VDC meeting.jpg" alt="BIM & VDC coordination meeting with project team" style="width: 100%; border-radius: var(--border-radius-lg); margin-bottom: var(--space-4);">
                         <div style="background: var(--color-gray-100); padding: var(--space-4); border-radius: var(--border-radius-md);">
                             <h4 style="margin-bottom: var(--space-3);">Key Capabilities</h4>
-                            <ul style="margin: 0; padding-left: var(--space-5);">
-                                <li>Expert Revit modeling and coordination</li>
-                                <li>Navisworks coordination reviews</li>
-                                <li>BIM 360 project collaboration</li>
-                                <li>Multi-discipline clash detection</li>
-                                <li>Construction documentation support</li>
-                                <li>Model quality assurance</li>
-                            </ul>
+                            <div class="capability-grid">
+                                <div class="capability-item">
+                                    <div class="capability-icon"></div>
+                                    <span>Expert Revit modeling</span>
+                                </div>
+                                <div class="capability-item">
+                                    <div class="capability-icon"></div>
+                                    <span>Navisworks reviews</span>
+                                </div>
+                                <div class="capability-item">
+                                    <div class="capability-icon"></div>
+                                    <span>BIM 360 collaboration</span>
+                                </div>
+                                <div class="capability-item">
+                                    <div class="capability-icon"></div>
+                                    <span>Clash detection</span>
+                                </div>
+                                <div class="capability-item">
+                                    <div class="capability-icon"></div>
+                                    <span>Documentation support</span>
+                                </div>
+                                <div class="capability-item">
+                                    <div class="capability-icon"></div>
+                                    <span>Quality assurance</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
