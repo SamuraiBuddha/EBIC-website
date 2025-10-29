@@ -61,26 +61,18 @@
             font-weight: bold;
             font-size: var(--font-size-xl);
         }
-        /* Reality Capture - Arrows (scanning/process theme) */
+        /* Reality Capture - Bullseye (precision/accuracy theme) */
         #reality-capture .service-features li::before {
-            content: '→';
+            content: '🎯';
             position: absolute;
             left: 0;
-            color: #00aa88;
-            font-weight: bold;
-            font-size: var(--font-size-xl);
+            font-size: var(--font-size-lg);
         }
-        /* Training - Numbers (learning progression) */
-        #training .service-features {
-            counter-reset: training-counter;
-        }
+        /* Training - Pencil (learning theme) */
         #training .service-features li::before {
-            counter-increment: training-counter;
-            content: counter(training-counter) '.';
+            content: '✏️';
             position: absolute;
             left: 0;
-            color: #ff6b35;
-            font-weight: bold;
             font-size: var(--font-size-lg);
         }
         /* Software/AI - Triangles (innovation theme) */
@@ -278,7 +270,7 @@
             <div class="container">
                 <div class="service-content">
                     <div>
-                        <h2>Training & Development</h2>
+                        <h2>Training</h2>
                         <p>Expert training programs designed to build your team's skills and optimize BIM workflows. Our training is based on real-world experience across design, construction, and owner perspectives, ensuring practical knowledge that translates directly to your projects.</p>
                         
                         <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">Training Programs</h4>
@@ -407,7 +399,7 @@
                     <ul>
                         <li><a href="services.html#bim-vdc">BIM & VDC Services</a></li>
                         <li><a href="services.html#reality-capture">Reality Capture</a></li>
-                        <li><a href="services.html#training">Training & Development</a></li>
+                        <li><a href="services.html#training">Training</a></li>
                         <li><a href="services.html#software-ai">Software & AI</a></li>
                     </ul>
                 </div>
