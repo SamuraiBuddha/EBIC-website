@@ -15,7 +15,10 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../assets/images/logo-black.png">
-    
+
+    <!-- Google Model Viewer for 3D Models -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
     <style>
         /* Portfolio Page Specific Styles */
         .portfolio-hero {
@@ -417,23 +420,179 @@
             color: var(--color-dark);
         }
         
+        /* 3D Model Showcase for Portfolio */
+        .model-showcase-portfolio {
+            background: var(--color-white);
+            padding: var(--space-10) 0;
+            border-bottom: 2px solid var(--color-gray-200);
+        }
+
+        .model-viewer-container-portfolio {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .model-selector-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+            flex-wrap: wrap;
+            gap: var(--space-4);
+        }
+
+        .model-selector-title h2 {
+            margin-bottom: var(--space-2);
+        }
+
+        .model-selector-subtitle {
+            color: var(--color-gray-600);
+            font-size: var(--font-size-base);
+        }
+
+        .model-selector {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .model-selector label {
+            font-weight: 600;
+            color: var(--color-dark);
+            font-size: var(--font-size-base);
+        }
+
+        .model-dropdown {
+            padding: var(--space-3) var(--space-5);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            border: 2px solid var(--color-primary);
+            border-radius: var(--border-radius);
+            background: var(--color-white);
+            color: var(--color-primary);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            min-width: 250px;
+        }
+
+        .model-dropdown:hover {
+            background: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .model-dropdown:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 600px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-xl);
+            --progress-bar-color: var(--color-primary);
+            --poster-color: transparent;
+        }
+
+        .model-info-panel {
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            background: rgba(255, 255, 255, 0.95);
+            padding: var(--space-4);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
+            max-width: 300px;
+            z-index: 10;
+        }
+
+        .model-info-panel h3 {
+            font-size: var(--font-size-lg);
+            color: var(--color-primary);
+            margin-bottom: var(--space-2);
+        }
+
+        .model-info-panel p {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray-700);
+            margin-bottom: var(--space-3);
+        }
+
+        .model-controls-hint {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+            margin-top: var(--space-4);
+            padding-top: var(--space-3);
+            border-top: 1px solid var(--color-gray-300);
+        }
+
+        .control-hint {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: var(--font-size-xs);
+            color: var(--color-gray-600);
+        }
+
+        .control-hint-icon {
+            font-size: var(--font-size-lg);
+        }
+
+        .ar-badge {
+            display: inline-block;
+            padding: var(--space-2) var(--space-3);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--color-white);
+            border-radius: var(--border-radius);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            margin-top: var(--space-2);
+        }
+
         /* Responsive Design */
         @media (max-width: 767px) {
             .project-title {
                 font-size: var(--font-size-2xl);
             }
-            
+
             .project-header {
                 height: 250px;
             }
-            
+
             .highlight-grid,
             .features-list {
                 grid-template-columns: 1fr;
             }
-            
+
             .portfolio-stats {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            model-viewer {
+                height: 400px;
+            }
+
+            .model-selector-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .model-selector {
+                width: 100%;
+            }
+
+            .model-dropdown {
+                width: 100%;
+            }
+
+            .model-info-panel {
+                position: static;
+                max-width: 100%;
+                margin-top: var(--space-4);
             }
         }
     </style>
@@ -495,6 +654,64 @@
                             <span class="portfolio-stat-label">Largest Single Project</span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3D Model Showcase -->
+        <section class="model-showcase-portfolio" role="region" aria-label="Interactive 3D project models">
+            <div class="container">
+                <div class="model-viewer-container-portfolio">
+                    <div class="model-selector-header">
+                        <div class="model-selector-title">
+                            <h2>Interactive 3D Project Models</h2>
+                            <p class="model-selector-subtitle">Explore our major projects in immersive 3D</p>
+                        </div>
+                        <div class="model-selector">
+                            <label for="modelSelect">Select Project:</label>
+                            <select id="modelSelect" class="model-dropdown">
+                                <option value="astronaut" data-description="Example 3D Model" data-project="Demo Model">Demo: Astronaut</option>
+                                <option value="orlando-terminal" data-description="Orlando International Airport Terminal C - $2.8B project with 45 coordinated trade models" data-project="Orlando Airport Terminal C">Orlando Airport Terminal C</option>
+                                <option value="universal-epic" data-description="Universal Epic Universe theme park - MEP & civil coordination across 750 acres" data-project="Universal Epic Universe">Universal Epic Universe</option>
+                                <option value="tampa-airport" data-description="Tampa International Airport MTCE building & Bombardier fitout" data-project="Tampa Airport MTCE">Tampa Airport</option>
+                                <option value="kennedy-space" data-description="Kennedy Space Center Visitor Complex - Reality capture & scan-to-BIM" data-project="Kennedy Space Center">Kennedy Space Center</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <model-viewer
+                        id="projectModel"
+                        src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
+                        alt="3D BIM Project Model"
+                        camera-controls
+                        auto-rotate
+                        shadow-intensity="1"
+                        exposure="1"
+                        camera-orbit="45deg 55deg 2.5m"
+                        ar
+                        ar-modes="webxr scene-viewer quick-look"
+                        loading="lazy">
+
+                        <div class="model-info-panel">
+                            <h3 id="modelTitle">Demo Model</h3>
+                            <p id="modelDescription">Example 3D Model</p>
+                            <div class="model-controls-hint">
+                                <div class="control-hint">
+                                    <span class="control-hint-icon">🖱️</span>
+                                    <span>Click & drag to rotate</span>
+                                </div>
+                                <div class="control-hint">
+                                    <span class="control-hint-icon">🔍</span>
+                                    <span>Scroll to zoom</span>
+                                </div>
+                                <div class="control-hint">
+                                    <span class="control-hint-icon">✌️</span>
+                                    <span>Two-finger drag to pan</span>
+                                </div>
+                            </div>
+                            <span class="ar-badge">📱 AR Ready on Mobile</span>
+                        </div>
+                    </model-viewer>
                 </div>
             </div>
         </section>
@@ -1233,6 +1450,59 @@
                     }
                 });
             });
+        });
+
+        // 3D Model Switcher Functionality
+        const modelData = {
+            'astronaut': {
+                src: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
+                title: 'Demo Model',
+                description: 'Example 3D Model - Replace with your BIM models'
+            },
+            'orlando-terminal': {
+                src: '../assets/models/orlando-terminal-c.glb',
+                title: 'Orlando Airport Terminal C',
+                description: 'Orlando International Airport Terminal C - $2.8B project with 45 coordinated trade models including concrete, MEP, skylight, and specialty systems'
+            },
+            'universal-epic': {
+                src: '../assets/models/universal-epic.glb',
+                title: 'Universal Epic Universe',
+                description: 'Universal Epic Universe theme park - MEP & civil coordination across 750 acres. Chilled water piping, underground utilities, 10-story hotel systems'
+            },
+            'tampa-airport': {
+                src: '../assets/models/tampa-airport.glb',
+                title: 'Tampa Airport MTCE',
+                description: 'Tampa International Airport MTCE building & Bombardier fitout - Concrete coordination, special accessories, scan-to-BIM documentation'
+            },
+            'kennedy-space': {
+                src: '../assets/models/kennedy-space-center.glb',
+                title: 'Kennedy Space Center',
+                description: 'Kennedy Space Center Visitor Complex - Reality capture & scan-to-BIM documentation using FARO laser scanning technology'
+            }
+        };
+
+        document.getElementById('modelSelect').addEventListener('change', function() {
+            const selectedValue = this.value;
+            const modelViewer = document.getElementById('projectModel');
+            const modelTitle = document.getElementById('modelTitle');
+            const modelDescription = document.getElementById('modelDescription');
+
+            const model = modelData[selectedValue];
+
+            if (model) {
+                // Update model source
+                modelViewer.src = model.src;
+
+                // Update info panel
+                modelTitle.textContent = model.title;
+                modelDescription.textContent = model.description;
+
+                // Reset camera to default view when switching models
+                modelViewer.cameraOrbit = '45deg 55deg 2.5m';
+
+                // Restart auto-rotate
+                modelViewer.autoRotate = true;
+            }
         });
     </script>
 </body>
