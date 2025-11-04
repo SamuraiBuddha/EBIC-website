@@ -15,6 +15,9 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/logo-black.png">
+
+    <!-- Google Model Viewer for 3D Models -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 </head>
 <body>
     <!-- Skip to main content for accessibility -->
@@ -350,7 +353,7 @@
                     <h2>Our Technology Stack</h2>
                     <p class="section-subtitle">Industry-leading tools and platforms</p>
                 </div>
-                
+
                 <div class="tech-grid">
                     <div class="tech-category">
                         <div class="tech-icon">
@@ -399,6 +402,93 @@
                             <li>5 Production MCP Tools</li>
                             <li>Custom Development</li>
                             <li>Workflow Integration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3D Model Showcase -->
+        <section class="model-showcase" role="region" aria-label="Interactive 3D models">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Interactive 3D Model Viewer</h2>
+                    <p class="section-subtitle">Explore our projects in immersive 3D with full rotation and zoom controls</p>
+                </div>
+
+                <div class="model-viewer-container">
+                    <model-viewer
+                        src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
+                        alt="3D BIM Model Example"
+                        camera-controls
+                        auto-rotate
+                        shadow-intensity="1"
+                        exposure="1"
+                        camera-orbit="45deg 55deg 2.5m"
+                        min-camera-orbit="auto auto auto"
+                        max-camera-orbit="auto auto auto"
+                        ar
+                        ar-modes="webxr scene-viewer quick-look"
+                        loading="lazy">
+
+                        <div class="model-controls" slot="controls">
+                            <button class="model-btn" data-model="building">Building Model</button>
+                            <button class="model-btn" data-model="mep">MEP Systems</button>
+                            <button class="model-btn" data-model="structure">Structure</button>
+                        </div>
+
+                        <div class="model-hotspot" slot="hotspot-1" data-position="0 1.5 0" data-normal="0 1 0">
+                            <div class="hotspot-annotation">
+                                <h4>Key Feature</h4>
+                                <p>Interactive model annotations</p>
+                            </div>
+                        </div>
+
+                        <div class="model-info">
+                            <div class="info-badge">
+                                <span>📱</span> Mobile AR Ready
+                            </div>
+                            <div class="info-badge">
+                                <span>🖱️</span> Click & Drag to Rotate
+                            </div>
+                            <div class="info-badge">
+                                <span>🔍</span> Scroll to Zoom
+                            </div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-features">
+                    <div class="feature-card">
+                        <h3>BIM Model Support</h3>
+                        <p>Convert Revit, Navisworks, and other BIM formats to web-ready 3D models</p>
+                        <ul class="feature-list">
+                            <li>Revit → GLTF Export</li>
+                            <li>Point Cloud Integration</li>
+                            <li>LOD 100-500 Visualization</li>
+                            <li>Real-time Coordination</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Interactive Features</h3>
+                        <p>Engage with your projects like never before</p>
+                        <ul class="feature-list">
+                            <li>360° Rotation Control</li>
+                            <li>Zoom & Pan Navigation</li>
+                            <li>Mobile AR Support</li>
+                            <li>Annotation Hotspots</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Export Options</h3>
+                        <p>Multiple pathways from BIM to web 3D</p>
+                        <ul class="feature-list">
+                            <li>Revit Plugin Exporters</li>
+                            <li>Blender Conversion</li>
+                            <li>FBX/OBJ to GLTF</li>
+                            <li>Cloud Processing</li>
                         </ul>
                     </div>
                 </div>
