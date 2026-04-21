@@ -672,6 +672,7 @@
                             <label for="modelSelect">Select Project:</label>
                             <select id="modelSelect" class="model-dropdown">
                                 <option value="astronaut" data-description="Example 3D Model" data-project="Demo Model">Demo: Astronaut</option>
+                                <option value="arch-framing" data-description="Architectural framing model" data-project="Architectural Framing">Architectural Framing</option>
                                 <option value="Home-Addition" data-description="Home renovation and addition in Orlando" data-project="HomeAddition">HomeAddition</option>
                                 <option value="universal-epic" data-description="Universal Epic Universe theme park - MEP & civil coordination across 750 acres" data-project="Universal Epic Universe">Universal Epic Universe</option>
                                 <option value="tampa-airport" data-description="Tampa International Airport MTCE building & Bombardier fitout" data-project="Tampa Airport MTCE">Tampa Airport</option>
@@ -691,7 +692,8 @@
                         camera-orbit="45deg 55deg 1.5m"
                         ar
                         ar-modes="webxr scene-viewer quick-look"
-                        loading="lazy">
+                        loading="eager"
+                        reveal="auto">
 
                         <div class="model-info-panel">
                             <h3 id="modelTitle">Demo Model</h3>
@@ -712,6 +714,7 @@
                             </div>
                             <span class="ar-badge">📱 AR Ready on Mobile</span>
                         </div>
+                        <div id="modelStatus" slot="progress-bar" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.7);color:#fff;padding:6px 10px;border-radius:4px;font-size:12px;font-family:sans-serif;max-width:70%;text-align:right;"></div>
                     </model-viewer>
                 </div>
             </div>
@@ -1454,56 +1457,87 @@
         });
 
         // 3D Model Switcher Functionality
+        // cameraOrbit "auto auto auto" lets model-viewer auto-frame the model based on its
+        // bounding box — essential for building-scale models where a fixed close-in distance
+        // would place the camera inside the geometry.
         const modelData = {
             'astronaut': {
                 src: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
                 title: 'Demo Model',
-                description: 'Example 3D Model - Replace with your BIM models'
+                description: 'Example 3D Model - Replace with your BIM models',
+                cameraOrbit: '45deg 55deg 1.5m'
+            },
+            'arch-framing': {
+                src: '../assets/models/arch-framing.glb',
+                title: 'Architectural Framing',
+                description: 'Architectural framing model - structural layout and detailing',
+                cameraOrbit: 'auto auto auto'
             },
             'Home-Addition': {
                 src: '../assets/models/HomeAddition.glb',
                 title: 'Orlando Home Addition',
-                description: 'Home renovation in Orlando, new room, extended roof, new bathroom, new kitchen, new HVAC'
+                description: 'Home renovation in Orlando, new room, extended roof, new bathroom, new kitchen, new HVAC',
+                cameraOrbit: 'auto auto auto'
             },
             'universal-epic': {
                 src: '../assets/models/universal-epic.glb',
                 title: 'Universal Epic Universe',
-                description: 'Universal Epic Universe theme park - MEP & civil coordination across 750 acres. Chilled water piping, underground utilities, 10-story hotel systems'
+                description: 'Universal Epic Universe theme park - MEP & civil coordination across 750 acres. Chilled water piping, underground utilities, 10-story hotel systems',
+                cameraOrbit: 'auto auto auto'
             },
             'tampa-airport': {
                 src: '../assets/models/tampa-airport.glb',
                 title: 'Tampa Airport MTCE',
-                description: 'Tampa International Airport MTCE building & Bombardier fitout - Concrete coordination, special accessories, scan-to-BIM documentation'
+                description: 'Tampa International Airport MTCE building & Bombardier fitout - Concrete coordination, special accessories, scan-to-BIM documentation',
+                cameraOrbit: 'auto auto auto'
             },
             'kennedy-space': {
                 src: '../assets/models/kennedy-space-center.glb',
                 title: 'Kennedy Space Center',
-                description: 'Kennedy Space Center Visitor Complex - Reality capture & scan-to-BIM documentation using FARO laser scanning technology'
+                description: 'Kennedy Space Center Visitor Complex - Reality capture & scan-to-BIM documentation using FARO laser scanning technology',
+                cameraOrbit: 'auto auto auto'
             }
         };
 
+        const modelViewerEl = document.getElementById('projectModel');
+        const statusEl = document.getElementById('modelStatus');
+
+        function setStatus(msg) {
+            if (statusEl) statusEl.textContent = msg || '';
+        }
+
+        modelViewerEl.addEventListener('load', () => {
+            const currentSrc = modelViewerEl.getAttribute('src') || '';
+            const fileName = currentSrc.split('/').pop();
+            setStatus('Loaded: ' + fileName);
+            setTimeout(() => setStatus(''), 2500);
+        });
+
+        modelViewerEl.addEventListener('error', (e) => {
+            const detail = e && e.detail ? (e.detail.type || JSON.stringify(e.detail)) : 'unknown';
+            const currentSrc = modelViewerEl.getAttribute('src') || '';
+            setStatus('Load failed (' + detail + '): ' + currentSrc.split('/').pop());
+            console.error('[model-viewer] error loading', currentSrc, e);
+        });
+
         document.getElementById('modelSelect').addEventListener('change', function() {
             const selectedValue = this.value;
-            const modelViewer = document.getElementById('projectModel');
             const modelTitle = document.getElementById('modelTitle');
             const modelDescription = document.getElementById('modelDescription');
 
             const model = modelData[selectedValue];
+            if (!model) return;
 
-            if (model) {
-                // Update model source
-                modelViewer.src = model.src;
+            setStatus('Loading ' + model.title + '...');
+            console.log('[model-viewer] switching to', model.src);
 
-                // Update info panel
-                modelTitle.textContent = model.title;
-                modelDescription.textContent = model.description;
+            modelViewerEl.removeAttribute('poster');
+            modelViewerEl.setAttribute('src', model.src);
+            modelViewerEl.setAttribute('camera-orbit', model.cameraOrbit);
 
-                // Reset camera to default view when switching models
-                modelViewer.cameraOrbit = '45deg 55deg 1.5m';
-
-                // Restart auto-rotate
-                modelViewer.autoRotate = true;
-            }
+            modelTitle.textContent = model.title;
+            modelDescription.textContent = model.description;
+            modelViewerEl.autoRotate = true;
         });
     </script>
 </body>
