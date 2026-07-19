@@ -6,16 +6,26 @@
     <meta name="description" content="About Jordan Ehrig and EBIC - 18 years of experience in digital construction technology, BIM, VDC, and reality capture across aviation, government, and commercial sectors.">
     <meta name="keywords" content="Jordan Ehrig, EBIC, BIM Expert, VDC Consultant, Reality Capture, Autodesk Certified Professional, FARO Laser Scanning">
     <meta name="author" content="EBIC - Ehrig BIM & IT Consultation, Inc.">
-    
+
     <title>About Jordan Ehrig & EBIC | 18 Years of Digital Construction Excellence</title>
-    
+    <link rel="canonical" href="https://www.ebicinc.com/pages/about.html">
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="EBIC - Ehrig BIM &amp; IT Consultation, Inc.">
+    <meta property="og:title" content="About Jordan Ehrig &amp; EBIC | 18 Years of Digital Construction Excellence">
+    <meta property="og:description" content="Jordan Ehrig and EBIC: 18 years across contractor, designer, owner and IT roles in aviation, government, entertainment and commercial construction.">
+    <meta property="og:url" content="https://www.ebicinc.com/pages/about.html">
+    <meta property="og:image" content="https://www.ebicinc.com/assets/images/logo-main.png">
+    <meta name="twitter:card" content="summary_large_image">
+
     <!-- Preload critical resources -->
     <link rel="preload" href="../assets/css/styles.css" as="style">
     <link rel="stylesheet" href="../assets/css/styles.css">
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../assets/images/logo-black.png">
-    
+
     <style>
         /* About Page Specific Styles */
         .about-hero {
@@ -25,7 +35,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .about-hero::before {
             content: '';
             position: absolute;
@@ -33,7 +43,7 @@
             background: url('../assets/images/hero-pattern.svg') center/cover;
             opacity: 0.05;
         }
-        
+
         .about-hero-content {
             position: relative;
             z-index: 1;
@@ -42,11 +52,11 @@
             gap: var(--space-8);
             align-items: center;
         }
-        
+
         .about-hero-image {
             text-align: center;
         }
-        
+
         .profile-image {
             width: 280px;
             height: 280px;
@@ -62,33 +72,33 @@
             font-weight: 700;
             color: var(--color-white);
         }
-        
+
         .about-hero-text h1 {
             color: var(--color-white);
             margin-bottom: var(--space-3);
         }
-        
+
         .about-hero-text .title {
             font-size: var(--font-size-xl);
             color: var(--color-secondary);
             font-weight: 600;
             margin-bottom: var(--space-5);
         }
-        
+
         .about-hero-text .tagline {
             font-size: var(--font-size-2xl);
             opacity: 0.95;
             margin-bottom: var(--space-6);
             font-style: italic;
         }
-        
+
         .about-hero-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: var(--space-4);
             margin-top: var(--space-6);
         }
-        
+
         .hero-stat {
             text-align: center;
             padding: var(--space-4);
@@ -96,46 +106,46 @@
             border-radius: var(--border-radius);
             backdrop-filter: blur(10px);
         }
-        
+
         .hero-stat-number {
             font-size: var(--font-size-3xl);
             font-weight: 700;
             color: var(--color-secondary);
             display: block;
         }
-        
+
         .hero-stat-label {
             font-size: var(--font-size-sm);
             opacity: 0.9;
         }
-        
+
         @media (min-width: 768px) {
             .about-hero-content {
                 grid-template-columns: 300px 1fr;
             }
-            
+
             .profile-image {
                 width: 300px;
                 height: 300px;
             }
         }
-        
+
         /* Company Story Section */
         .story-section {
             background: var(--color-white);
         }
-        
+
         .story-content {
             max-width: 900px;
             margin: 0 auto;
         }
-        
+
         .story-content p {
             font-size: var(--font-size-lg);
             line-height: 1.8;
             color: var(--color-gray-700);
         }
-        
+
         .story-highlight {
             background: var(--color-gray-100);
             padding: var(--space-6);
@@ -143,24 +153,24 @@
             border-radius: var(--border-radius);
             margin: var(--space-6) 0;
         }
-        
+
         .story-highlight strong {
             color: var(--color-primary);
             display: block;
             margin-bottom: var(--space-2);
         }
-        
+
         /* Certifications Grid */
         .certifications-section {
             background: var(--color-gray-100);
         }
-        
+
         .certifications-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: var(--space-6);
         }
-        
+
         .cert-card {
             background: var(--color-white);
             padding: var(--space-6);
@@ -170,42 +180,42 @@
             transition: all var(--transition-base);
             border-top: 4px solid var(--color-primary);
         }
-        
+
         .cert-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
         }
-        
+
         .cert-icon {
             width: 60px;
             height: 60px;
             margin: 0 auto var(--space-4);
             color: var(--color-primary);
         }
-        
+
         .cert-title {
             font-size: var(--font-size-lg);
             font-weight: 700;
             color: var(--color-dark);
             margin-bottom: var(--space-2);
         }
-        
+
         .cert-issuer {
             font-size: var(--font-size-sm);
             color: var(--color-gray-500);
         }
-        
+
         /* Differentiators Section */
         .differentiators-section {
             background: var(--color-white);
         }
-        
+
         .diff-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: var(--space-6);
         }
-        
+
         .diff-card {
             padding: var(--space-6);
             background: var(--color-white);
@@ -213,12 +223,12 @@
             border-radius: var(--border-radius-lg);
             transition: all var(--transition-base);
         }
-        
+
         .diff-card:hover {
             border-color: var(--color-primary);
             box-shadow: var(--shadow-md);
         }
-        
+
         .diff-number {
             display: inline-block;
             width: 40px;
@@ -231,29 +241,29 @@
             font-weight: 700;
             margin-bottom: var(--space-3);
         }
-        
+
         .diff-card h3 {
             margin-bottom: var(--space-3);
         }
-        
+
         /* Timeline Section */
         .timeline-section {
             background: var(--color-dark);
             color: var(--color-white);
         }
-        
+
         .timeline-section h2,
         .timeline-section .section-subtitle {
             color: var(--color-white);
         }
-        
+
         .timeline {
             max-width: 1000px;
             margin: 0 auto;
             position: relative;
             padding: var(--space-6) 0;
         }
-        
+
         .timeline::before {
             content: '';
             position: absolute;
@@ -264,7 +274,7 @@
             background: var(--color-primary);
             transform: translateX(-50%);
         }
-        
+
         .timeline-item {
             display: grid;
             grid-template-columns: 1fr 80px 1fr;
@@ -272,33 +282,33 @@
             margin-bottom: var(--space-8);
             position: relative;
         }
-        
+
         .timeline-content {
             background: rgba(255, 255, 255, 0.05);
             padding: var(--space-5);
             border-radius: var(--border-radius-lg);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .timeline-item:nth-child(even) .timeline-content:first-child {
             grid-column: 1;
         }
-        
+
         .timeline-item:nth-child(even) .timeline-content:last-child {
             grid-column: 3;
         }
-        
+
         .timeline-item:nth-child(odd) .timeline-content {
             grid-column: 3;
         }
-        
+
         .timeline-year {
             grid-column: 2;
             text-align: center;
             position: relative;
             z-index: 1;
         }
-        
+
         .timeline-dot {
             width: 80px;
             height: 80px;
@@ -312,57 +322,57 @@
             color: var(--color-white);
             box-shadow: 0 0 0 8px var(--color-dark);
         }
-        
+
         .timeline-content h3 {
             color: var(--color-secondary);
             margin-bottom: var(--space-2);
         }
-        
+
         .timeline-content p {
             color: var(--color-gray-300);
             font-size: var(--font-size-base);
         }
-        
+
         @media (max-width: 767px) {
             .timeline::before {
                 left: 20px;
             }
-            
+
             .timeline-item {
                 grid-template-columns: 60px 1fr;
                 gap: var(--space-4);
             }
-            
+
             .timeline-year {
                 grid-column: 1;
             }
-            
+
             .timeline-dot {
                 width: 60px;
                 height: 60px;
                 font-size: var(--font-size-base);
             }
-            
+
             .timeline-content {
                 grid-column: 2 !important;
             }
-            
+
             .timeline-item:nth-child(odd) .timeline-content {
                 grid-column: 2 !important;
             }
         }
-        
+
         /* Philosophy Section */
         .philosophy-section {
             background: var(--color-gray-100);
         }
-        
+
         .philosophy-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: var(--space-6);
         }
-        
+
         .philosophy-card {
             background: var(--color-white);
             padding: var(--space-6);
@@ -370,37 +380,37 @@
             box-shadow: var(--shadow-base);
             text-align: center;
         }
-        
+
         .philosophy-icon {
             width: 60px;
             height: 60px;
             margin: 0 auto var(--space-4);
             color: var(--color-primary);
         }
-        
+
         .philosophy-card h3 {
             color: var(--color-primary);
             margin-bottom: var(--space-3);
         }
-        
+
         /* Numbers Section */
         .numbers-section {
             background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
             color: var(--color-white);
         }
-        
+
         .numbers-section h2 {
             color: var(--color-white);
             text-align: center;
             margin-bottom: var(--space-10);
         }
-        
+
         .numbers-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: var(--space-6);
         }
-        
+
         .number-card {
             text-align: center;
             padding: var(--space-6);
@@ -408,7 +418,7 @@
             border-radius: var(--border-radius-lg);
             backdrop-filter: blur(10px);
         }
-        
+
         .number-value {
             font-size: var(--font-size-5xl);
             font-weight: 700;
@@ -416,7 +426,7 @@
             display: block;
             margin-bottom: var(--space-2);
         }
-        
+
         .number-label {
             font-size: var(--font-size-base);
             opacity: 0.95;
@@ -436,11 +446,11 @@
                         <img src="../assets/images/logo-main.png" alt="EBIC - Ehrig BIM & IT Consultation, Inc." class="site-logo">
                     </a>
                 </div>
-                
+
                 <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
                     <span class="hamburger"></span>
                 </button>
-                
+
                 <ul class="nav-links">
                     <li><a href="../index.html" class="nav-link">Home</a></li>
                     <li><a href="services.html" class="nav-link">Services</a></li>
@@ -455,7 +465,7 @@
 
     <!-- Main Content -->
     <main id="main-content">
-        
+
         <!-- Hero Section -->
         <section class="about-hero" role="region" aria-label="About hero section">
             <div class="container">
@@ -465,13 +475,13 @@
                             JE
                         </div>
                     </div>
-                    
+
                     <div class="about-hero-text">
                         <h1>Jordan Ehrig</h1>
                         <p class="title">Founder & Principal</p>
                         <p class="tagline">"Your Trusted Partner in Digital Construction Technology"</p>
                         <p>With 18 years of experience (5 years EBIC) across design, construction, and as-built documentation, I bring a unique perspective that understands your project from ALL angles: contractor, designer, owner, and IT professional.</p>
-                        
+
                         <div class="about-hero-stats">
                             <div class="hero-stat">
                                 <span class="hero-stat-number">18</span>
@@ -502,19 +512,19 @@
                     <h2>The EBIC Story</h2>
                     <p class="section-subtitle">From multi-disciplinary design to digital construction leadership</p>
                 </div>
-                
+
                 <div class="story-content">
                     <p>EBIC - Ehrig BIM & IT Consultation, Inc. was founded in March 2020 after 13 years of intensive multi-disciplinary design practice. What started as a mechanical engineering career evolved through architecture, aerospace engineering, and software development into a comprehensive digital construction consulting firm.</p>
-                    
+
                     <div class="story-highlight">
                         <strong>Mission</strong>
                         <p>To deliver transparent, reliable, and cost-effective digital construction solutions that empower AEC professionals to build better, faster, and smarter.</p>
                     </div>
-                    
+
                     <p>Our open-source philosophy drives everything we do. We believe in transparent processes, reliable methodologies, and cost-effective solutions that put client success first. This isn't just talk - it's proven through 75+ major projects across aviation, government, commercial, and industrial sectors.</p>
-                    
+
                     <p>What makes EBIC different is experience from every angle. Having worked as a designer, contractor coordinator, facility owner's representative, and IT systems integrator, I understand the challenges and opportunities from all perspectives. This 360-degree view enables solutions that work for everyone involved in the project lifecycle.</p>
-                    
+
                     <div class="story-highlight">
                         <strong>Philosophy</strong>
                         <p>We don't just deliver services - we build partnerships. Every project is an opportunity to transfer knowledge, optimize workflows, and elevate the entire team's capabilities.</p>
@@ -530,7 +540,7 @@
                     <h2>Certifications & Expertise</h2>
                     <p class="section-subtitle">Industry-recognized credentials and technical mastery</p>
                 </div>
-                
+
                 <div class="certifications-grid">
                     <div class="cert-card">
                         <div class="cert-icon" aria-hidden="true">
@@ -543,7 +553,7 @@
                         <div class="cert-title">Autodesk Certified Professional</div>
                         <div class="cert-issuer">Revit MEP (2008-2025)</div>
                     </div>
-                    
+
                     <div class="cert-card">
                         <div class="cert-icon" aria-hidden="true">
                             <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -555,7 +565,7 @@
                         <div class="cert-title">FARO Laser Scanning Certified</div>
                         <div class="cert-issuer">Reality Capture Specialist</div>
                     </div>
-                    
+
                     <div class="cert-card">
                         <div class="cert-icon" aria-hidden="true">
                             <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -566,7 +576,7 @@
                         <div class="cert-title">Certified SolidWorks Associate</div>
                         <div class="cert-issuer">CSWA - Mechanical Design</div>
                     </div>
-                    
+
                     <div class="cert-card">
                         <div class="cert-icon" aria-hidden="true">
                             <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -578,7 +588,7 @@
                         <div class="cert-issuer">Mechanical & Plumbing Systems</div>
                     </div>
                 </div>
-                
+
                 <div style="margin-top: var(--space-10); text-align: center;">
                     <h3 style="margin-bottom: var(--space-6);">Technical Expertise Spans</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); max-width: 900px; margin: 0 auto;">
@@ -618,38 +628,38 @@
                     <h2>Why EBIC is Different</h2>
                     <p class="section-subtitle">Unique advantages that set us apart in the AEC technology market</p>
                 </div>
-                
+
                 <div class="diff-grid">
                     <div class="diff-card">
                         <div class="diff-number">1</div>
                         <h3>360-Degree Perspective</h3>
                         <p>Experience from ALL sides: contractor coordination, design engineering, owner's representation, and IT systems integration. This comprehensive view ensures solutions that work for every stakeholder.</p>
                     </div>
-                    
+
                     <div class="diff-card">
                         <div class="diff-number">2</div>
                         <h3>Integrated Service Stack</h3>
                         <p>Complete BIM + Reality Capture + Fabrication + AI automation under one roof. No coordination between multiple vendors - seamless workflows from scan to deliverable.</p>
                     </div>
-                    
+
                     <div class="diff-card">
                         <div class="diff-number">3</div>
                         <h3>Quality Systems Built-In</h3>
                         <p>QAQC Plan Template implementation ensures consistency and reliability. Every deliverable meets documented standards with full traceability.</p>
                     </div>
-                    
+
                     <div class="diff-card">
                         <div class="diff-number">4</div>
                         <h3>Security Clearance Pathway</h3>
                         <p>Active projects at 8+ military installations demonstrate capability for sensitive government work. Established processes for secure facility coordination.</p>
                     </div>
-                    
+
                     <div class="diff-card">
                         <div class="diff-number">5</div>
                         <h3>Technology Leadership</h3>
                         <p>1-2 year lead in AI orchestration adoption. 87 MCP tools for workflow automation represent the cutting edge of construction technology integration.</p>
                     </div>
-                    
+
                     <div class="diff-card">
                         <div class="diff-number">6</div>
                         <h3>Multi-Scale Flexibility</h3>
@@ -666,7 +676,7 @@
                     <h2>18-Year Professional Journey</h2>
                     <p class="section-subtitle">Evolution from multi-disciplinary design to digital construction leadership</p>
                 </div>
-                
+
                 <div class="timeline">
                     <div class="timeline-item">
                         <div class="timeline-content">
@@ -851,7 +861,7 @@
         <section class="numbers-section" role="region" aria-label="EBIC by the numbers">
             <div class="container">
                 <h2>EBIC By The Numbers</h2>
-                
+
                 <div class="numbers-grid">
                     <div class="number-card">
                         <span class="number-value">18</span>
@@ -900,7 +910,7 @@
                     <h2>Professional Philosophy</h2>
                     <p class="section-subtitle">Core principles that guide every project</p>
                 </div>
-                
+
                 <div class="philosophy-grid">
                     <div class="philosophy-card">
                         <div class="philosophy-icon" aria-hidden="true">
@@ -912,7 +922,7 @@
                         <h3>Transparency & Reliability</h3>
                         <p>Open communication, documented processes, and predictable outcomes. No surprises, no hidden agendas - just honest partnership.</p>
                     </div>
-                    
+
                     <div class="philosophy-card">
                         <div class="philosophy-icon" aria-hidden="true">
                             <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -923,7 +933,7 @@
                         <h3>Cost-Effective Solutions</h3>
                         <p>Maximum value through efficient workflows, reusable processes, and knowledge transfer. Investment in long-term capability, not just deliverables.</p>
                     </div>
-                    
+
                     <div class="philosophy-card">
                         <div class="philosophy-icon" aria-hidden="true">
                             <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -934,7 +944,7 @@
                         <h3>Continuous Innovation</h3>
                         <p>1-2 year technology lead through proactive adoption of emerging tools. Early AI orchestration experience now benefiting current projects.</p>
                     </div>
-                    
+
                     <div class="philosophy-card">
                         <div class="philosophy-icon" aria-hidden="true">
                             <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -957,23 +967,23 @@
                     <h2>Geographic Reach</h2>
                     <p class="section-subtitle">Proven project delivery across diverse locations</p>
                 </div>
-                
+
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); max-width: 1000px; margin: 0 auto;">
                     <div class="sector-card">
                         <h3>Southeast United States</h3>
                         <p>Primary focus: Tampa Bay metropolitan area, Central Florida. Deep local relationships and rapid response capability.</p>
                     </div>
-                    
+
                     <div class="sector-card">
                         <h3>Pacific Region</h3>
                         <p>Military installations: Okinawa (Japan), Rota, Saipan, Tinian. Experience with international coordination and security protocols.</p>
                     </div>
-                    
+
                     <div class="sector-card">
                         <h3>National Projects</h3>
                         <p>Kennedy Space Center, Tyndall AFB, USAF facilities nationwide. Federal and aerospace sector expertise.</p>
                     </div>
-                    
+
                     <div class="sector-card">
                         <h3>International</h3>
                         <p>Bahamas residential and commercial projects. Cross-border coordination and international building standards.</p>
@@ -1007,7 +1017,7 @@
                     <p class="footer-tagline">Your Trusted Partner in Digital Construction Technology</p>
                     <p style="margin-top: 1rem; font-size: 0.9rem;">403 South Edgemon Avenue<br>Winter Springs, FL 32708<br>(407) 234-3445</p>
                 </div>
-                
+
                 <div class="footer-column">
                     <h4>Services</h4>
                     <ul>
@@ -1017,7 +1027,7 @@
                         <li><a href="services.html#software-ai">Software & AI</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-column">
                     <h4>Company</h4>
                     <ul>
@@ -1026,14 +1036,14 @@
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-column">
                     <h4>Connect</h4>
                     <p>Professional consultation for AEC industry leaders</p>
                     <a href="contact.html" class="btn btn-outline">Contact Us</a>
                 </div>
             </div>
-            
+
             <div class="footer-bottom">
                 <p>&copy; 2025 EBIC - Ehrig BIM & IT Consultation, Inc. All rights reserved.</p>
                 <p class="footer-meta">Founded March 2020 | 18 Years Industry Experience</p>
