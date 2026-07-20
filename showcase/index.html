@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EBIC Reality Capture -- Showcase Concept</title>
+<meta name="description" content="Design concept showcase: EBIC survey point clouds as living particles.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="../assets/images/logo-black.png">
+<script>document.documentElement.className += " js";</script>
+<style>
+/* =====================================================================
+   EBIC SHOWCASE CONCEPT -- "The Swarm"
+   Real survey point clouds from EBIC reality-capture projects,
+   decimated by scripts/decimate-pointcloud.py to ~12k points each, and
+   rendered as a swirling particle field that materializes into the
+   scanned building on hover. Self-contained page: no dependencies,
+   ASCII source, reduced-motion safe. Demo page: noindex, unlinked.
+   ===================================================================== */
+
+:root {
+  --bg: #07090f;
+  --panel: #10141f;
+  --line: rgba(51, 133, 214, 0.18);
+  --txt: #eef2fa;
+  --dim: #8b98b4;
+  --blue: #3385d6;
+  --brand: #0066cc;
+  --orange: #ff6b35;
+  --green: #00a86b;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: Consolas, "Cascadia Mono", "Courier New", monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0; background: var(--bg); color: var(--txt);
+  font-family: var(--sans); line-height: 1.65; overflow-x: hidden;
+}
+a { color: var(--orange); }
+
+/* ---------- hero stage ---------- */
+
+.stage {
+  position: relative; min-height: 100vh; overflow: hidden;
+  background:
+    radial-gradient(1000px 540px at 72% 30%, rgba(0, 102, 204, 0.22), transparent 62%),
+    var(--bg);
+}
+#cloud { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; }
+
+.stage-head {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 3;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.4rem 2rem; pointer-events: none;
+}
+.stage-head img { height: 44px; pointer-events: auto; }
+.stage-head .tag {
+  font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--dim);
+}
+
+.stage-title {
+  position: absolute; left: 2rem; bottom: 7.5rem; z-index: 3; pointer-events: none;
+  max-width: 560px;
+}
+.stage-title h1 {
+  margin: 0 0 0.6rem; font-size: clamp(2.2rem, 5.4vw, 4.2rem);
+  font-weight: 800; letter-spacing: -0.02em; line-height: 1.02;
+  text-transform: uppercase;
+}
+.stage-title h1 span { color: var(--orange); }
+.stage-title p { margin: 0; color: var(--dim); font-size: 1.05rem; max-width: 46ch; }
+
+.hud {
+  position: absolute; left: 2rem; bottom: 2rem; z-index: 3;
+  font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.12em;
+  color: var(--dim); text-transform: uppercase; pointer-events: none;
+}
+.hud b { color: var(--orange); font-weight: 400; }
+.hud .pts { color: var(--blue); }
+
+.hint {
+  position: absolute; right: 2rem; bottom: 2rem; z-index: 3;
+  font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--dim); pointer-events: none;
+  text-align: right;
+}
+.js .hint .pulse { color: var(--orange); animation: hintpulse 2.4s ease-in-out infinite; }
+@keyframes hintpulse { 50% { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) { .js .hint .pulse { animation: none; } }
+
+.loading {
+  position: absolute; inset: 0; z-index: 4; display: flex;
+  align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--dim);
+  background: var(--bg); transition: opacity 0.6s ease;
+}
+.loading.done { opacity: 0; pointer-events: none; }
+
+/* ---------- info strip ---------- */
+
+.strip { border-top: 1px solid var(--line); background: var(--panel); }
+.strip-inner {
+  max-width: 1280px; margin: 0 auto; padding: 3.4rem 2rem;
+  display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 2.4rem; align-items: center;
+}
+.strip h3 {
+  margin: 0 0 0.3rem; font-size: 0.8rem; font-family: var(--mono);
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--blue); font-weight: 400;
+}
+.strip p { margin: 0; color: var(--dim); font-size: 0.9375rem; }
+.strip .cta {
+  display: inline-block; background: var(--orange); color: #1a0d00;
+  font-weight: 700; text-decoration: none; padding: 0.9rem 1.7rem;
+  border-radius: 8px; font-size: 0.9375rem; white-space: nowrap;
+}
+.strip .cta:hover { background: #ff8352; }
+
+.foot {
+  border-top: 1px solid var(--line); padding: 1.6rem 2rem;
+  font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--dim);
+  display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+}
+.foot a { color: var(--dim); }
+.foot a:hover { color: var(--orange); }
+
+@media (max-width: 860px) {
+  .stage-title { left: 1.2rem; right: 1.2rem; bottom: 8.5rem; }
+  .hud { left: 1.2rem; }
+  .hint { right: 1.2rem; bottom: 4.6rem; }
+  .strip-inner { grid-template-columns: 1fr; gap: 1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<section class="stage" id="stage">
+  <canvas id="cloud"></canvas>
+  <div class="stage-head">
+    <img src="../assets/images/logo-main.png" alt="EBIC - Ehrig BIM and IT Consultation, Inc.">
+    <span class="tag">Reality Capture / Concept</span>
+  </div>
+  <div class="stage-title">
+    <h1>Point clouds,<br><span>alive.</span></h1>
+    <p>Every particle is a real survey point from an EBIC reality-capture project. Decimated from billions of measurements to the essence of the building.</p>
+  </div>
+  <div class="hud" id="hud">LOADING SCANS</div>
+  <div class="hint" id="hint"><span class="pulse">Hover to materialize</span><br>Click for next scan</div>
+  <div class="loading" id="loading">DECODING POINT CLOUDS</div>
+</section>
+
+<section class="strip">
+  <div class="strip-inner">
+    <div>
+      <h3>Scan-to-BIM</h3>
+      <p>Terrestrial LiDAR to coordinated Revit models, as-builts you can trust.</p>
+    </div>
+    <div>
+      <h3>Reality Capture</h3>
+      <p>30+ capture projects: residences, campuses, plants, even a 50m yacht.</p>
+    </div>
+    <div>
+      <h3>The Data Above</h3>
+      <p>Genuine project scans, voxel-decimated from billions of points to ~12k particles each.</p>
+    </div>
+    <a class="cta" href="../pages/services.html">Explore Services</a>
+  </div>
+</section>
+
+<footer class="foot">
+  <span>EBIC - Ehrig BIM &amp; IT Consultation, Inc.</span>
+  <a href="../index.html">Return to main site</a>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var REDUCED = window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var FINE = window.matchMedia &&
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  /* Clouds baked by scripts/decimate-pointcloud.py. Fetched in order;
+     missing files are skipped, so newly baked buildings join the
+     rotation automatically. */
+  var MANIFEST = [
+    "coastalglass", "atlanta", "whitney", "ebko", "boatscan"
+  ];
+
+  var canvas = document.getElementById("cloud");
+  var hud = document.getElementById("hud");
+  var loading = document.getElementById("loading");
+  var hint = document.getElementById("hint");
+  if (!canvas || !canvas.getContext) { return; }
+  var ctx = canvas.getContext("2d");
+
+  var DPR = Math.min(window.devicePixelRatio || 1, 2);
+  var W = 0, H = 0;
+
+  var POOL = 12500;
+  var swirl = new Float32Array(POOL * 4);  /* radius, angle0, angSpeed, height */
+  var target = new Float32Array(POOL * 3); /* current building, unit coords */
+  var colors = new Array(POOL);
+  var clouds = [];
+  var current = -1;
+  var M = 0, Mgoal = 0;      /* materialization 0..1 */
+  var hover = false, switching = false;
+  var yaw = 0, tiltX = 0, tiltY = 0, tgtTiltX = 0, tgtTiltY = 0;
+
+  function sizeCanvas() {
+    var r = canvas.parentNode.getBoundingClientRect();
+    W = r.width; H = r.height;
+    canvas.width = W * DPR; canvas.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+
+  function seedSwirl() {
+    for (var i = 0; i < POOL; i++) {
+      swirl[i * 4] = 0.25 + Math.pow(Math.random(), 0.6) * 1.05;
+      swirl[i * 4 + 1] = Math.random() * 6.2832;
+      swirl[i * 4 + 2] = (0.05 + Math.random() * 0.12) * (Math.random() < 0.12 ? 1.9 : 1);
+      swirl[i * 4 + 3] = (Math.random() - 0.5) * 0.5;
+    }
+  }
+
+  function decode(json) {
+    var bin = atob(json.data);
+    var n = json.n;
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) { bytes[i] = bin.charCodeAt(i); }
+    var ints = new Int16Array(bytes.buffer);
+    var pts = new Float32Array(n * 3);
+    for (var p = 0; p < n * 3; p++) { pts[p] = ints[p] / 32767; }
+    return { name: json.name, n: n, pts: pts };
+  }
+
+  function applyCloud(idx) {
+    current = idx;
+    var c = clouds[idx];
+    /* elevation range for the color ramp (z is up in scan space) */
+    var zmin = 1, zmax = -1;
+    for (var k = 0; k < c.n; k++) {
+      var z = c.pts[k * 3 + 2];
+      if (z < zmin) { zmin = z; } if (z > zmax) { zmax = z; }
+    }
+    var zspan = Math.max(zmax - zmin, 0.001);
+    for (var i = 0; i < POOL; i++) {
+      var j = (i % c.n) * 3;
+      target[i * 3] = c.pts[j];
+      target[i * 3 + 1] = c.pts[j + 1];
+      target[i * 3 + 2] = c.pts[j + 2];
+      var e = (c.pts[j + 2] - zmin) / zspan;
+      /* elevation ramp: deep brand blue -> light blue; ~5% orange accents */
+      colors[i] = Math.random() < 0.05 ? "255,107,53" :
+        Math.round(60 + e * 100) + "," + Math.round(110 + e * 90) + "," + Math.round(190 + e * 55);
+    }
+    updateHud();
+  }
+
+  function updateHud() {
+    var c = clouds[current];
+    hud.innerHTML = "SCAN " + (current + 1) + "/" + clouds.length +
+      " / <b>" + c.name.toUpperCase() + "</b> / <span class=\"pts\">" +
+      c.n.toLocaleString() + " PTS</span>";
+  }
+
+  function nextCloud() {
+    if (clouds.length < 2 || switching) { return; }
+    switching = true;
+    var next = (current + 1) % clouds.length;
+    var wait = window.setInterval(function () {
+      if (M < 0.06) {
+        window.clearInterval(wait);
+        applyCloud(next);
+        switching = false;
+      }
+    }, 60);
+  }
+
+  var last = null;
+  function frame(ts) {
+    if (last === null) { last = ts; }
+    var dt = Math.min((ts - last) / 1000, 0.08);
+    last = ts;
+
+    if (!REDUCED) { yaw += dt * 0.22; }
+    Mgoal = switching ? 0 : (hover || !FINE || REDUCED ? 1 : 0);
+    M += (Mgoal - M) * Math.min(dt * 2.2, 1);
+    tiltX += (tgtTiltX - tiltX) * Math.min(dt * 3, 1);
+    tiltY += (tgtTiltY - tiltY) * Math.min(dt * 3, 1);
+
+    var t = ts / 1000;
+    var R = Math.min(W, H) * 0.36;
+    var cx = W * (W > 900 ? 0.62 : 0.5), cy = H * 0.46;
+    var f = 2.4;
+
+    var cosY = Math.cos(yaw + tiltX), sinY = Math.sin(yaw + tiltX);
+    var pitch = -0.42 + tiltY;
+    var cosP = Math.cos(pitch), sinP = Math.sin(pitch);
+
+    ctx.clearRect(0, 0, W, H);
+
+    for (var i = 0; i < POOL; i++) {
+      /* swirl position (galaxy disc, world space) */
+      var sr = swirl[i * 4] * 1.35;
+      var sa = swirl[i * 4 + 1] + t * swirl[i * 4 + 2] * (REDUCED ? 0 : 1);
+      var sx = Math.cos(sa) * sr;
+      var sy = Math.sin(sa) * sr;
+      var sz = swirl[i * 4 + 3] * (0.7 + 0.3 * Math.sin(t * 0.4 + i));
+
+      /* building position (scan space: x,y ground, z up) */
+      var bx = target[i * 3], by = target[i * 3 + 1], bz = target[i * 3 + 2];
+
+      /* staggered blend */
+      var stag = (i % 997) / 997;
+      var tt = (M * 1.35 - stag * 0.35) / 1.0;
+      if (tt < 0) { tt = 0; } if (tt > 1) { tt = 1; }
+      tt = tt * tt * (3 - 2 * tt);
+
+      var x = sx + (bx - sx) * tt;
+      var y = sy + (by - sy) * tt;
+      var z = sz + (bz - sz) * tt;
+
+      /* rotate about up axis, then pitch, then project */
+      var rx = x * cosY - y * sinY;
+      var ry = x * sinY + y * cosY;
+      var rz2 = z * cosP - ry * sinP;
+      var rd = ry * cosP + z * sinP;
+
+      var per = f / (f + rd);
+      var px = cx + rx * R * per;
+      var py = cy - rz2 * R * per;
+      if (px < -4 || px > W + 4 || py < -4 || py > H + 4) { continue; }
+
+      var a = (0.25 + 0.75 * per * per * 0.55) * (0.55 + tt * 0.45);
+      ctx.fillStyle = "rgba(" + colors[i] + "," + a.toFixed(2) + ")";
+      var s = per > 1.05 ? 2.4 : per > 0.9 ? 1.8 : 1.2;
+      ctx.fillRect(px, py, s, s);
+    }
+
+    window.requestAnimationFrame(frame);
+  }
+
+  /* ---------- input ---------- */
+
+  if (FINE) {
+    canvas.addEventListener("mousemove", function (e) {
+      hover = true;
+      var r = canvas.getBoundingClientRect();
+      tgtTiltX = ((e.clientX - r.left) / r.width - 0.5) * 0.9;
+      tgtTiltY = ((e.clientY - r.top) / r.height - 0.5) * 0.5;
+    });
+    canvas.addEventListener("mouseleave", function () {
+      hover = false; tgtTiltX = 0; tgtTiltY = 0;
+    });
+  }
+  canvas.addEventListener("click", nextCloud);
+
+  /* ---------- load ---------- */
+
+  function start() {
+    sizeCanvas(); seedSwirl(); applyCloud(0);
+    loading.className += " done";
+    if (!FINE) { hint.innerHTML = "<span class=\"pulse\">Tap for next scan</span>"; }
+    if (REDUCED) { M = 1; }
+    window.requestAnimationFrame(frame);
+  }
+
+  var loadedClouds = [];
+  var pending = MANIFEST.length;
+  MANIFEST.forEach(function (name, order) {
+    fetch("../assets/clouds/" + name + ".json")
+      .then(function (r) { if (!r.ok) { throw new Error(String(r.status)); } return r.json(); })
+      .then(function (j) { loadedClouds[order] = decode(j); })
+      .catch(function () { loadedClouds[order] = null; })
+      .then(function () {
+        pending--;
+        if (pending === 0) {
+          clouds = loadedClouds.filter(Boolean);
+          if (!clouds.length) {
+            loading.textContent = "NO CLOUD DATA (SERVE OVER HTTP)";
+            return;
+          }
+          start();
+        }
+      });
+  });
+
+  window.addEventListener("resize", sizeCanvas);
+})();
+</script>
+</body>
+</html>
