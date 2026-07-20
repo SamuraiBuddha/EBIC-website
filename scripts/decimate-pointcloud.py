@@ -176,6 +176,7 @@ def main():
     with open(args.output, "w") as f:
         import json
         json.dump(out, f)
+        f.write("\n")  # repo pre-commit end-of-file-fixer expects this
     print("wrote %s (%.0f KB, %d pts)" % (args.output, os.path.getsize(args.output) / 1024, len(q)), flush=True)
 
 

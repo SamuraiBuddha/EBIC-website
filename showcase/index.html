@@ -211,6 +211,7 @@ a { color: var(--orange); }
   var M = 0, Mgoal = 0;      /* materialization 0..1 */
   var hover = false, switching = false;
   var yaw = 0, tiltX = 0, tiltY = 0, tgtTiltX = 0, tgtTiltY = 0;
+  var cloudZoom = 1;
 
   function sizeCanvas() {
     var r = canvas.parentNode.getBoundingClientRect();
@@ -249,6 +250,15 @@ a { color: var(--orange); }
       if (z < zmin) { zmin = z; } if (z > zmax) { zmax = z; }
     }
     var zspan = Math.max(zmax - zmin, 0.001);
+    /* long thin buildings normalize small against their major axis;
+       zoom the presentation by inverse RMS radius so every scan fills
+       a comparable share of the stage */
+    var sum = 0;
+    for (var m = 0; m < c.n; m++) {
+      var mx = c.pts[m * 3], my = c.pts[m * 3 + 1], mz = c.pts[m * 3 + 2];
+      sum += mx * mx + my * my + mz * mz;
+    }
+    cloudZoom = Math.min(2.2, Math.max(1, 0.62 / Math.sqrt(sum / c.n)));
     for (var i = 0; i < POOL; i++) {
       var j = (i % c.n) * 3;
       target[i * 3] = c.pts[j];
@@ -295,7 +305,7 @@ a { color: var(--orange); }
     tiltY += (tgtTiltY - tiltY) * Math.min(dt * 3, 1);
 
     var t = ts / 1000;
-    var R = Math.min(W, H) * 0.36;
+    var R = Math.min(W, H) * 0.36 * (1 + (cloudZoom - 1) * M);
     var cx = W * (W > 900 ? 0.62 : 0.5), cy = H * 0.46;
     var f = 2.4;
 
