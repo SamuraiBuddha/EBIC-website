@@ -149,7 +149,7 @@ a { color: var(--orange); }
     <p>Every particle is a real survey point from an EBIC reality-capture project. Decimated from billions of measurements to the essence of the building.</p>
   </div>
   <div class="hud" id="hud">LOADING SCANS</div>
-  <div class="hint" id="hint"><span class="pulse">Hover to materialize</span><br>Click for next scan</div>
+  <div class="hint" id="hint"><span class="pulse">Hover to materialize</span><br>Click for next scan<br>Scroll to zoom / double-click to reset</div>
   <div class="loading" id="loading">DECODING POINT CLOUDS</div>
 </section>
 
@@ -212,6 +212,7 @@ a { color: var(--orange); }
   var hover = false, switching = false;
   var yaw = 0, tiltX = 0, tiltY = 0, tgtTiltX = 0, tgtTiltY = 0;
   var cloudZoom = 1;
+  var zoomGoal = 1, zoom = 1;   /* scroll-wheel zoom, smoothed */
 
   function sizeCanvas() {
     var r = canvas.parentNode.getBoundingClientRect();
@@ -303,9 +304,10 @@ a { color: var(--orange); }
     M += (Mgoal - M) * Math.min(dt * 2.2, 1);
     tiltX += (tgtTiltX - tiltX) * Math.min(dt * 3, 1);
     tiltY += (tgtTiltY - tiltY) * Math.min(dt * 3, 1);
+    zoom += (zoomGoal - zoom) * Math.min(dt * 6, 1);
 
     var t = ts / 1000;
-    var R = Math.min(W, H) * 0.36 * (1 + (cloudZoom - 1) * M);
+    var R = Math.min(W, H) * 0.36 * (1 + (cloudZoom - 1) * M) * zoom;
     var cx = W * (W > 900 ? 0.62 : 0.5), cy = H * 0.46;
     var f = 2.4;
 
@@ -370,6 +372,14 @@ a { color: var(--orange); }
     });
   }
   canvas.addEventListener("click", nextCloud);
+
+  canvas.addEventListener("wheel", function (e) {
+    e.preventDefault();
+    zoomGoal *= Math.exp(-e.deltaY * 0.0012);
+    if (zoomGoal < 0.45) { zoomGoal = 0.45; }
+    if (zoomGoal > 4.5) { zoomGoal = 4.5; }
+  }, { passive: false });
+  canvas.addEventListener("dblclick", function () { zoomGoal = 1; });
 
   /* ---------- load ---------- */
 
