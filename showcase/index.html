@@ -146,7 +146,7 @@ a { color: var(--orange); }
   </div>
   <div class="stage-title">
     <h1>Point clouds,<br><span>alive.</span></h1>
-    <p>Every particle is a real survey point from an EBIC reality-capture project. Decimated from billions of measurements to the essence of the building.</p>
+    <p>Every particle is real EBIC project data -- survey points and BIM geometry, decimated from billions of measurements to the essence of the building.</p>
   </div>
   <div class="hud" id="hud">LOADING SCANS</div>
   <div class="hint" id="hint"><span class="pulse">Hover to materialize</span><br>Click for next scan<br>Scroll to zoom / double-click to reset</div>
@@ -165,7 +165,7 @@ a { color: var(--orange); }
     </div>
     <div>
       <h3>The Data Above</h3>
-      <p>Genuine project scans, voxel-decimated from billions of points to ~12k particles each.</p>
+      <p>Genuine project scans and BIM models, voxel-decimated to ~12k particles each.</p>
     </div>
     <a class="cta" href="../pages/services.html">Explore Services</a>
   </div>
@@ -189,7 +189,7 @@ a { color: var(--orange); }
      missing files are skipped, so newly baked buildings join the
      rotation automatically. */
   var MANIFEST = [
-    "coastalglass", "atlanta", "whitney", "ebko", "boatscan"
+    "coastalglass", "atlanta", "whitney", "ebko", "homeaddition"
   ];
 
   var canvas = document.getElementById("cloud");
@@ -206,6 +206,9 @@ a { color: var(--orange); }
   var swirl = new Float32Array(POOL * 4);  /* radius, angle0, angSpeed, height */
   var target = new Float32Array(POOL * 3); /* current building, unit coords */
   var colors = new Array(POOL);
+  var swirlCol = new Uint8Array(POOL * 3); /* travel color (elevation ramp) */
+  var tgtCol = new Uint8Array(POOL * 3);   /* baked true color, rgb clouds */
+  var hasRGB = false;
   var clouds = [];
   var current = -1;
   var M = 0, Mgoal = 0;      /* materialization 0..1 */
@@ -238,7 +241,13 @@ a { color: var(--orange); }
     var ints = new Int16Array(bytes.buffer);
     var pts = new Float32Array(n * 3);
     for (var p = 0; p < n * 3; p++) { pts[p] = ints[p] / 32767; }
-    return { name: json.name, n: n, pts: pts };
+    var rgb = null;
+    if (json.rgb) {
+      var rbin = atob(json.rgb);
+      rgb = new Uint8Array(rbin.length);
+      for (var k = 0; k < rbin.length; k++) { rgb[k] = rbin.charCodeAt(k); }
+    }
+    return { name: json.name, n: n, pts: pts, rgb: rgb };
   }
 
   function applyCloud(idx) {
@@ -260,6 +269,7 @@ a { color: var(--orange); }
       sum += mx * mx + my * my + mz * mz;
     }
     cloudZoom = Math.min(2.2, Math.max(1, 0.62 / Math.sqrt(sum / c.n)));
+    hasRGB = !!c.rgb;
     for (var i = 0; i < POOL; i++) {
       var j = (i % c.n) * 3;
       target[i * 3] = c.pts[j];
@@ -267,15 +277,24 @@ a { color: var(--orange); }
       target[i * 3 + 2] = c.pts[j + 2];
       var e = (c.pts[j + 2] - zmin) / zspan;
       /* elevation ramp: deep brand blue -> light blue; ~5% orange accents */
-      colors[i] = Math.random() < 0.05 ? "255,107,53" :
-        Math.round(60 + e * 100) + "," + Math.round(110 + e * 90) + "," + Math.round(190 + e * 55);
+      var acc = Math.random() < 0.05;
+      var cr = acc ? 255 : Math.round(60 + e * 100);
+      var cg = acc ? 107 : Math.round(110 + e * 90);
+      var cb = acc ? 53 : Math.round(190 + e * 55);
+      colors[i] = cr + "," + cg + "," + cb;
+      swirlCol[i * 3] = cr; swirlCol[i * 3 + 1] = cg; swirlCol[i * 3 + 2] = cb;
+      if (hasRGB) {
+        tgtCol[i * 3] = c.rgb[j];
+        tgtCol[i * 3 + 1] = c.rgb[j + 1];
+        tgtCol[i * 3 + 2] = c.rgb[j + 2];
+      }
     }
     updateHud();
   }
 
   function updateHud() {
     var c = clouds[current];
-    hud.innerHTML = "SCAN " + (current + 1) + "/" + clouds.length +
+    hud.innerHTML = "DATASET " + (current + 1) + "/" + clouds.length +
       " / <b>" + c.name.toUpperCase() + "</b> / <span class=\"pts\">" +
       c.n.toLocaleString() + " PTS</span>";
   }
@@ -350,7 +369,18 @@ a { color: var(--orange); }
       if (px < -4 || px > W + 4 || py < -4 || py > H + 4) { continue; }
 
       var a = (0.25 + 0.75 * per * per * 0.55) * (0.55 + tt * 0.45);
-      ctx.fillStyle = "rgba(" + colors[i] + "," + a.toFixed(2) + ")";
+      /* rgb clouds settle from the travel ramp into their baked true
+         color over the last stretch of the coalesce; the stagger in tt
+         makes the color ripple across the surface instead of fading in */
+      var col = colors[i];
+      if (hasRGB && tt > 0.55) {
+        var ct = (tt - 0.55) / 0.45;
+        if (ct > 1) { ct = 1; }
+        col = ((swirlCol[i * 3] + (tgtCol[i * 3] - swirlCol[i * 3]) * ct) | 0) + "," +
+          ((swirlCol[i * 3 + 1] + (tgtCol[i * 3 + 1] - swirlCol[i * 3 + 1]) * ct) | 0) + "," +
+          ((swirlCol[i * 3 + 2] + (tgtCol[i * 3 + 2] - swirlCol[i * 3 + 2]) * ct) | 0);
+      }
+      ctx.fillStyle = "rgba(" + col + "," + a.toFixed(2) + ")";
       var s = per > 1.05 ? 2.4 : per > 0.9 ? 1.8 : 1.2;
       ctx.fillRect(px, py, s, s);
     }

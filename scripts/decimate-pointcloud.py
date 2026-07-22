@@ -1,19 +1,27 @@
 #!/usr/bin/env python
-"""Decimate a survey point cloud into a compact web-ready particle set.
+"""Decimate a survey point cloud OR a CAD mesh into a web-ready particle set.
 
 Usage:
-    python scripts/decimate-pointcloud.py <input> <output.json> [--name "Label"] [--points 12000]
+    python scripts/decimate-pointcloud.py <input> <output.json> [--name "Label"] [--points 12000] [--up auto|y|z]
 
-Readers: .e57 (pye57), .pts (ASCII x y z [i r g b], streamed), .ply
-(ascii or binary_little_endian, x/y/z floats).
+Scan readers: .e57 (pye57), .pts (ASCII x y z [i r g b], streamed), .ply
+(ascii or binary_little_endian, x/y/z floats). XYZ only.
 
-Pipeline: stride-subsample to a workable size -> voxel-grid downsample to
-the target count -> radius-percentile outlier clip -> center + uniform
-scale -> shuffle -> quantize to int16 -> base64.
+Mesh readers (trimesh): .glb .gltf .obj .stl -- the Revit/SolidWorks entry
+point (export the model to one of these first). The surface is sampled
+area-weighted and each point carries an RGB from the mesh's material,
+texture, or vertex color. glTF is Y-up; scan space is Z-up; --up auto
+converts glb/gltf and trusts everything else (override if an OBJ/STL
+comes in Y-up).
 
-Output JSON: {"name": str, "n": int, "data": base64 Int16 xyz triplets}
-Decoded client-side into a Float32 particle target array. A 12k-point
-building is ~96 KB on the wire before gzip.
+Pipeline: read/sample -> voxel-grid downsample to the target count ->
+(scans only: radius-percentile outlier clip) -> center + uniform scale ->
+shuffle -> quantize xyz to int16 -> base64.
+
+Output JSON: {"name": str, "n": int, "data": base64 Int16 xyz triplets,
+"rgb": base64 Uint8 rgb triplets (mesh bakes only)}. Decoded client-side
+into Float32 particle targets. A 12k-point building is ~96 KB on the wire
+before gzip (~132 KB with color).
 """
 import argparse
 import base64
@@ -90,7 +98,70 @@ def read_ply(path):
         return np.column_stack([arr["x"], arr["y"], arr["z"]]).astype(np.float64)
 
 
-def voxel_downsample(pts, target):
+def mesh_label(m):
+    """Best-effort identity for a mesh: material name plus node name."""
+    parts = []
+    mat = getattr(m.visual, "material", None)
+    if mat is not None and getattr(mat, "name", None):
+        parts.append(mat.name)
+    node = m.metadata.get("name") or m.metadata.get("node")
+    if node:
+        parts.append(str(node))
+    return " / ".join(parts)
+
+
+def read_mesh(path, want, drop_terms=()):
+    """Area-weighted surface sampling of a CAD mesh -> (xyz, rgb uint8).
+    Oversamples 4x; the voxel pass downstream evens out the density.
+    drop_terms: case-insensitive substrings; any mesh whose material or
+    node name matches is excluded (site/topo/entourage in Revit exports
+    otherwise eat the point budget -- a lawn has more area than a house)."""
+    import trimesh
+    loaded = trimesh.load(path)
+    meshes = loaded.dump() if isinstance(loaded, trimesh.Scene) else [loaded]
+    meshes = [m for m in meshes if isinstance(m, trimesh.Trimesh) and len(m.faces)]
+    if drop_terms:
+        kept = []
+        for m in meshes:
+            label = mesh_label(m).lower()
+            if any(t in label for t in drop_terms):
+                print("  dropping mesh: %s" % (mesh_label(m) or "(unnamed)"), flush=True)
+            else:
+                kept.append(m)
+        meshes = kept
+    if not meshes:
+        raise SystemExit("no triangle geometry in " + path)
+    areas = np.array([m.area for m in meshes], dtype=np.float64)
+    total = float(areas.sum())
+    n_over = want * 4
+    pts_chunks, rgb_chunks = [], []
+    for m, area in zip(meshes, areas):
+        n = int(round(n_over * area / total))
+        if n < 1:
+            continue
+        samples, fidx = trimesh.sample.sample_surface(m, n, seed=7)
+        try:
+            vis = m.visual
+            if vis.kind == "texture":
+                vis = vis.to_color()  # bake texture/material into vertex colors
+            vcol = np.asarray(vis.vertex_colors, dtype=np.float64)[:, :3]
+            col = vcol[m.faces[fidx]].mean(axis=1)  # face-average at each sample
+        except Exception:
+            col = np.full((len(samples), 3), 180.0)  # neutral gray fallback
+        pts_chunks.append(np.asarray(samples, dtype=np.float64))
+        rgb_chunks.append(col)
+    pts = np.vstack(pts_chunks)
+    rgb = np.clip(np.round(np.vstack(rgb_chunks)), 0, 255).astype(np.uint8)
+    print("  sampled %d pts across %d meshes" % (len(pts), len(meshes)), flush=True)
+    return pts, rgb
+
+
+def yup_to_zup(pts):
+    """glTF Y-up right-handed -> scan-space Z-up: (x, y, z) -> (x, -z, y)."""
+    return np.column_stack([pts[:, 0], -pts[:, 2], pts[:, 1]])
+
+
+def voxel_indices(pts, target):
     lo = pts.min(axis=0)
     span = pts.max(axis=0) - lo
     v = float(np.linalg.norm(span)) / 120.0
@@ -106,28 +177,46 @@ def voxel_downsample(pts, target):
             v /= ((target / max(n, 1)) ** (1.0 / 3.0)) * 1.03
         else:
             break
-    return pts[np.sort(idx)]
+    return np.sort(idx)
+
+
+def voxel_downsample(pts, target):
+    return pts[voxel_indices(pts, target)]
+
+
+def outlier_indices(pts, keep=0.995):
+    c = pts.mean(axis=0)
+    r = np.linalg.norm(pts - c, axis=1)
+    return np.flatnonzero(r <= np.quantile(r, keep))
 
 
 def clip_outliers(pts, keep=0.995):
-    c = pts.mean(axis=0)
-    r = np.linalg.norm(pts - c, axis=1)
-    return pts[r <= np.quantile(r, keep)]
+    return pts[outlier_indices(pts, keep)]
 
 
-def robust_clip(pts):
-    """Iteratively shed distant stray clusters (mis-registered setups,
-    reflections, range noise) until the max radius is commensurate with
-    the median. A single stray cluster otherwise eats the int16
-    quantization range and crushes the actual building into a corner."""
+def robust_indices(pts):
+    """Iteratively shed distant stray geometry (mis-registered scan
+    setups, reflections, range noise -- or in CAD exports, sprawling
+    low-area elements like curbs and fences) until the max radius is
+    commensurate with the median. A single stray cluster otherwise eats
+    the int16 quantization range and crushes the building into a
+    corner/slab."""
+    keep = np.arange(len(pts))
+    cur = pts
     for _ in range(10):
-        c = pts.mean(axis=0)
-        r = np.linalg.norm(pts - c, axis=1)
+        c = cur.mean(axis=0)
+        r = np.linalg.norm(cur - c, axis=1)
         med = np.median(r)
         if med <= 0 or r.max() <= 3.5 * med:
             break
-        pts = pts[r <= np.quantile(r, 0.985)]
-    return pts
+        sel = r <= np.quantile(r, 0.985)
+        keep = keep[sel]
+        cur = pts[keep]
+    return keep
+
+
+def robust_clip(pts):
+    return pts[robust_indices(pts)]
 
 
 def main():
@@ -136,26 +225,48 @@ def main():
     ap.add_argument("output")
     ap.add_argument("--name", default=None)
     ap.add_argument("--points", type=int, default=12000)
+    ap.add_argument("--up", choices=["auto", "y", "z"], default="auto",
+                    help="input up axis; auto = y for glb/gltf, z otherwise")
+    ap.add_argument("--drop", default="",
+                    help="comma-separated name substrings; matching meshes are excluded (e.g. site,topo,grass)")
     args = ap.parse_args()
 
     ext = os.path.splitext(args.input)[1].lower()
     print("reading %s ..." % args.input, flush=True)
-    if ext == ".e57":
-        pts = read_e57(args.input)
-    elif ext == ".pts":
-        pts = read_pts(args.input)
-    elif ext == ".ply":
-        pts = read_ply(args.input)
+    rgb = None
+    if ext in (".glb", ".gltf", ".obj", ".stl"):
+        drop = tuple(t.strip().lower() for t in args.drop.split(",") if t.strip())
+        pts, rgb = read_mesh(args.input, args.points, drop)
+        up = args.up if args.up != "auto" else ("y" if ext in (".glb", ".gltf") else "z")
+        if up == "y":
+            pts = yup_to_zup(pts)
+        keep = np.isfinite(pts).all(axis=1)
+        pts, rgb = pts[keep], rgb[keep]
+        # CAD is noise-free but not sprawl-free: curbs/fences/wires reach
+        # far past the building at negligible area and would eat the
+        # quantization range, so the same radius clip as scans applies
+        idx = robust_indices(pts)
+        pts, rgb = pts[idx], rgb[idx]
+        idx = voxel_indices(pts, args.points)
+        pts, rgb = pts[idx], rgb[idx]
+        idx = robust_indices(pts)
+        pts, rgb = pts[idx], rgb[idx]
     else:
-        raise SystemExit("unsupported extension: " + ext)
-    pts = pts[np.isfinite(pts).all(axis=1)]
-    print("loaded %d pts; voxel downsampling to ~%d ..." % (len(pts), args.points), flush=True)
-
-    pts = robust_clip(pts)
-    pts = clip_outliers(pts)
-    pts = voxel_downsample(pts, args.points)
-    pts = robust_clip(pts)
-    pts = clip_outliers(pts, 0.999)
+        if ext == ".e57":
+            pts = read_e57(args.input)
+        elif ext == ".pts":
+            pts = read_pts(args.input)
+        elif ext == ".ply":
+            pts = read_ply(args.input)
+        else:
+            raise SystemExit("unsupported extension: " + ext)
+        pts = pts[np.isfinite(pts).all(axis=1)]
+        print("loaded %d pts; voxel downsampling to ~%d ..." % (len(pts), args.points), flush=True)
+        pts = robust_clip(pts)
+        pts = clip_outliers(pts)
+        pts = voxel_downsample(pts, args.points)
+        pts = robust_clip(pts)
+        pts = clip_outliers(pts, 0.999)
     print("decimated to %d pts" % len(pts), flush=True)
 
     center = pts.mean(axis=0)
@@ -164,7 +275,10 @@ def main():
     q = np.clip(np.round(pts * scale), -32767, 32767).astype("<i2")
 
     rng = np.random.default_rng(7)
-    q = q[rng.permutation(len(q))]
+    perm = rng.permutation(len(q))
+    q = q[perm]
+    if rgb is not None:
+        rgb = rgb[perm]
 
     name = args.name or os.path.splitext(os.path.basename(args.input))[0]
     out = {
@@ -172,6 +286,8 @@ def main():
         "n": int(len(q)),
         "data": base64.b64encode(q.tobytes()).decode("ascii"),
     }
+    if rgb is not None:
+        out["rgb"] = base64.b64encode(rgb.tobytes()).decode("ascii")
     os.makedirs(os.path.dirname(os.path.abspath(args.output)), exist_ok=True)
     with open(args.output, "w") as f:
         import json
