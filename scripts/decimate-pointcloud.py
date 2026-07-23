@@ -98,6 +98,42 @@ def read_ply(path):
         return np.column_stack([arr["x"], arr["y"], arr["z"]]).astype(np.float64)
 
 
+def face_colors(m, fidx):
+    """RGB (float 0-255) for each sampled face of a mesh.
+
+    Order matters. A CAD exporter typically writes ONE flat PBR material
+    per body with the appearance color in baseColorFactor and no texture
+    image at all; trimesh reports that as kind == "texture", and calling
+    to_color() on it discards the factor and hands back default gray.
+    That silently flattened a whole SolidWorks assembly to one color, so
+    the untextured-material case is checked explicitly."""
+    fallback = np.full((len(fidx), 3), 180.0)
+    try:
+        vis = m.visual
+        kind = getattr(vis, "kind", None)
+        if kind == "vertex":
+            vcol = np.asarray(vis.vertex_colors, dtype=np.float64)[:, :3]
+            return vcol[m.faces[fidx]].mean(axis=1)
+        if kind == "face":
+            return np.asarray(vis.face_colors, dtype=np.float64)[fidx][:, :3]
+        mat = getattr(vis, "material", None)
+        has_image = any(getattr(mat, a, None) is not None
+                        for a in ("baseColorTexture", "image", "emissiveTexture"))
+        if kind == "texture" and has_image:
+            vcol = np.asarray(vis.to_color().vertex_colors, dtype=np.float64)[:, :3]
+            return vcol[m.faces[fidx]].mean(axis=1)
+        flat = getattr(mat, "main_color", None)
+        if flat is None:
+            flat = getattr(mat, "baseColorFactor", None)
+        if flat is None:
+            flat = getattr(mat, "diffuse", None)
+        if flat is not None:
+            return np.tile(np.asarray(flat, dtype=np.float64)[:3], (len(fidx), 1))
+    except Exception:
+        pass
+    return fallback
+
+
 def mesh_label(m):
     """Best-effort identity for a mesh: material name plus node name."""
     parts = []
@@ -140,14 +176,7 @@ def read_mesh(path, want, drop_terms=()):
         if n < 1:
             continue
         samples, fidx = trimesh.sample.sample_surface(m, n, seed=7)
-        try:
-            vis = m.visual
-            if vis.kind == "texture":
-                vis = vis.to_color()  # bake texture/material into vertex colors
-            vcol = np.asarray(vis.vertex_colors, dtype=np.float64)[:, :3]
-            col = vcol[m.faces[fidx]].mean(axis=1)  # face-average at each sample
-        except Exception:
-            col = np.full((len(samples), 3), 180.0)  # neutral gray fallback
+        col = face_colors(m, fidx)
         pts_chunks.append(np.asarray(samples, dtype=np.float64))
         rgb_chunks.append(col)
     pts = np.vstack(pts_chunks)

@@ -165,7 +165,7 @@ a { color: var(--orange); }
     </div>
     <div>
       <h3>The Data Above</h3>
-      <p>Genuine project scans and BIM models, voxel-decimated to ~12k particles each.</p>
+      <p>Genuine project scans, BIM models and CAD assemblies, voxel-decimated to ~12k particles each.</p>
     </div>
     <a class="cta" href="../pages/services.html">Explore Services</a>
   </div>
@@ -189,8 +189,13 @@ a { color: var(--orange); }
      missing files are skipped, so newly baked buildings join the
      rotation automatically. */
   var MANIFEST = [
-    "coastalglass", "atlanta", "whitney", "ebko", "homeaddition"
+    "coastalglass", "atlanta", "whitney", "ebko", "homeaddition",
+    "lunarrover", "speakerbox"
   ];
+  /* Optional local-only extras (assets/clouds/local/manifest.json, git
+     ignored): datasets we may demo but must not publish. Absent in the
+     deployed site, so the fetch simply 404s and is skipped. */
+  var LOCAL_MANIFEST = "../assets/clouds/local/manifest.json";
 
   var canvas = document.getElementById("cloud");
   var hud = document.getElementById("hud");
@@ -421,25 +426,32 @@ a { color: var(--orange); }
     window.requestAnimationFrame(frame);
   }
 
-  var loadedClouds = [];
-  var pending = MANIFEST.length;
-  MANIFEST.forEach(function (name, order) {
-    fetch("../assets/clouds/" + name + ".json")
-      .then(function (r) { if (!r.ok) { throw new Error(String(r.status)); } return r.json(); })
-      .then(function (j) { loadedClouds[order] = decode(j); })
-      .catch(function () { loadedClouds[order] = null; })
-      .then(function () {
-        pending--;
-        if (pending === 0) {
-          clouds = loadedClouds.filter(Boolean);
-          if (!clouds.length) {
-            loading.textContent = "NO CLOUD DATA (SERVE OVER HTTP)";
-            return;
-          }
-          start();
-        }
-      });
-  });
+  function loadAll(names, dir) {
+    return Promise.all(names.map(function (name) {
+      return fetch(dir + name + ".json")
+        .then(function (r) { if (!r.ok) { throw new Error(String(r.status)); } return r.json(); })
+        .then(decode)
+        .catch(function () { return null; });
+    }));
+  }
+
+  fetch(LOCAL_MANIFEST)
+    .then(function (r) { return r.ok ? r.json() : []; })
+    .catch(function () { return []; })
+    .then(function (extra) {
+      return Promise.all([
+        loadAll(MANIFEST, "../assets/clouds/"),
+        loadAll(Array.isArray(extra) ? extra : [], "../assets/clouds/local/")
+      ]);
+    })
+    .then(function (sets) {
+      clouds = sets[0].concat(sets[1]).filter(Boolean);
+      if (!clouds.length) {
+        loading.textContent = "NO CLOUD DATA (SERVE OVER HTTP)";
+        return;
+      }
+      start();
+    });
 
   window.addEventListener("resize", sizeCanvas);
 })();

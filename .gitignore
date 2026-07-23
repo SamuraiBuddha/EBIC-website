@@ -37,3 +37,7 @@ coverage/
 # Local config that should not propagate
 *.local.json
 local.*.yaml
+
+# Local-only showcase datasets: client-confidential models we may demo
+# locally but must never publish (airport models, etc).
+assets/clouds/local/
