@@ -207,12 +207,16 @@ a { color: var(--orange); }
   var DPR = Math.min(window.devicePixelRatio || 1, 2);
   var W = 0, H = 0;
 
-  var POOL = 12500;
+  var POOL = 22000;
   var swirl = new Float32Array(POOL * 4);  /* radius, angle0, angSpeed, height */
   var target = new Float32Array(POOL * 3); /* current building, unit coords */
-  var colors = new Array(POOL);
-  var swirlCol = new Uint8Array(POOL * 3); /* travel color (elevation ramp) */
-  var tgtCol = new Uint8Array(POOL * 3);   /* baked true color, rgb clouds */
+  var galCol = new Uint8Array(POOL * 3);   /* galaxy travel color, by disc radius */
+  var bldCol = new Uint8Array(POOL * 3);   /* building color: baked rgb or elevation ramp */
+  var sparkP = new Float32Array(POOL);     /* crystal-sparkle phase, 1 -> 0 */
+  var sparkH = new Float32Array(POOL);     /* crystal-sparkle hue, 0..1 */
+  var sparkAcc = 0;                        /* fractional spark-spawn accumulator */
+  var SPARKS_PER_SEC = 55;                 /* new twinkles ignited per second */
+  var SPARK_LIFE = 1.1;                    /* seconds a twinkle takes to decay */
   var hasRGB = false;
   var clouds = [];
   var current = -1;
@@ -229,12 +233,49 @@ a { color: var(--orange); }
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   }
 
+  function galaxyTone(n) {
+    /* luminescent gold-white core -> blue arms -> deep indigo rim */
+    var r, g, b;
+    if (n < 0.5) {
+      var s = n / 0.5;
+      r = 255 + (74 - 255) * s;
+      g = 236 + (132 - 236) * s;
+      b = 205 + (240 - 205) * s;
+    } else {
+      var u = (n - 0.5) / 0.5;
+      r = 74 + (46 - 74) * u;
+      g = 132 + (34 - 132) * u;
+      b = 240 + (120 - 240) * u;
+    }
+    return [r, g, b];
+  }
+
   function seedSwirl() {
     for (var i = 0; i < POOL; i++) {
       swirl[i * 4] = 0.25 + Math.pow(Math.random(), 0.6) * 1.05;
       swirl[i * 4 + 1] = Math.random() * 6.2832;
       swirl[i * 4 + 2] = (0.05 + Math.random() * 0.12) * (Math.random() < 0.12 ? 1.9 : 1);
       swirl[i * 4 + 3] = (Math.random() - 0.5) * 0.5;
+      var n = (swirl[i * 4] - 0.25) / 1.05;
+      if (n < 0) { n = 0; } if (n > 1) { n = 1; }
+      var jit = 0.88 + Math.random() * 0.24;
+      var tone = galaxyTone(n);
+      galCol[i * 3] = Math.min(255, tone[0] * jit) | 0;
+      galCol[i * 3 + 1] = Math.min(255, tone[1] * jit) | 0;
+      galCol[i * 3 + 2] = Math.min(255, tone[2] * jit) | 0;
+    }
+  }
+
+  function sparkTone(h) {
+    /* full-saturation jewel hue for the crystal twinkle */
+    var i = (h * 6) | 0, f = h * 6 - i, q = 1 - f;
+    switch (i % 6) {
+      case 0: return [255, f * 255, 40];
+      case 1: return [q * 255, 255, 40];
+      case 2: return [40, 255, f * 255];
+      case 3: return [40, q * 255, 255];
+      case 4: return [f * 255, 40, 255];
+      default: return [255, 40, q * 255];
     }
   }
 
@@ -280,18 +321,17 @@ a { color: var(--orange); }
       target[i * 3] = c.pts[j];
       target[i * 3 + 1] = c.pts[j + 1];
       target[i * 3 + 2] = c.pts[j + 2];
-      var e = (c.pts[j + 2] - zmin) / zspan;
-      /* elevation ramp: deep brand blue -> light blue; ~5% orange accents */
-      var acc = Math.random() < 0.05;
-      var cr = acc ? 255 : Math.round(60 + e * 100);
-      var cg = acc ? 107 : Math.round(110 + e * 90);
-      var cb = acc ? 53 : Math.round(190 + e * 55);
-      colors[i] = cr + "," + cg + "," + cb;
-      swirlCol[i * 3] = cr; swirlCol[i * 3 + 1] = cg; swirlCol[i * 3 + 2] = cb;
       if (hasRGB) {
-        tgtCol[i * 3] = c.rgb[j];
-        tgtCol[i * 3 + 1] = c.rgb[j + 1];
-        tgtCol[i * 3 + 2] = c.rgb[j + 2];
+        bldCol[i * 3] = c.rgb[j];
+        bldCol[i * 3 + 1] = c.rgb[j + 1];
+        bldCol[i * 3 + 2] = c.rgb[j + 2];
+      } else {
+        var e = (c.pts[j + 2] - zmin) / zspan;
+        /* elevation ramp: deep brand blue -> light blue; ~5% orange accents */
+        var acc = Math.random() < 0.05;
+        bldCol[i * 3] = acc ? 255 : Math.round(60 + e * 100);
+        bldCol[i * 3 + 1] = acc ? 107 : Math.round(110 + e * 90);
+        bldCol[i * 3 + 2] = acc ? 53 : Math.round(190 + e * 55);
       }
     }
     updateHud();
@@ -341,6 +381,37 @@ a { color: var(--orange); }
 
     ctx.clearRect(0, 0, W, H);
 
+    /* additive blending: overlapping particles bloom into haze and the
+       dense disc center saturates to a luminescent core -- the galaxy look */
+    ctx.globalCompositeOperation = "lighter";
+
+    /* luminescent galactic core: a soft glow at the disc centre that
+       fades out as the building materializes */
+    var glowStr = 1 - M;
+    if (glowStr > 0.02 && !REDUCED) {
+      var gr = R * 0.6 * zoom;
+      var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, gr);
+      grad.addColorStop(0, "rgba(255,241,214," + (0.34 * glowStr).toFixed(3) + ")");
+      grad.addColorStop(0.35, "rgba(150,172,255," + (0.14 * glowStr).toFixed(3) + ")");
+      grad.addColorStop(1, "rgba(60,60,140,0)");
+      ctx.fillStyle = grad;
+      ctx.fillRect(cx - gr, cy - gr, gr * 2, gr * 2);
+    }
+
+    /* crystal sparkle (the ARGB "twinkle" demo): ignite a few random
+       particles per frame to a vivid random hue at full brightness, then
+       let them decay -- scattered multi-color jewel glints */
+    if (!REDUCED) {
+      sparkAcc += SPARKS_PER_SEC * dt;
+      var spawn = sparkAcc | 0;
+      sparkAcc -= spawn;
+      for (var q = 0; q < spawn; q++) {
+        var si = (Math.random() * POOL) | 0;
+        sparkP[si] = 1;
+        sparkH[si] = Math.random();
+      }
+    }
+
     for (var i = 0; i < POOL; i++) {
       /* swirl position (galaxy disc, world space) */
       var sr = swirl[i * 4] * 1.35;
@@ -373,22 +444,47 @@ a { color: var(--orange); }
       var py = cy - rz2 * R * per;
       if (px < -4 || px > W + 4 || py < -4 || py > H + 4) { continue; }
 
-      var a = (0.25 + 0.75 * per * per * 0.55) * (0.55 + tt * 0.45);
-      /* rgb clouds settle from the travel ramp into their baked true
-         color over the last stretch of the coalesce; the stagger in tt
-         makes the color ripple across the surface instead of fading in */
-      var col = colors[i];
-      if (hasRGB && tt > 0.55) {
-        var ct = (tt - 0.55) / 0.45;
-        if (ct > 1) { ct = 1; }
-        col = ((swirlCol[i * 3] + (tgtCol[i * 3] - swirlCol[i * 3]) * ct) | 0) + "," +
-          ((swirlCol[i * 3 + 1] + (tgtCol[i * 3 + 1] - swirlCol[i * 3 + 1]) * ct) | 0) + "," +
-          ((swirlCol[i * 3 + 2] + (tgtCol[i * 3 + 2] - swirlCol[i * 3 + 2]) * ct) | 0);
+      /* color: travels as a galaxy tone, settles into the building color
+         as the particle coalesces. For rgb clouds the settle happens over
+         the last stretch so color ripples across the surface. */
+      var cmix = tt;
+      if (hasRGB) { cmix = tt > 0.55 ? (tt - 0.55) / 0.45 : 0; }
+      var cr = galCol[i * 3] + (bldCol[i * 3] - galCol[i * 3]) * cmix;
+      var cg = galCol[i * 3 + 1] + (bldCol[i * 3 + 1] - galCol[i * 3 + 1]) * cmix;
+      var cb = galCol[i * 3 + 2] + (bldCol[i * 3 + 2] - galCol[i * 3 + 2]) * cmix;
+
+      var a = (0.2 + 0.55 * per * per) * (0.5 + tt * 0.5);
+      /* inner disc particles glow brighter while still in the galaxy */
+      if (M < 0.98) {
+        var cb2 = 1 - swirl[i * 4] / 1.3;
+        if (cb2 > 0) { a += cb2 * cb2 * 0.5 * (1 - M); }
       }
-      ctx.fillStyle = "rgba(" + col + "," + a.toFixed(2) + ")";
-      var s = per > 1.05 ? 2.4 : per > 0.9 ? 1.8 : 1.2;
+
+      var s = per > 1.05 ? 2.0 : per > 0.9 ? 1.5 : 1.1;
+      var sp = sparkP[i];
+      if (sp > 0) {
+        var st = sparkTone(sparkH[i]);
+        cr += (st[0] - cr) * sp;
+        cg += (st[1] - cg) * sp;
+        cb += (st[2] - cb) * sp;
+        a += sp * 0.6;
+        sparkP[i] = sp - dt / SPARK_LIFE;
+      }
+      if (a > 1) { a = 1; }
+
+      ctx.fillStyle = "rgba(" + (cr | 0) + "," + (cg | 0) + "," + (cb | 0) + "," + a.toFixed(3) + ")";
       ctx.fillRect(px, py, s, s);
+
+      /* crystalline glint: a bright plus of thin spikes that flares and
+         fades with the twinkle */
+      if (sp > 0.2) {
+        var len = 2 + sp * 5;
+        ctx.fillRect(px - len, py, len * 2 + s, 0.8);
+        ctx.fillRect(px, py - len, 0.8, len * 2 + s);
+      }
     }
+
+    ctx.globalCompositeOperation = "source-over";
 
     window.requestAnimationFrame(frame);
   }
