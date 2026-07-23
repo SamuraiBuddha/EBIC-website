@@ -426,11 +426,24 @@ a { color: var(--orange); }
     }
     cloudZoom = Math.min(2.2, Math.max(1, 0.62 / Math.sqrt(sum / c.n)));
     hasRGB = !!c.rgb;
+    /* Baked clouds hold ~12k points. When POOL exceeds c.n the wrap-around
+       copies would land on the SAME coordinates as existing points and add no
+       visible density -- which is why raising Points thickened the galaxy but
+       not the resolved object. Jitter each duplicate copy into the gaps so the
+       object densifies too. First pass (i < c.n) stays exactly on the real
+       scan points for fidelity; only copies get nudged. */
+    var jr = 0.012;
     for (var i = 0; i < POOL; i++) {
       var j = (i % c.n) * 3;
-      target[i * 3] = c.pts[j];
-      target[i * 3 + 1] = c.pts[j + 1];
-      target[i * 3 + 2] = c.pts[j + 2];
+      if (i < c.n) {
+        target[i * 3] = c.pts[j];
+        target[i * 3 + 1] = c.pts[j + 1];
+        target[i * 3 + 2] = c.pts[j + 2];
+      } else {
+        target[i * 3] = c.pts[j] + (Math.random() - 0.5) * jr;
+        target[i * 3 + 1] = c.pts[j + 1] + (Math.random() - 0.5) * jr;
+        target[i * 3 + 2] = c.pts[j + 2] + (Math.random() - 0.5) * jr;
+      }
       if (hasRGB) {
         bldCol[i * 3] = c.rgb[j];
         bldCol[i * 3 + 1] = c.rgb[j + 1];
