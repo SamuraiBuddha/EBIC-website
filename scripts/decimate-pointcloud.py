@@ -185,6 +185,20 @@ def read_mesh(path, want, drop_terms=()):
     return pts, rgb
 
 
+def read_xyzrgb(path):
+    """Plain-text colored point set: whitespace-separated 'x y z [r g b]'
+    per line. This is what the Revit surface sampler emits (feet, Z-up,
+    RGB 0-255). Returns (xyz float64, rgb uint8 or None)."""
+    arr = np.loadtxt(path)
+    if arr.ndim == 1:
+        arr = arr.reshape(1, -1)
+    pts = arr[:, :3].astype(np.float64)
+    rgb = None
+    if arr.shape[1] >= 6:
+        rgb = np.clip(np.round(arr[:, 3:6]), 0, 255).astype(np.uint8)
+    return pts, rgb
+
+
 def yup_to_zup(pts):
     """glTF Y-up right-handed -> scan-space Z-up: (x, y, z) -> (x, -z, y)."""
     return np.column_stack([pts[:, 0], -pts[:, 2], pts[:, 1]])
@@ -263,23 +277,32 @@ def main():
     ext = os.path.splitext(args.input)[1].lower()
     print("reading %s ..." % args.input, flush=True)
     rgb = None
-    if ext in (".glb", ".gltf", ".obj", ".stl"):
-        drop = tuple(t.strip().lower() for t in args.drop.split(",") if t.strip())
-        pts, rgb = read_mesh(args.input, args.points, drop)
-        up = args.up if args.up != "auto" else ("y" if ext in (".glb", ".gltf") else "z")
+    if ext in (".glb", ".gltf", ".obj", ".stl", ".txt", ".xyz", ".xyzrgb"):
+        if ext in (".glb", ".gltf", ".obj", ".stl"):
+            drop = tuple(t.strip().lower() for t in args.drop.split(",") if t.strip())
+            pts, rgb = read_mesh(args.input, args.points, drop)
+            up = args.up if args.up != "auto" else ("y" if ext in (".glb", ".gltf") else "z")
+        else:
+            # colored text point set (Revit sampler output): already points,
+            # feet, Z-up -- no surface sampling, no axis flip by default
+            pts, rgb = read_xyzrgb(args.input)
+            up = args.up if args.up != "auto" else "z"
+            print("  loaded %d colored points" % len(pts), flush=True)
         if up == "y":
             pts = yup_to_zup(pts)
         keep = np.isfinite(pts).all(axis=1)
-        pts, rgb = pts[keep], rgb[keep]
-        # CAD is noise-free but not sprawl-free: curbs/fences/wires reach
-        # far past the building at negligible area and would eat the
-        # quantization range, so the same radius clip as scans applies
-        idx = robust_indices(pts)
-        pts, rgb = pts[idx], rgb[idx]
-        idx = voxel_indices(pts, args.points)
-        pts, rgb = pts[idx], rgb[idx]
-        idx = robust_indices(pts)
-        pts, rgb = pts[idx], rgb[idx]
+        pts = pts[keep]
+        if rgb is not None:
+            rgb = rgb[keep]
+        # CAD/scan alike: sprawl (curbs, wires, stray survey-origin points)
+        # reaches far past the building at negligible density and would eat
+        # the int16 quantization range, so clip radius, voxel, clip again --
+        # all index-based so rgb rides along
+        for step in (robust_indices, lambda p: voxel_indices(p, args.points), robust_indices):
+            idx = step(pts)
+            pts = pts[idx]
+            if rgb is not None:
+                rgb = rgb[idx]
     else:
         if ext == ".e57":
             pts = read_e57(args.input)
