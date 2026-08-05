@@ -6,18 +6,26 @@
     <meta name="description" content="EBIC - Your Trusted Partner in Digital Construction Technology. Specializing in BIM & VDC Services, Reality Capture, Training, and AI-driven solutions for AEC industry.">
     <meta name="keywords" content="BIM, VDC, Building Information Modeling, Reality Capture, Scan-to-BIM, Training, AEC, Construction Technology">
     <meta name="author" content="EBIC - Ehrig BIM & IT Consultation, Inc.">
-    
-    <title>EBIC - Ehrig BIM & IT Consultation | Your Trusted Partner in Digital Construction Technology</title>
-    
+
+    <title>BIM & VDC Consulting in Orlando, FL | EBIC - Ehrig BIM & IT Consultation</title>
+    <link rel="canonical" href="https://www.ebicinc.com/">
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="EBIC - Ehrig BIM &amp; IT Consultation, Inc.">
+    <meta property="og:title" content="BIM &amp; VDC Consulting in Orlando, FL | EBIC - Ehrig BIM &amp; IT Consultation">
+    <meta property="og:description" content="BIM coordination, underground utility BIM, scan-to-BIM, outsourced BIM management and managed IT for contractors, designers and owners in Orlando and Central Florida.">
+    <meta property="og:url" content="https://www.ebicinc.com/">
+    <meta property="og:image" content="https://www.ebicinc.com/assets/images/logo-main.png">
+    <meta name="twitter:card" content="summary_large_image">
+
     <!-- Preload critical resources -->
     <link rel="preload" href="assets/css/styles.css" as="style">
     <link rel="stylesheet" href="assets/css/styles.css">
-    
+    <link rel="stylesheet" href="assets/css/particles.css">
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/logo-black.png">
-
-    <!-- Google Model Viewer for 3D Models -->
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 </head>
 <body>
     <!-- Skip to main content for accessibility -->
@@ -32,17 +40,19 @@
                         <img src="assets/images/logo-main.png" alt="EBIC - Ehrig BIM & IT Consultation, Inc." class="site-logo">
                     </a>
                 </div>
-                
+
                 <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
                     <span class="hamburger"></span>
                 </button>
-                
+
                 <ul class="nav-links">
                     <li><a href="index.html" class="nav-link active">Home</a></li>
                     <li><a href="pages/services.html" class="nav-link">Services</a></li>
                     <li><a href="pages/portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="showcase/index.html" class="nav-link">Showcase</a></li>
                     <li><a href="pages/about.html" class="nav-link">About</a></li>
-                    <li><a href="pages/contact.html" class="nav-link btn-primary">Contact</a></li>
+                    <li><a href="pages/contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="pages/quote.html" class="nav-link btn-primary">Get a Quote</a></li>
                 </ul>
             </div>
         </nav>
@@ -50,10 +60,15 @@
 
     <!-- Main Content -->
     <main id="main-content">
-        
-        <!-- Hero Section -->
-        <section class="hero" role="region" aria-label="Hero section">
+
+        <!-- Hero Section: live particle backdrop built from real project scans -->
+        <section class="hero pstage pstage--band" id="hero-stage" role="region" aria-label="Hero section">
+            <canvas class="p-cloud" aria-hidden="true"></canvas>
             <div class="hero-overlay"></div>
+            <div class="pstage-caption">
+                Real EBIC scan data, rendered live<br>
+                <a href="showcase/index.html">Explore the showcase</a>
+            </div>
             <div class="container hero-content">
                 <h1 class="hero-title">
                     Your Trusted Partner in <span class="highlight">Digital Construction Technology</span>
@@ -102,7 +117,7 @@
                     <h2>Our Core Services</h2>
                     <p class="section-subtitle">Transparent, reliable, and cost-effective solutions driven by our open-source philosophy</p>
                 </div>
-                
+
                 <div class="services-grid">
                     <article class="service-card">
                         <div class="service-image">
@@ -150,7 +165,7 @@
                         <p>Expert Revit and Navisworks training with BIM workflow development to build your team's skills and optimize processes across the project lifecycle.</p>
                         <a href="pages/services.html#training" class="service-link" aria-label="Learn more about Training & Development">Learn More</a>
                     </article>
-                    
+
                     <article class="service-card">
                         <div class="service-icon" aria-hidden="true">
                             <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -173,7 +188,7 @@
                     <h2>Industry Expertise</h2>
                     <p class="section-subtitle">Proven track record across multiple high-stakes sectors</p>
                 </div>
-                
+
                 <div class="sectors-grid">
                     <div class="sector-card">
                         <div class="sector-percentage">30%</div>
@@ -408,93 +423,6 @@
             </div>
         </section>
 
-        <!-- 3D Model Showcase -->
-        <section class="model-showcase" role="region" aria-label="Interactive 3D models">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Interactive 3D Model Viewer</h2>
-                    <p class="section-subtitle">Explore our projects in immersive 3D with full rotation and zoom controls</p>
-                </div>
-
-                <div class="model-viewer-container">
-                    <model-viewer
-                        src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
-                        alt="3D BIM Model Example"
-                        camera-controls
-                        auto-rotate
-                        shadow-intensity="1"
-                        exposure="1"
-                        camera-orbit="45deg 55deg 2.5m"
-                        min-camera-orbit="auto auto auto"
-                        max-camera-orbit="auto auto auto"
-                        ar
-                        ar-modes="webxr scene-viewer quick-look"
-                        loading="lazy">
-
-                        <div class="model-controls" slot="controls">
-                            <button class="model-btn" data-model="building">Building Model</button>
-                            <button class="model-btn" data-model="mep">MEP Systems</button>
-                            <button class="model-btn" data-model="structure">Structure</button>
-                        </div>
-
-                        <div class="model-hotspot" slot="hotspot-1" data-position="0 1.5 0" data-normal="0 1 0">
-                            <div class="hotspot-annotation">
-                                <h4>Key Feature</h4>
-                                <p>Interactive model annotations</p>
-                            </div>
-                        </div>
-
-                        <div class="model-info">
-                            <div class="info-badge">
-                                <span>📱</span> Mobile AR Ready
-                            </div>
-                            <div class="info-badge">
-                                <span>🖱️</span> Click & Drag to Rotate
-                            </div>
-                            <div class="info-badge">
-                                <span>🔍</span> Scroll to Zoom
-                            </div>
-                        </div>
-                    </model-viewer>
-                </div>
-
-                <div class="model-features">
-                    <div class="feature-card">
-                        <h3>BIM Model Support</h3>
-                        <p>Convert Revit, Navisworks, and other BIM formats to web-ready 3D models</p>
-                        <ul class="feature-list">
-                            <li>Revit → GLTF Export</li>
-                            <li>Point Cloud Integration</li>
-                            <li>LOD 100-500 Visualization</li>
-                            <li>Real-time Coordination</li>
-                        </ul>
-                    </div>
-
-                    <div class="feature-card">
-                        <h3>Interactive Features</h3>
-                        <p>Engage with your projects like never before</p>
-                        <ul class="feature-list">
-                            <li>360° Rotation Control</li>
-                            <li>Zoom & Pan Navigation</li>
-                            <li>Mobile AR Support</li>
-                            <li>Annotation Hotspots</li>
-                        </ul>
-                    </div>
-
-                    <div class="feature-card">
-                        <h3>Export Options</h3>
-                        <p>Multiple pathways from BIM to web 3D</p>
-                        <ul class="feature-list">
-                            <li>Revit Plugin Exporters</li>
-                            <li>Blender Conversion</li>
-                            <li>FBX/OBJ to GLTF</li>
-                            <li>Cloud Processing</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Chronos Product Spotlight -->
         <section class="product-spotlight" role="region" aria-label="Chronos product spotlight">
             <div class="container">
@@ -509,21 +437,21 @@
 
                         <div class="spotlight-features">
                             <div class="spotlight-feature">
-                                <div class="feature-icon">🔒</div>
+                                <div class="feature-icon">&#x1F512;</div>
                                 <div>
                                     <h4>No Screenshots Saved</h4>
                                     <p>Visual data exists only in memory for less than 100ms</p>
                                 </div>
                             </div>
                             <div class="spotlight-feature">
-                                <div class="feature-icon">💻</div>
+                                <div class="feature-icon">&#x1F4BB;</div>
                                 <div>
                                     <h4>Local AI Processing</h4>
                                     <p>All AI runs on your computer, never in the cloud</p>
                                 </div>
                             </div>
                             <div class="spotlight-feature">
-                                <div class="feature-icon">⚡</div>
+                                <div class="feature-icon">&#x26A1;</div>
                                 <div>
                                     <h4>Lightweight & Efficient</h4>
                                     <p>Uses less than 2% CPU, runs quietly in the background</p>
@@ -545,7 +473,7 @@
 
                         <div class="spotlight-cta">
                             <a href="https://samuraibuddha.github.io/chronos-website" class="btn btn-primary btn-large">Learn More About Chronos</a>
-                            <p class="spotlight-note">14-day money-back guarantee • Cross-platform support</p>
+                            <p class="spotlight-note">14-day money-back guarantee &#x2022; Cross-platform support</p>
                         </div>
                     </div>
                 </div>
@@ -574,7 +502,7 @@
                     <p class="footer-tagline">Your Trusted Partner in Digital Construction Technology</p>
                     <p style="margin-top: 1rem; font-size: 0.9rem;">403 South Edgemon Avenue<br>Winter Springs, FL 32708<br>(407) 234-3445</p>
                 </div>
-                
+
                 <div class="footer-column">
                     <h4>Services</h4>
                     <ul>
@@ -584,7 +512,7 @@
                         <li><a href="pages/services.html#software-ai">Software & AI</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-column">
                     <h4>Company</h4>
                     <ul>
@@ -593,14 +521,14 @@
                         <li><a href="pages/contact.html">Contact</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-column">
                     <h4>Connect</h4>
                     <p>Professional consultation for AEC industry leaders</p>
                     <a href="pages/contact.html" class="btn btn-outline">Contact Us</a>
                 </div>
             </div>
-            
+
             <div class="footer-bottom">
                 <p>&copy; 2025 EBIC - Ehrig BIM & IT Consultation, Inc. All rights reserved.</p>
                 <p class="footer-meta">Founded March 2020 | 18 Years Industry Experience</p>
@@ -610,5 +538,79 @@
 
     <!-- JavaScript -->
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/particles.js"></script>
+    <script>
+    (function () {
+        "use strict";
+        /* Hero band: a lighter point budget than the full showcase (this is a
+           backdrop competing with the rest of the page for GPU time), and no
+           wheel-zoom -- capturing the scroll here would trap the visitor at
+           the top of the page. */
+        window.EBICParticles({
+            root: document.getElementById("hero-stage"),
+            cloudDir: "assets/clouds/",
+            /* The showcase tuning blows the core out to near-white, which is
+               correct on a page where the field IS the content. Here the hero
+               copy sits on top of it, so the core is pulled well down to keep
+               the headline and subtitle legible. */
+            params: { points: 14000, glow: 0.5, coreSize: 0.65, hazeReach: 1.25 },
+            lab: false,
+            wheelZoom: false
+        });
+    })();
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "@id": "https://www.ebicinc.com/#organization",
+      "name": "Ehrig BIM & IT Consultation, Inc.",
+      "alternateName": "EBIC",
+      "description": "BIM and VDC coordination, underground utility BIM, reality capture, outsourced BIM management, software and AI automation, and managed IT services for the AEC industry.",
+      "url": "https://www.ebicinc.com/",
+      "logo": "https://www.ebicinc.com/assets/images/logo-main.png",
+      "image": "https://www.ebicinc.com/assets/images/logo-main.png",
+      "telephone": "+1-407-234-3445",
+      "foundingDate": "2020-03",
+      "founder": {
+        "@type": "Person",
+        "name": "Jordan Ehrig"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "403 South Edgemon Avenue",
+        "addressLocality": "Winter Springs",
+        "addressRegion": "FL",
+        "postalCode": "32708",
+        "addressCountry": "US"
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Orlando" },
+        { "@type": "City", "name": "Tampa" },
+        { "@type": "City", "name": "Jacksonville" },
+        { "@type": "State", "name": "Florida" },
+        { "@type": "Country", "name": "United States" }
+      ],
+      "knowsAbout": [
+        "Building Information Modeling",
+        "Virtual Design and Construction",
+        "Underground utility coordination",
+        "Subsurface utility engineering",
+        "Clash detection",
+        "Scan-to-BIM",
+        "Autodesk Revit",
+        "Autodesk Navisworks",
+        "Autodesk Civil 3D",
+        "NAVFAC BIM requirements",
+        "Managed IT services"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "EBIC Services",
+        "url": "https://www.ebicinc.com/pages/services.html"
+      }
+    }
+    </script>
 </body>
 </html>

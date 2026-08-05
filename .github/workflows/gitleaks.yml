@@ -1,0 +1,30 @@
+name: gitleaks
+
+# Secret scanning on every PR (fast, scoped to diff). The full-history job was
+# removed: it re-flagged the same known, already-triaged historical leaks every
+# week and never surfaced anything new -- pure failing-email noise. New secrets
+# are still caught by the PR-diff scan below; a one-off history audit can be run
+# locally with `gitleaks detect` when actually needed.
+on:
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: read
+
+jobs:
+  pr-scan:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: gitleaks (PR diff)
+        uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_COMMENTS: "true"
+          GITLEAKS_ENABLE_SUMMARY: "true"

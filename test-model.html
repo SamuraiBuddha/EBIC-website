@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Test</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        model-viewer {
+            width: 100%;
+            height: 600px;
+            background-color: #f0f0f0;
+        }
+        .info {
+            margin: 20px 0;
+            padding: 10px;
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+    </style>
+</head>
+<body>
+    <h1>HomeAddition Model Test</h1>
+
+    <div class="info">
+        <strong>Instructions:</strong> If the model loads, you'll see it below.
+        If it doesn't load, press F12 and check the Console tab for errors.
+    </div>
+
+    <model-viewer
+        src="assets/models/HomeAddition.glb"
+        alt="Home Addition Model Test"
+        camera-controls
+        auto-rotate
+        shadow-intensity="1">
+
+        <div style="position: absolute; top: 10px; left: 10px; background: white; padding: 10px;">
+            <p><strong>Status:</strong> Loading model...</p>
+        </div>
+    </model-viewer>
+
+    <script>
+        const modelViewer = document.querySelector('model-viewer');
+
+        modelViewer.addEventListener('load', () => {
+            console.log('✅ Model loaded successfully!');
+            alert('SUCCESS! Model loaded correctly.');
+        });
+
+        modelViewer.addEventListener('error', (event) => {
+            console.error('❌ Model failed to load:', event);
+            alert('ERROR! Check console (F12) for details.');
+        });
+    </script>
+</body>
+</html>

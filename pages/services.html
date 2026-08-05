@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EBIC Services: BIM & VDC Services, Reality Capture & Scan-to-BIM, Training & Development, and Software Development & AI Automation for the AEC industry.">
-    <title>Our Services | EBIC - BIM & IT Consultation</title>
+    <meta name="description" content="BIM coordination, underground utility BIM, outsourced BIM management, scan-to-BIM, managed IT and AI automation for contractors and owners in Orlando and across Central Florida.">
+    <title>BIM, VDC & IT Services in Orlando, FL | EBIC Consulting</title>
+    <link rel="canonical" href="https://www.ebicinc.com/pages/services.html">
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="EBIC - Ehrig BIM &amp; IT Consultation, Inc.">
+    <meta property="og:title" content="BIM, VDC &amp; IT Services in Orlando, FL | EBIC Consulting">
+    <meta property="og:description" content="BIM coordination, underground utility BIM, outsourced BIM management, scan-to-BIM, managed IT and AI automation for contractors and owners in Central Florida.">
+    <meta property="og:url" content="https://www.ebicinc.com/pages/services.html">
+    <meta property="og:image" content="https://www.ebicinc.com/assets/images/logo-main.png">
+    <meta name="twitter:card" content="summary_large_image">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../assets/images/logo-black.png">
@@ -54,7 +64,7 @@
         }
         /* BIM/VDC - Checkmarks (quality control theme) */
         #bim-vdc .service-features li::before {
-            content: '✓';
+            content: '\2713';
             position: absolute;
             left: 0;
             color: var(--color-accent);
@@ -63,26 +73,51 @@
         }
         /* Reality Capture - Bullseye (precision/accuracy theme) */
         #reality-capture .service-features li::before {
-            content: '🎯';
+            content: '\1F3AF';
             position: absolute;
             left: 0;
             font-size: var(--font-size-lg);
         }
         /* Training - Pencil (learning theme) */
         #training .service-features li::before {
-            content: '✏️';
+            content: '\270F\FE0F';
             position: absolute;
             left: 0;
             font-size: var(--font-size-lg);
         }
         /* Software/AI - Triangles (innovation theme) */
         #software-ai .service-features li::before {
-            content: '▸';
+            content: '\25B8';
             position: absolute;
             left: 0;
             color: #764ba2;
             font-weight: bold;
             font-size: var(--font-size-xl);
+        }
+        /* New service sections: marker drawn in CSS so the source stays ASCII-only */
+        #civil-underground .service-features li::before,
+        #bim-manager .service-features li::before,
+        #it-services .service-features li::before,
+        #federal-bim .service-features li::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 1.15em;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            background: var(--color-accent);
+        }
+        /* Retainer / engagement-model callout */
+        .engagement-note {
+            background: var(--color-accent-light);
+            padding: var(--space-4);
+            border-radius: var(--border-radius-md);
+            margin: var(--space-4) 0;
+        }
+        .engagement-note p {
+            margin: 0;
+            font-weight: 600;
         }
         /* Icon grid for capabilities */
         .capability-grid {
@@ -131,8 +166,10 @@
                     <li><a href="../index.html" class="nav-link">Home</a></li>
                     <li><a href="services.html" class="nav-link active">Services</a></li>
                     <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="../showcase/index.html" class="nav-link">Showcase</a></li>
                     <li><a href="about.html" class="nav-link">About</a></li>
-                    <li><a href="contact.html" class="nav-link btn-primary">Contact</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="quote.html" class="nav-link btn-primary">Get a Quote</a></li>
                 </ul>
             </div>
         </nav>
@@ -141,8 +178,19 @@
     <main id="main-content">
         <section class="services-hero">
             <div class="container">
-                <h1>Our Services</h1>
-                <p style="font-size: var(--font-size-xl); max-width: 800px;">Your Trusted Partner in Digital Construction Technology. Transparent, reliable, and cost-effective solutions with extensive experience across design, construction, and as-built documentation.</p>
+                <h1>BIM, VDC &amp; IT Services</h1>
+                <p style="font-size: var(--font-size-xl); max-width: 800px;">Serving contractors, designers and owners in Orlando and across Central Florida. Transparent, reliable, and cost-effective solutions with extensive experience across design, construction, and as-built documentation.</p>
+                <p style="max-width: 800px; margin-top: var(--space-3);"><strong>Based in Winter Springs, Florida.</strong> Your work is performed here, by the person you talk to. No offshore handoffs, no overnight round-trips, no account manager between you and the model.</p>
+                <nav class="service-jump" aria-label="Jump to a service" style="margin-top: var(--space-5); display: flex; flex-wrap: wrap; gap: var(--space-2);">
+                    <a href="#bim-vdc" class="btn btn-outline">BIM &amp; VDC</a>
+                    <a href="#civil-underground" class="btn btn-outline">Underground Utilities</a>
+                    <a href="#bim-manager" class="btn btn-outline">BIM Manager as a Service</a>
+                    <a href="#reality-capture" class="btn btn-outline">Reality Capture</a>
+                    <a href="#training" class="btn btn-outline">Training</a>
+                    <a href="#software-ai" class="btn btn-outline">Software &amp; AI</a>
+                    <a href="#it-services" class="btn btn-outline">IT Services</a>
+                    <a href="#federal-bim" class="btn btn-outline">Federal &amp; NAVFAC</a>
+                </nav>
             </div>
         </section>
 
@@ -152,7 +200,7 @@
                     <div>
                         <h2>BIM & VDC Services</h2>
                         <p>Comprehensive Building Information Modeling and Virtual Design & Construction services tailored to your project's needs. Our unique perspective across contractor, designer, owner, and IT roles ensures we understand your challenges from all angles.</p>
-                        
+
                         <div class="service-categories">
                             <div class="service-category">
                                 <h4>Design Services</h4>
@@ -163,7 +211,7 @@
                                     <li>Navisworks Clash Reports (conflict detection, pre-construction issue resolution)</li>
                                 </ul>
                             </div>
-                            
+
                             <div class="service-category">
                                 <h4>Contractor Services</h4>
                                 <ul class="service-features">
@@ -173,7 +221,7 @@
                                     <li>Multi-subcontractor coordination (proven with 8+ subcontractors on Tampa Airport MTCE)</li>
                                 </ul>
                             </div>
-                            
+
                             <div class="service-category">
                                 <h4>Owner Services</h4>
                                 <ul class="service-features">
@@ -184,7 +232,7 @@
                                 </ul>
                             </div>
                         </div>
-                        
+
                         <a href="contact.html" class="btn btn-primary">Request BIM/VDC Services</a>
                     </div>
                     <div>
@@ -223,6 +271,95 @@
             </div>
         </section>
 
+        <section id="civil-underground" class="service-detail">
+            <div class="container">
+                <div class="service-content">
+                    <div>
+                        <img src="../assets/images/projects/Chronos_Tower_Front_Epic_Universe.jpg" alt="Universal Epic Universe construction, where EBIC coordinated civil underground utilities" style="width: 100%; border-radius: var(--border-radius-lg); margin-bottom: var(--space-4);">
+                        <div style="background: var(--color-gray-100); padding: var(--space-4); border-radius: var(--border-radius-md);">
+                            <h4 style="margin-bottom: var(--space-3);">Underground Scope We Have Modeled</h4>
+                            <div class="capability-grid">
+                                <div class="capability-item"><div class="capability-icon"></div><span>Sanitary sewer</span></div>
+                                <div class="capability-item"><div class="capability-icon"></div><span>Storm drainage</span></div>
+                                <div class="capability-item"><div class="capability-icon"></div><span>Potable water</span></div>
+                                <div class="capability-item"><div class="capability-icon"></div><span>Fire water and FDC</span></div>
+                                <div class="capability-item"><div class="capability-icon"></div><span>Irrigation</span></div>
+                                <div class="capability-item"><div class="capability-icon"></div><span>Site improvements</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>Underground Utility Coordination &amp; Civil BIM</h2>
+                        <p>Most BIM providers stop at the building line. We do not. EBIC models and coordinates the wet and dry utilities below the slab and across the site, so that underground conflicts are found in the model instead of in the trench.</p>
+
+                        <p>Underground rework is among the most expensive failures on a job: crews are mobilized, excavation is open, and a single unresolved crossing between storm and sanitary can stop a site for days. Coordinating that scope against the building model before anyone digs is the cheapest insurance on the project.</p>
+
+                        <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">What We Deliver</h4>
+                        <ul class="service-features">
+                            <li>Wet and dry utility modeling from civil drawings and survey data</li>
+                            <li>Utility conflict analysis and clash detection against foundations and building systems</li>
+                            <li>Storm, sanitary, potable, fire water and FDC coordination in a single federated model</li>
+                            <li>Subsurface utility engineering (SUE) data conversion: we take your ASCE 38 QL-A and QL-B deliverables and build the coordinated model</li>
+                            <li>Utility conflict matrix translated into a working 3D coordination model</li>
+                            <li>Civil 3D to Revit and Navisworks integration, including pipe network interference checking without the usual joint-by-joint false positives</li>
+                            <li>Utility crossing and cover verification prior to excavation</li>
+                            <li>As-built underground documentation from survey points and field data</li>
+                            <li>Coordination sets and 2D backflow for site subcontractors</li>
+                        </ul>
+
+                        <div class="engagement-note">
+                            <p>Proven at scale: EBIC coordinated civil underground utilities across Universal Epic Universe, including Celestial Park (GC: Yates, Sub: Phillips &amp; Jordan) and Dragon Land Civil (GC: Hensel Phelps, Sub: Phillips &amp; Jordan).</p>
+                        </div>
+
+                        <a href="contact.html" class="btn btn-primary">Discuss Underground Coordination</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="bim-manager" class="service-detail">
+            <div class="container">
+                <div class="service-content">
+                    <div>
+                        <h2>BIM Manager as a Service</h2>
+                        <p>A full-time BIM manager is a six-figure hire. Most contractors and design firms do not need one full time, but they do need one. EBIC provides an experienced BIM manager on a monthly retainer, embedded in your team and accountable for your standards, your models, and your coordination calendar.</p>
+
+                        <p>You get continuity without the headcount: the same person every week, who knows your projects, owns your templates, runs your coordination meetings, and is reachable when a model breaks the day before a deadline.</p>
+
+                        <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">What the Retainer Covers</h4>
+                        <ul class="service-features">
+                            <li>BIM Execution Plan authoring and enforcement</li>
+                            <li>Company and project template ownership and version control</li>
+                            <li>Weekly clash detection cycles and coordination meeting facilitation</li>
+                            <li>Model health monitoring, audits and remediation</li>
+                            <li>Standards development, content library management and staff mentoring</li>
+                            <li>Software, licensing and workflow guidance</li>
+                            <li>Owner and general contractor BIM deliverable compliance</li>
+                        </ul>
+
+                        <div class="engagement-note">
+                            <p>EBIC currently operates as the acting BIM manager for multiple firms simultaneously, at a fraction of the cost of a single in-house hire.</p>
+                        </div>
+
+                        <a href="contact.html" class="btn btn-primary">Request Retainer Pricing</a>
+                    </div>
+                    <div>
+                        <img src="../assets/images/projects/Pics/VDC meeting.jpg" alt="BIM manager facilitating a project coordination meeting" style="width: 100%; border-radius: var(--border-radius-lg); margin-bottom: var(--space-4);">
+                        <div style="background: var(--color-gray-100); padding: var(--space-4); border-radius: var(--border-radius-md);">
+                            <h4 style="margin-bottom: var(--space-3);">Who This Is For</h4>
+                            <ul style="margin: 0; padding-left: var(--space-5);">
+                                <li>Subcontractors newly required to deliver BIM</li>
+                                <li>Design firms without a dedicated BIM lead</li>
+                                <li>General contractors scaling coordination across jobs</li>
+                                <li>Teams between BIM manager hires</li>
+                                <li>Firms whose standards have drifted project to project</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="reality-capture" class="service-detail">
             <div class="container">
                 <div class="service-content">
@@ -243,7 +380,7 @@
                     <div>
                         <h2>Reality Capture & Scan-to-BIM</h2>
                         <p>Precision FARO laser scanning services delivering millimeter-accurate as-built documentation. We transform point cloud data into fast, actionable information that drives better project decisions and outcomes.</p>
-                        
+
                         <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">Our Services</h4>
                         <ul class="service-features">
                             <li>FARO Laser Scanning (high-accuracy point cloud capture)</li>
@@ -255,11 +392,11 @@
                             <li>Industrial Facility Mapping (complex mechanical and process systems)</li>
                             <li>Historical Building Documentation (preservation and renovation support)</li>
                         </ul>
-                        
+
                         <div style="background: var(--color-accent-light); padding: var(--space-4); border-radius: var(--border-radius-md); margin: var(--space-4) 0;">
                             <p style="margin: 0; font-weight: 600;">Fast turnaround times with actionable data that helps you make informed decisions quickly.</p>
                         </div>
-                        
+
                         <a href="contact.html" class="btn btn-primary">Request Scanning Quote</a>
                     </div>
                 </div>
@@ -272,7 +409,7 @@
                     <div>
                         <h2>Training</h2>
                         <p>Expert training programs designed to build your team's skills and optimize BIM workflows. Our training is based on real-world experience across design, construction, and owner perspectives, ensuring practical knowledge that translates directly to your projects.</p>
-                        
+
                         <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">Training Programs</h4>
                         <ul class="service-features">
                             <li>Expert Revit Training (from fundamentals to advanced parametric design)</li>
@@ -282,7 +419,7 @@
                             <li>Project-Specific Training (tailored to your current projects and standards)</li>
                             <li>Best Practices Implementation (industry standards and proven methodologies)</li>
                         </ul>
-                        
+
                         <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">Why Choose EBIC Training?</h4>
                         <ul class="service-features">
                             <li>Instructors with 18+ years of hands-on BIM experience</li>
@@ -291,7 +428,7 @@
                             <li>Practical, project-based learning approach</li>
                             <li>Ongoing support beyond initial training sessions</li>
                         </ul>
-                        
+
                         <a href="contact.html" class="btn btn-primary">Discuss Training Needs</a>
                     </div>
                     <div>
@@ -336,7 +473,7 @@
 
                         <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: var(--space-4); border-radius: var(--border-radius-md); margin: var(--space-4) 0;">
                             <h4 style="margin-bottom: var(--space-3); color: white;">AI That Amplifies Your Team</h4>
-                            <p style="margin: 0; line-height: 1.6;">Our AI solutions are designed to <strong>enhance and empower your existing workforce</strong>, not replace it. By automating repetitive, time-consuming tasks, we free your skilled professionals to focus on strategic thinking, creative problem-solving, and high-value decision-making. The result: your team accomplishes more, delivers better outcomes, and maintains higher job satisfaction—all without adding headcount. We believe the future of construction technology is <strong>human expertise amplified by intelligent automation</strong>, creating opportunities for professional growth while dramatically increasing organizational capacity.</p>
+                            <p style="margin: 0; line-height: 1.6;">Our AI solutions are designed to <strong>enhance and empower your existing workforce</strong>, not replace it. By automating repetitive, time-consuming tasks, we free your skilled professionals to focus on strategic thinking, creative problem-solving, and high-value decision-making. The result: your team accomplishes more, delivers better outcomes, and maintains higher job satisfaction -- all without adding headcount. We believe the future of construction technology is <strong>human expertise amplified by intelligent automation</strong>, creating opportunities for professional growth while dramatically increasing organizational capacity.</p>
                         </div>
 
                         <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">Development Services</h4>
@@ -349,11 +486,11 @@
                             <li>Data Processing and Analytics (extract insights from BIM data)</li>
                             <li>Cloud Infrastructure Development (modern, scalable architecture)</li>
                         </ul>
-                        
+
                         <div style="background: var(--color-accent-light); padding: var(--space-4); border-radius: var(--border-radius-md); margin: var(--space-4) 0;">
                             <p style="margin: 0; font-weight: 600;">Open-Source Portfolio: Our published repositories and production tools demonstrate capability to build sophisticated, integrated solutions for complex technical challenges.</p>
                         </div>
-                        
+
                         <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">Why Choose EBIC for Development?</h4>
                         <ul class="service-features">
                             <li>Deep understanding of BIM workflows from contractor, designer, and owner perspectives</li>
@@ -362,8 +499,116 @@
                             <li>Focus on practical, production-ready solutions</li>
                             <li>Ongoing support and continuous improvement</li>
                         </ul>
-                        
+
                         <a href="contact.html" class="btn btn-primary">Explore Custom Solutions</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="it-services" class="service-detail">
+            <div class="container">
+                <div class="service-content">
+                    <div>
+                        <h2>IT Services &amp; Support for Construction Companies</h2>
+                        <p>The "IT" in Ehrig BIM &amp; IT Consultation is not decorative. We keep small and mid-sized businesses running: networks, workstations, servers, backups, and the high-performance machines that engineering and design work actually depend on.</p>
+
+                        <p>A generalist IT provider does not know why a Revit workstation behaves differently from an office PC, why a federated coordination model chokes a network share, what a FARO scan does to your storage plan, or how to keep Procore, Bluebeam and Autodesk licensing working across a jobsite connection. We support both sides because we work on both sides.</p>
+
+                        <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">Managed IT</h4>
+                        <ul class="service-features">
+                            <li>Network design, maintenance and troubleshooting</li>
+                            <li>Workstation deployment, imaging and support</li>
+                            <li>Server, NAS and storage configuration</li>
+                            <li>Backup, disaster recovery and business continuity</li>
+                            <li>Security hardening, patching and endpoint protection</li>
+                            <li>Vendor, license and software asset management</li>
+                            <li>High-performance workstation specification for CAD, BIM and reality capture</li>
+                        </ul>
+
+                        <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">AI Setup &amp; Integration</h4>
+                        <ul class="service-features">
+                            <li>Practical AI assessment: what is worth automating and what is not</li>
+                            <li>Local and private AI deployment for sensitive business data</li>
+                            <li>AI tooling integration with existing business systems</li>
+                            <li>Staff enablement and workflow redesign around AI assistance</li>
+                        </ul>
+
+                        <div class="engagement-note">
+                            <p>Available hourly for project work or on a monthly managed-services agreement for ongoing coverage.</p>
+                        </div>
+
+                        <a href="contact.html" class="btn btn-primary">Request IT Support</a>
+                    </div>
+                    <div>
+                        <div style="background: var(--color-gray-100); padding: var(--space-4); border-radius: var(--border-radius-md); margin-bottom: var(--space-4);">
+                            <h4 style="margin-bottom: var(--space-3);">Engagement Models</h4>
+                            <ul style="margin: 0; padding-left: var(--space-5);">
+                                <li>Hourly / as-needed support</li>
+                                <li>Monthly managed-services retainer</li>
+                                <li>Project-based build-outs and migrations</li>
+                                <li>Emergency and after-hours response</li>
+                            </ul>
+                        </div>
+                        <div style="background: var(--color-gray-100); padding: var(--space-4); border-radius: var(--border-radius-md);">
+                            <h4 style="margin-bottom: var(--space-3);">Who We Support</h4>
+                            <ul style="margin: 0; padding-left: var(--space-5);">
+                                <li>Engineering, design and construction firms</li>
+                                <li>Robotics and technology companies</li>
+                                <li>Professional services offices</li>
+                                <li>Small businesses without in-house IT</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="federal-bim" class="service-detail">
+            <div class="container">
+                <div class="service-content">
+                    <div>
+                        <div style="background: var(--color-gray-100); padding: var(--space-4); border-radius: var(--border-radius-md); margin-bottom: var(--space-4);">
+                            <h4 style="margin-bottom: var(--space-3);">Installation Experience</h4>
+                            <p style="margin: 0;"><strong>8+ military and federal installations</strong>, including:</p>
+                            <ul style="margin: var(--space-3) 0 0; padding-left: var(--space-5);">
+                                <li>Okinawa, Japan</li>
+                                <li>Rota, Spain</li>
+                                <li>Saipan and Tinian</li>
+                                <li>Tyndall Air Force Base</li>
+                                <li>Kennedy Space Center facilities</li>
+                                <li>USAF stadium complex</li>
+                            </ul>
+                        </div>
+                        <div style="background: var(--color-gray-100); padding: var(--space-4); border-radius: var(--border-radius-md);">
+                            <h4 style="margin-bottom: var(--space-3);">Standards We Work To</h4>
+                            <ul style="margin: 0; padding-left: var(--space-5);">
+                                <li>NAVFAC BIM requirements</li>
+                                <li>Unified Facilities Criteria (UFC)</li>
+                                <li>COBie deliverables</li>
+                                <li>Owner-specific BIM execution plans</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>Federal &amp; NAVFAC BIM Programs</h2>
+                        <p>Federal work does not fail on modeling ability. It fails on deliverable compliance: the wrong file structure, missing COBie data, a BIM execution plan that does not match the contract. EBIC has delivered BIM on military installations across the Pacific and the southeastern United States, and understands what the government actually asks for at closeout.</p>
+
+                        <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-3);">Program Support</h4>
+                        <ul class="service-features">
+                            <li>NAVFAC and UFC BIM deliverable compliance review</li>
+                            <li>BIM execution planning for federal contracts</li>
+                            <li>COBie data structuring and validation</li>
+                            <li>Scan-to-BIM as-built documentation for existing federal facilities</li>
+                            <li>Coordination support for MACC and IDIQ task orders</li>
+                            <li>Teaming support for contractors pursuing federal BIM scope</li>
+                        </ul>
+
+                        <div class="engagement-note">
+                            <p>Security-cleared pathways available. EBIC is actively pursuing federal BIM program work and welcomes teaming conversations with prime contractors.</p>
+                        </div>
+
+                        <a href="contact.html" class="btn btn-primary">Discuss Federal Teaming</a>
                     </div>
                 </div>
             </div>
@@ -398,9 +643,13 @@
                     <h4>Services</h4>
                     <ul>
                         <li><a href="services.html#bim-vdc">BIM & VDC Services</a></li>
+                        <li><a href="services.html#civil-underground">Underground Utility BIM</a></li>
+                        <li><a href="services.html#bim-manager">BIM Manager as a Service</a></li>
                         <li><a href="services.html#reality-capture">Reality Capture</a></li>
-                        <li><a href="services.html#training">Training</a></li>
+                        <li><a href="services.html#it-services">IT Services & Support</a></li>
                         <li><a href="services.html#software-ai">Software & AI</a></li>
+                        <li><a href="services.html#federal-bim">Federal & NAVFAC BIM</a></li>
+                        <li><a href="services.html#training">Training</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -425,5 +674,123 @@
     </footer>
 
     <script src="../assets/js/main.js"></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://www.ebicinc.com/#organization",
+          "name": "Ehrig BIM & IT Consultation, Inc.",
+          "alternateName": "EBIC",
+          "url": "https://www.ebicinc.com/",
+          "logo": "https://www.ebicinc.com/assets/images/logo-main.png",
+          "telephone": "+1-407-234-3445",
+          "foundingDate": "2020-03",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "403 South Edgemon Avenue",
+            "addressLocality": "Winter Springs",
+            "addressRegion": "FL",
+            "postalCode": "32708",
+            "addressCountry": "US"
+          },
+          "areaServed": [
+            { "@type": "City", "name": "Orlando" },
+            { "@type": "City", "name": "Tampa" },
+            { "@type": "State", "name": "Florida" },
+            { "@type": "Country", "name": "United States" }
+          ],
+          "knowsAbout": [
+            "Building Information Modeling",
+            "Virtual Design and Construction",
+            "Underground utility coordination",
+            "Clash detection",
+            "Scan-to-BIM",
+            "Autodesk Revit",
+            "Autodesk Navisworks",
+            "Managed IT services"
+          ]
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://www.ebicinc.com/pages/services.html",
+          "url": "https://www.ebicinc.com/pages/services.html",
+          "name": "BIM, VDC & IT Services in Orlando, FL | EBIC Consulting",
+          "isPartOf": { "@id": "https://www.ebicinc.com/#organization" },
+          "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ebicinc.com/" },
+              { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://www.ebicinc.com/pages/services.html" }
+            ]
+          }
+        },
+        {
+          "@type": "OfferCatalog",
+          "name": "EBIC Services",
+          "itemListElement": [
+            {
+              "@type": "Service",
+              "name": "BIM & VDC Coordination",
+              "description": "Model coordination, clash detection, LOD 500 modeling and constructability review for contractors, designers and owners.",
+              "url": "https://www.ebicinc.com/pages/services.html#bim-vdc",
+              "provider": { "@id": "https://www.ebicinc.com/#organization" }
+            },
+            {
+              "@type": "Service",
+              "name": "Underground Utility Coordination & Civil BIM",
+              "description": "Wet and dry underground utility modeling, utility conflict analysis and clash detection for sanitary, storm, potable, fire water, FDC and irrigation systems, including SUE (ASCE 38) data conversion, coordinated against the building model before excavation.",
+              "url": "https://www.ebicinc.com/pages/services.html#civil-underground",
+              "provider": { "@id": "https://www.ebicinc.com/#organization" }
+            },
+            {
+              "@type": "Service",
+              "name": "BIM Manager as a Service",
+              "description": "Outsourced fractional BIM manager on a monthly retainer: BIM execution planning, template ownership, coordination cycles and model health monitoring.",
+              "url": "https://www.ebicinc.com/pages/services.html#bim-manager",
+              "provider": { "@id": "https://www.ebicinc.com/#organization" }
+            },
+            {
+              "@type": "Service",
+              "name": "Reality Capture & Scan-to-BIM",
+              "description": "FARO laser scanning, point cloud processing and as-built BIM documentation.",
+              "url": "https://www.ebicinc.com/pages/services.html#reality-capture",
+              "provider": { "@id": "https://www.ebicinc.com/#organization" }
+            },
+            {
+              "@type": "Service",
+              "name": "IT Services & Managed Support",
+              "description": "Network maintenance, workstation and server support, backup and disaster recovery, and AI setup for small and mid-sized businesses.",
+              "url": "https://www.ebicinc.com/pages/services.html#it-services",
+              "provider": { "@id": "https://www.ebicinc.com/#organization" }
+            },
+            {
+              "@type": "Service",
+              "name": "Software Development & AI Automation",
+              "description": "Custom Revit add-ins, Dynamo and Python automation, API integration and AI-powered workflow automation for AEC organizations.",
+              "url": "https://www.ebicinc.com/pages/services.html#software-ai",
+              "provider": { "@id": "https://www.ebicinc.com/#organization" }
+            },
+            {
+              "@type": "Service",
+              "name": "Federal & NAVFAC BIM Programs",
+              "description": "NAVFAC and UFC BIM deliverable compliance, COBie validation and BIM execution planning for federal contracts.",
+              "url": "https://www.ebicinc.com/pages/services.html#federal-bim",
+              "provider": { "@id": "https://www.ebicinc.com/#organization" }
+            },
+            {
+              "@type": "Service",
+              "name": "Training",
+              "description": "Revit, Navisworks and BIM workflow training delivered on-site, remotely or embedded in live projects.",
+              "url": "https://www.ebicinc.com/pages/services.html#training",
+              "provider": { "@id": "https://www.ebicinc.com/#organization" }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </body>
 </html>

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Not useful in search results
+Disallow: /test-model.html
+
+Sitemap: https://www.ebicinc.com/sitemap.xml

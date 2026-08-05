@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get an instant estimate for BIM modeling, VDC coordination, reality capture, and more. EBIC - Ehrig BIM & IT Consultation, Inc.">
+    <title>Get a BIM, VDC or IT Services Quote | EBIC Orlando, FL</title>
+    <link rel="canonical" href="https://www.ebicinc.com/pages/quote.html">
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="EBIC - Ehrig BIM &amp; IT Consultation, Inc.">
+    <meta property="og:title" content="Get a BIM, VDC or IT Services Quote | EBIC Orlando, FL">
+    <meta property="og:description" content="Get an estimate for BIM modeling, VDC coordination, underground utility BIM, reality capture or IT support from EBIC.">
+    <meta property="og:url" content="https://www.ebicinc.com/pages/quote.html">
+    <meta property="og:image" content="https://www.ebicinc.com/assets/images/logo-main.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" href="../assets/images/logo-black.png">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        /* ---- Quote Page Specific Styles ---- */
+        .quote-hero {
+            background: linear-gradient(135deg, #004c99 0%, #0066cc 60%, #ff6b35 100%);
+            color: white;
+            padding: 8rem 0 4rem;
+            margin-top: var(--header-height);
+            text-align: center;
+        }
+        .quote-hero h1 { margin-bottom: var(--space-4); }
+        .quote-hero p  { font-size: var(--font-size-lg); max-width: 600px; margin: 0 auto; opacity: 0.9; }
+
+        /* Progress bar */
+        .progress-bar-wrap {
+            background: var(--color-gray-200);
+            border-radius: 100px;
+            height: 6px;
+            margin: var(--space-8) 0 var(--space-6);
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0066cc, #ff6b35);
+            border-radius: 100px;
+            transition: width 0.4s ease;
+        }
+        .step-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-8);
+            font-size: var(--font-size-sm);
+        }
+        .step-label {
+            color: var(--color-gray-500);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .step-label.active  { color: var(--color-primary); font-weight: 700; }
+        .step-label.done    { color: var(--color-accent); }
+
+        /* Form container */
+        .quote-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: var(--space-8);
+            padding: var(--space-10) 0;
+            align-items: start;
+        }
+        .quote-form-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: var(--space-8);
+        }
+        .quote-sidebar {
+            position: sticky;
+            top: calc(var(--header-height) + 20px);
+        }
+        .sidebar-card {
+            background: var(--color-gray-100);
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-6);
+            border-left: 4px solid var(--color-primary);
+            margin-bottom: var(--space-5);
+        }
+        .sidebar-card h4 { color: var(--color-primary); margin-bottom: var(--space-3); }
+        .sidebar-card p  { font-size: var(--font-size-sm); color: var(--color-gray-700); }
+
+        /* Steps */
+        .form-step { display: none; }
+        .form-step.active { display: block; }
+
+        .step-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--color-primary-dark);
+            margin-bottom: var(--space-2);
+        }
+        .step-subtitle {
+            color: var(--color-gray-500);
+            margin-bottom: var(--space-6);
+            font-size: var(--font-size-sm);
+        }
+
+        /* Form elements */
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+        .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
+        .form-group { margin-bottom: var(--space-5); }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--color-gray-700);
+            margin-bottom: var(--space-2);
+            font-size: var(--font-size-sm);
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: var(--space-3);
+            border: 2px solid var(--color-gray-200);
+            border-radius: var(--border-radius);
+            font-family: var(--font-primary);
+            font-size: var(--font-size-base);
+            transition: border-color var(--transition-base);
+            background: white;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+        .form-group .hint {
+            font-size: var(--font-size-xs);
+            color: var(--color-gray-500);
+            margin-top: var(--space-1);
+        }
+        .required { color: var(--color-secondary); }
+
+        /* Service sections */
+        .service-section {
+            border: 2px solid var(--color-gray-200);
+            border-radius: var(--border-radius-lg);
+            margin-bottom: var(--space-5);
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .service-section.selected { border-color: var(--color-primary); }
+
+        .service-section-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-4) var(--space-5);
+            background: var(--color-gray-100);
+            cursor: pointer;
+            user-select: none;
+        }
+        .service-section-header:hover { background: #e8f0fb; }
+        .service-section.selected .service-section-header { background: #e8f0fb; }
+
+        .service-check {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--color-primary);
+        }
+        .service-section-title {
+            font-weight: 700;
+            color: var(--color-gray-800);
+            font-size: var(--font-size-lg);
+        }
+        .service-section-badge {
+            margin-left: auto;
+            background: var(--color-primary);
+            color: white;
+            font-size: var(--font-size-xs);
+            padding: 2px 8px;
+            border-radius: 100px;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .service-section.selected .service-section-badge { opacity: 1; }
+
+        .service-section-body {
+            padding: var(--space-5);
+            display: none;
+        }
+        .service-section.selected .service-section-body { display: block; }
+
+        /* Discipline grid (BIM trades) */
+        .discipline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
+        }
+        .discipline-card {
+            border: 2px solid var(--color-gray-200);
+            border-radius: var(--border-radius);
+            padding: var(--space-3);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .discipline-card:hover { border-color: var(--color-primary-light); }
+        .discipline-card.selected { border-color: var(--color-primary); background: #f0f7ff; }
+
+        .discipline-card label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            margin-bottom: 0;
+        }
+        .discipline-card input[type="checkbox"] { accent-color: var(--color-primary); }
+
+        .lod-selector {
+            display: none;
+            margin-top: var(--space-3);
+            padding-top: var(--space-3);
+            border-top: 1px solid var(--color-gray-200);
+        }
+        .discipline-card.selected .lod-selector { display: block; }
+
+        .lod-selector label {
+            font-size: var(--font-size-xs);
+            color: var(--color-gray-500);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+        .lod-buttons {
+            display: flex;
+            gap: 4px;
+        }
+        .lod-btn {
+            flex: 1;
+            padding: 4px 0;
+            font-size: 11px;
+            font-weight: 700;
+            border: 2px solid var(--color-gray-200);
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: center;
+        }
+        .lod-btn:hover { border-color: var(--color-primary-light); }
+        .lod-btn.active { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+
+        /* Checkbox groups */
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: var(--space-2);
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-3);
+            border: 1px solid var(--color-gray-200);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .checkbox-item:hover { border-color: var(--color-primary-light); background: #f8fbff; }
+        .checkbox-item input { margin-top: 3px; accent-color: var(--color-primary); }
+        .checkbox-item span { font-size: var(--font-size-sm); font-weight: 500; }
+
+        /* Inline fields */
+        .inline-field {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-top: var(--space-4);
+        }
+        .inline-field label { white-space: nowrap; font-weight: 600; font-size: var(--font-size-sm); color: var(--color-gray-700); }
+        .inline-field input, .inline-field select { max-width: 160px; }
+
+        /* Review step */
+        .review-section {
+            border: 1px solid var(--color-gray-200);
+            border-radius: var(--border-radius);
+            padding: var(--space-5);
+            margin-bottom: var(--space-5);
+        }
+        .review-section h4 {
+            color: var(--color-primary-dark);
+            font-size: var(--font-size-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-3);
+        }
+        .review-row {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-2) 0;
+            border-bottom: 1px solid var(--color-gray-200);
+            font-size: var(--font-size-sm);
+        }
+        .review-row:last-child { border-bottom: none; }
+        .review-row .label { color: var(--color-gray-500); }
+        .review-row .value { font-weight: 600; }
+
+        /* Navigation buttons */
+        .form-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--space-8);
+            padding-top: var(--space-6);
+            border-top: 2px solid var(--color-gray-200);
+        }
+        .btn-prev {
+            background: white;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--border-radius);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-prev:hover { background: var(--color-primary); color: white; }
+        .btn-next {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: var(--space-3) var(--space-8);
+            border-radius: var(--border-radius);
+            font-size: var(--font-size-base);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-next:hover { background: var(--color-primary-dark); }
+        .btn-submit {
+            background: var(--color-secondary);
+            color: white;
+            border: none;
+            padding: var(--space-3) var(--space-8);
+            border-radius: var(--border-radius);
+            font-size: var(--font-size-base);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-submit:hover { background: #e05500; }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Success state */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: var(--space-12) var(--space-8);
+        }
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--color-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-6);
+            font-size: 2rem;
+            color: white;
+        }
+
+        @media (max-width: 900px) {
+            .quote-layout { grid-template-columns: 1fr; }
+            .quote-sidebar { position: static; }
+            .form-row, .form-row.three { grid-template-columns: 1fr; }
+            .discipline-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .discipline-grid { grid-template-columns: 1fr; }
+            .step-labels { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header" role="banner">
+        <nav class="main-nav" role="navigation" aria-label="Main navigation">
+            <div class="container nav-container">
+                <div class="logo">
+                    <a href="../index.html" aria-label="EBIC Home">
+                        <img src="../assets/images/logo-main.png" alt="EBIC - Ehrig BIM & IT Consultation, Inc." class="site-logo">
+                    </a>
+                </div>
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="../showcase/index.html" class="nav-link">Showcase</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="quote.html" class="nav-link btn-primary active">Get a Quote</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="quote-hero">
+            <div class="container">
+                <h1>Get a Project Estimate</h1>
+                <p>Answer a few questions about your project and we will generate a detailed quote, reviewed by Jordan before delivery.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="container quote-layout">
+                <!-- Main Form -->
+                <div class="quote-form-card">
+                    <div class="progress-bar-wrap">
+                        <div class="progress-bar-fill" id="progressBar" style="width: 20%;"></div>
+                    </div>
+                    <div class="step-labels">
+                        <span class="step-label active" data-step="1">Contact</span>
+                        <span class="step-label" data-step="2">Project</span>
+                        <span class="step-label" data-step="3">BIM Services</span>
+                        <span class="step-label" data-step="4">Other Services</span>
+                        <span class="step-label" data-step="5">Review</span>
+                    </div>
+
+                    <form id="quoteForm" novalidate>
+
+                        <!-- ========== STEP 1: CONTACT ========== -->
+                        <div class="form-step active" data-step="1">
+                            <h2 class="step-title">Contact Information</h2>
+                            <p class="step-subtitle">Tell us who you are. All fields marked <span class="required">*</span> are required.</p>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="contact_name">Full Name <span class="required">*</span></label>
+                                    <input type="text" id="contact_name" name="contact_name" required autocomplete="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact_title">Your Title</label>
+                                    <input type="text" id="contact_title" name="contact_title" placeholder="e.g. VDC Manager" autocomplete="organization-title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact_company">Company / Organization <span class="required">*</span></label>
+                                <input type="text" id="contact_company" name="contact_company" required autocomplete="organization">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="contact_email">Email Address <span class="required">*</span></label>
+                                    <input type="email" id="contact_email" name="contact_email" required autocomplete="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact_phone">Phone Number</label>
+                                    <input type="tel" id="contact_phone" name="contact_phone" autocomplete="tel">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="relationship">Client Relationship</label>
+                                <select id="relationship" name="relationship">
+                                    <option value="new">New Client</option>
+                                    <option value="repeat">Repeat Client (-5%)</option>
+                                    <option value="retainer">Retainer Agreement (-10%)</option>
+                                    <option value="multi_project">Multi-Project Bundle (-15%)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="referral_source">How did you hear about EBIC?</label>
+                                <select id="referral_source" name="referral_source">
+                                    <option value="">Select one</option>
+                                    <option value="referral">Referral from colleague</option>
+                                    <option value="linkedin">LinkedIn</option>
+                                    <option value="search">Web search</option>
+                                    <option value="previous_project">Previous project</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- ========== STEP 2: PROJECT ========== -->
+                        <div class="form-step" data-step="2">
+                            <h2 class="step-title">Project Details</h2>
+                            <p class="step-subtitle">Help us understand the scope and context of your project.</p>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="project_name">Project Name <span class="required">*</span></label>
+                                    <input type="text" id="project_name" name="project_name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="project_location">Project Location</label>
+                                    <input type="text" id="project_location" name="project_location" placeholder="City, State">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="project_sf">Project Size (Square Feet) <span class="required">*</span></label>
+                                    <input type="number" id="project_sf" name="project_sf" required min="0" placeholder="e.g. 50000">
+                                    <span class="hint">Enter total gross square footage of the project</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="project_type">Project Type <span class="required">*</span></label>
+                                    <select id="project_type" name="project_type" required>
+                                        <option value="commercial">Commercial (base rate)</option>
+                                        <option value="aviation">Aviation / Airport (+25%)</option>
+                                        <option value="military">Military / Government (+20%)</option>
+                                        <option value="healthcare">Healthcare (+30%)</option>
+                                        <option value="industrial">Industrial / Process (+15%)</option>
+                                        <option value="data_center">Data Center (+20%)</option>
+                                        <option value="historic">Historic / Renovation (+20%)</option>
+                                        <option value="theme_park">Theme Park / Entertainment (+15%)</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="timeline">Timeline</label>
+                                <select id="timeline" name="timeline">
+                                    <option value="standard">Standard (base price)</option>
+                                    <option value="expedited">Expedited - 50% faster (+25%)</option>
+                                    <option value="rush">Rush - Urgent (+50%)</option>
+                                    <option value="extended">Extended - Flexible schedule (-10%)</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="has_bep">Existing BIM Execution Plan?</label>
+                                    <select id="has_bep" name="has_bep">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="draft">Draft / Partial</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="has_existing_models">Existing Models / Drawings to Provide?</label>
+                                    <select id="has_existing_models" name="has_existing_models">
+                                        <option value="no">No</option>
+                                        <option value="yes_models">Yes - BIM models</option>
+                                        <option value="yes_cad">Yes - CAD drawings</option>
+                                        <option value="yes_pdf">Yes - PDFs only</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ========== STEP 3: BIM SERVICES ========== -->
+                        <div class="form-step" data-step="3">
+                            <h2 class="step-title">BIM Modeling Services</h2>
+                            <p class="step-subtitle">Select which disciplines need to be modeled and the required Level of Development (LOD). Minimum LOD 300 per EBIC policy.</p>
+
+                            <!-- BIM Modeling Section -->
+                            <div class="service-section" id="bim-section">
+                                <div class="service-section-header" onclick="toggleSection('bim-section')">
+                                    <input type="checkbox" class="service-check" id="bim_enabled" name="bim_enabled" onclick="event.stopPropagation(); toggleSection('bim-section', this.checked)">
+                                    <span class="service-section-title">BIM Modeling (by discipline)</span>
+                                    <span class="service-section-badge">Selected</span>
+                                </div>
+                                <div class="service-section-body">
+                                    <p style="font-size:var(--font-size-sm);color:var(--color-gray-500);margin-bottom:var(--space-4);">Check each discipline needed. Then select the LOD for each.</p>
+                                    <div class="discipline-grid" id="disciplineGrid">
+
+                                        <div class="discipline-card" data-discipline="architectural">
+                                            <label>
+                                                <input type="checkbox" name="disc_architectural" value="architectural">
+                                                Architectural
+                                            </label>
+                                            <div class="lod-selector">
+                                                <label>LOD</label>
+                                                <div class="lod-buttons">
+                                                    <button type="button" class="lod-btn active" data-lod="300" data-disc="architectural">300</button>
+                                                    <button type="button" class="lod-btn" data-lod="350" data-disc="architectural">350</button>
+                                                    <button type="button" class="lod-btn" data-lod="400" data-disc="architectural">400</button>
+                                                    <button type="button" class="lod-btn" data-lod="500" data-disc="architectural">500</button>
+                                                </div>
+                                                <input type="hidden" name="lod_architectural" value="300">
+                                            </div>
+                                        </div>
+
+                                        <div class="discipline-card" data-discipline="structural">
+                                            <label>
+                                                <input type="checkbox" name="disc_structural" value="structural">
+                                                Structural
+                                            </label>
+                                            <div class="lod-selector">
+                                                <label>LOD</label>
+                                                <div class="lod-buttons">
+                                                    <button type="button" class="lod-btn active" data-lod="300" data-disc="structural">300</button>
+                                                    <button type="button" class="lod-btn" data-lod="350" data-disc="structural">350</button>
+                                                    <button type="button" class="lod-btn" data-lod="400" data-disc="structural">400</button>
+                                                    <button type="button" class="lod-btn" data-lod="500" data-disc="structural">500</button>
+                                                </div>
+                                                <input type="hidden" name="lod_structural" value="300">
+                                            </div>
+                                        </div>
+
+                                        <div class="discipline-card" data-discipline="mechanical">
+                                            <label>
+                                                <input type="checkbox" name="disc_mechanical" value="mechanical">
+                                                Mechanical / HVAC
+                                            </label>
+                                            <div class="lod-selector">
+                                                <label>LOD</label>
+                                                <div class="lod-buttons">
+                                                    <button type="button" class="lod-btn active" data-lod="300" data-disc="mechanical">300</button>
+                                                    <button type="button" class="lod-btn" data-lod="350" data-disc="mechanical">350</button>
+                                                    <button type="button" class="lod-btn" data-lod="400" data-disc="mechanical">400</button>
+                                                    <button type="button" class="lod-btn" data-lod="500" data-disc="mechanical">500</button>
+                                                </div>
+                                                <input type="hidden" name="lod_mechanical" value="300">
+                                            </div>
+                                        </div>
+
+                                        <div class="discipline-card" data-discipline="electrical">
+                                            <label>
+                                                <input type="checkbox" name="disc_electrical" value="electrical">
+                                                Electrical
+                                            </label>
+                                            <div class="lod-selector">
+                                                <label>LOD</label>
+                                                <div class="lod-buttons">
+                                                    <button type="button" class="lod-btn active" data-lod="300" data-disc="electrical">300</button>
+                                                    <button type="button" class="lod-btn" data-lod="350" data-disc="electrical">350</button>
+                                                    <button type="button" class="lod-btn" data-lod="400" data-disc="electrical">400</button>
+                                                    <button type="button" class="lod-btn" data-lod="500" data-disc="electrical">500</button>
+                                                </div>
+                                                <input type="hidden" name="lod_electrical" value="300">
+                                            </div>
+                                        </div>
+
+                                        <div class="discipline-card" data-discipline="plumbing">
+                                            <label>
+                                                <input type="checkbox" name="disc_plumbing" value="plumbing">
+                                                Plumbing
+                                            </label>
+                                            <div class="lod-selector">
+                                                <label>LOD</label>
+                                                <div class="lod-buttons">
+                                                    <button type="button" class="lod-btn active" data-lod="300" data-disc="plumbing">300</button>
+                                                    <button type="button" class="lod-btn" data-lod="350" data-disc="plumbing">350</button>
+                                                    <button type="button" class="lod-btn" data-lod="400" data-disc="plumbing">400</button>
+                                                    <button type="button" class="lod-btn" data-lod="500" data-disc="plumbing">500</button>
+                                                </div>
+                                                <input type="hidden" name="lod_plumbing" value="300">
+                                            </div>
+                                        </div>
+
+                                        <div class="discipline-card" data-discipline="fire_protection">
+                                            <label>
+                                                <input type="checkbox" name="disc_fire_protection" value="fire_protection">
+                                                Fire Protection
+                                            </label>
+                                            <div class="lod-selector">
+                                                <label>LOD</label>
+                                                <div class="lod-buttons">
+                                                    <button type="button" class="lod-btn active" data-lod="300" data-disc="fire_protection">300</button>
+                                                    <button type="button" class="lod-btn" data-lod="350" data-disc="fire_protection">350</button>
+                                                    <button type="button" class="lod-btn" data-lod="400" data-disc="fire_protection">400</button>
+                                                    <button type="button" class="lod-btn" data-lod="500" data-disc="fire_protection">500</button>
+                                                </div>
+                                                <input type="hidden" name="lod_fire_protection" value="300">
+                                            </div>
+                                        </div>
+
+                                        <div class="discipline-card" data-discipline="low_voltage">
+                                            <label>
+                                                <input type="checkbox" name="disc_low_voltage" value="low_voltage">
+                                                Low Voltage / Technology
+                                            </label>
+                                            <div class="lod-selector">
+                                                <label>LOD</label>
+                                                <div class="lod-buttons">
+                                                    <button type="button" class="lod-btn active" data-lod="300" data-disc="low_voltage">300</button>
+                                                    <button type="button" class="lod-btn" data-lod="350" data-disc="low_voltage">350</button>
+                                                    <button type="button" class="lod-btn" data-lod="400" data-disc="low_voltage">400</button>
+                                                    <button type="button" class="lod-btn" data-lod="500" data-disc="low_voltage">500</button>
+                                                </div>
+                                                <input type="hidden" name="lod_low_voltage" value="300">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- VDC Coordination Section -->
+                            <div class="service-section" id="vdc-section">
+                                <div class="service-section-header" onclick="toggleSection('vdc-section')">
+                                    <input type="checkbox" class="service-check" id="vdc_enabled" name="vdc_enabled" onclick="event.stopPropagation(); toggleSection('vdc-section', this.checked)">
+                                    <span class="service-section-title">VDC Coordination</span>
+                                    <span class="service-section-badge">Selected</span>
+                                </div>
+                                <div class="service-section-body">
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" name="coordination_enabled" value="yes">
+                                            <span>Multi-Trade Coordination</span>
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" name="clash_detection" value="yes">
+                                            <span>Clash Detection & Resolution</span>
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" name="sequencing_4d" value="yes">
+                                            <span>4D Schedule Sequencing</span>
+                                        </label>
+                                    </div>
+                                    <div class="inline-field" id="tradeCountField" style="display:none;">
+                                        <label>Number of trades:</label>
+                                        <input type="number" name="trade_count" min="1" max="50" value="6" style="width:80px;">
+                                    </div>
+                                    <div class="inline-field" id="clashRoundsField" style="display:none;">
+                                        <label>Coordination rounds:</label>
+                                        <input type="number" name="clash_rounds" min="1" max="20" value="2" style="width:80px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ========== STEP 4: OTHER SERVICES ========== -->
+                        <div class="form-step" data-step="4">
+                            <h2 class="step-title">Additional Services</h2>
+                            <p class="step-subtitle">Select any other services needed for your project.</p>
+
+                            <!-- Reality Capture -->
+                            <div class="service-section" id="rc-section">
+                                <div class="service-section-header" onclick="toggleSection('rc-section')">
+                                    <input type="checkbox" class="service-check" id="rc_enabled" name="rc_enabled" onclick="event.stopPropagation(); toggleSection('rc-section', this.checked)">
+                                    <span class="service-section-title">Reality Capture / Scan-to-BIM</span>
+                                    <span class="service-section-badge">Selected</span>
+                                </div>
+                                <div class="service-section-body">
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" name="scanning_enabled" id="scanningCheck" value="yes">
+                                            <span>Field Laser Scanning</span>
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" name="scan_to_bim_enabled" id="s2bCheck" value="yes">
+                                            <span>Scan-to-BIM Modeling</span>
+                                        </label>
+                                    </div>
+                                    <div id="scanningOptions" style="display:none; margin-top:var(--space-4);">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label>Estimated scan days</label>
+                                                <input type="number" name="scan_days" min="1" value="1">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Site distance from Winter Springs, FL</label>
+                                                <select name="scan_distance">
+                                                    <option value="local">Local (under 50 mi - $500 mob)</option>
+                                                    <option value="regional">Regional (50-200 mi - $1,500 mob)</option>
+                                                    <option value="travel">Travel (200+ mi - $2,500+ mob)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="s2bOptions" style="display:none; margin-top:var(--space-4);">
+                                        <div class="form-group">
+                                            <label>Scan-to-BIM scope</label>
+                                            <select name="s2b_scope">
+                                                <option value="architectural">Architectural (LOD 300) - $1.50/SF</option>
+                                                <option value="arch_visible_mep">Arch + Visible MEP (LOD 300) - $2.50/SF</option>
+                                                <option value="full_mep">Full MEP (LOD 350) - $5.00/SF</option>
+                                                <option value="fabrication">Fabrication Detail (LOD 400) - $8.00/SF</option>
+                                                <option value="as_built">As-Built Verified (LOD 500) - $12.00/SF</option>
+                                                <option value="shell_core">Shell & Core only (LOD 200) - $0.50/SF</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Specialty -->
+                            <div class="service-section" id="spec-section">
+                                <div class="service-section-header" onclick="toggleSection('spec-section')">
+                                    <input type="checkbox" class="service-check" id="spec_enabled" name="spec_enabled" onclick="event.stopPropagation(); toggleSection('spec-section', this.checked)">
+                                    <span class="service-section-title">Specialty Services</span>
+                                    <span class="service-section-badge">Selected</span>
+                                </div>
+                                <div class="service-section-body">
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" name="lightning_protection" id="lpCheck" value="yes">
+                                            <span>Lightning Protection Design</span>
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" name="low_voltage_design" id="lvCheck" value="yes">
+                                            <span>Low Voltage Design (BICSI)</span>
+                                        </label>
+                                    </div>
+                                    <div id="lpOptions" style="display:none;margin-top:var(--space-3);">
+                                        <label style="font-size:var(--font-size-sm);font-weight:600;color:var(--color-gray-700);">LP Design Phase</label>
+                                        <select name="lp_phase">
+                                            <option value="cd">Construction Documents ($3.50/SF, min $17,500)</option>
+                                            <option value="dd">Design Development ($2.00/SF, min $10,000)</option>
+                                            <option value="schematic">Schematic Design ($1.00/SF, min $5,000)</option>
+                                            <option value="feasibility">Feasibility Study (fixed $3,500)</option>
+                                        </select>
+                                    </div>
+                                    <div id="lvOptions" style="display:none;margin-top:var(--space-3);">
+                                        <label style="font-size:var(--font-size-sm);font-weight:600;color:var(--color-gray-700);">LV Package</label>
+                                        <select name="lv_package">
+                                            <option value="full_lv">Full LV Package ($1.50/SF, min $7,500)</option>
+                                            <option value="pathway">Pathway Design Only ($0.75/SF, min $4,000)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Training -->
+                            <div class="service-section" id="train-section">
+                                <div class="service-section-header" onclick="toggleSection('train-section')">
+                                    <input type="checkbox" class="service-check" id="train_enabled" name="train_enabled" onclick="event.stopPropagation(); toggleSection('train-section', this.checked)">
+                                    <span class="service-section-title">Training Services</span>
+                                    <span class="service-section-badge">Selected</span>
+                                </div>
+                                <div class="service-section-body">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Format</label>
+                                            <select name="training_format">
+                                                <option value="onsite_full">On-Site Full Day ($2,750)</option>
+                                                <option value="onsite_half">On-Site Half Day ($1,500)</option>
+                                                <option value="remote">Remote / Virtual ($1,250/day)</option>
+                                                <option value="multi_day">Multi-Day Program ($2,250/day)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Number of days</label>
+                                            <input type="number" name="training_days" min="1" value="1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Course(s) of interest (optional)</label>
+                                        <div class="checkbox-group">
+                                            <label class="checkbox-item"><input type="checkbox" name="course_revit_fund" value="yes"><span>Revit Fundamentals (3 days)</span></label>
+                                            <label class="checkbox-item"><input type="checkbox" name="course_revit_mep" value="yes"><span>Revit MEP (3 days)</span></label>
+                                            <label class="checkbox-item"><input type="checkbox" name="course_navis" value="yes"><span>Navisworks Coordination (2 days)</span></label>
+                                            <label class="checkbox-item"><input type="checkbox" name="course_bim_impl" value="yes"><span>BIM Implementation (2 days)</span></label>
+                                            <label class="checkbox-item"><input type="checkbox" name="course_s2b" value="yes"><span>Scan-to-BIM Workflow (1 day)</span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- AI & Software -->
+                            <div class="service-section" id="ai-section">
+                                <div class="service-section-header" onclick="toggleSection('ai-section')">
+                                    <input type="checkbox" class="service-check" id="ai_enabled" name="ai_enabled" onclick="event.stopPropagation(); toggleSection('ai-section', this.checked)">
+                                    <span class="service-section-title">AI, Software & IT</span>
+                                    <span class="service-section-badge">Selected</span>
+                                </div>
+                                <div class="service-section-body">
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-item"><input type="checkbox" name="ai_consulting" value="yes"><span>AI Strategy Consulting ($300/hr)</span></label>
+                                        <label class="checkbox-item"><input type="checkbox" name="mcp_dev" id="mcpCheck" value="yes"><span>MCP Server Development</span></label>
+                                        <label class="checkbox-item"><input type="checkbox" name="revit_plugin" id="rvtCheck" value="yes"><span>Revit Plugin Development</span></label>
+                                        <label class="checkbox-item"><input type="checkbox" name="it_workstation" id="wsCheck" value="yes"><span>Workstation Build / Optimization</span></label>
+                                        <label class="checkbox-item"><input type="checkbox" name="it_network" id="netCheck" value="yes"><span>Network Infrastructure</span></label>
+                                    </div>
+                                    <div id="mcpOptions" style="display:none;margin-top:var(--space-3);">
+                                        <label style="font-size:var(--font-size-sm);font-weight:600;">MCP Complexity</label>
+                                        <select name="mcp_complexity">
+                                            <option value="discovery">Discovery & Scoping ($2,500)</option>
+                                            <option value="basic">Basic Server - 5-10 tools ($10,000)</option>
+                                            <option value="advanced">Advanced Server - 20+ tools ($25,000)</option>
+                                            <option value="enterprise">Enterprise Integration ($50,000+)</option>
+                                        </select>
+                                    </div>
+                                    <div id="rvtOptions" style="display:none;margin-top:var(--space-3);">
+                                        <label style="font-size:var(--font-size-sm);font-weight:600;">Plugin Complexity</label>
+                                        <select name="rvt_complexity">
+                                            <option value="simple">Simple Tool ($5,000)</option>
+                                            <option value="standard">Standard Plugin ($15,000)</option>
+                                            <option value="complex">Complex Add-in ($35,000+)</option>
+                                        </select>
+                                    </div>
+                                    <div id="wsOptions" style="display:none;margin-top:var(--space-3);">
+                                        <label style="font-size:var(--font-size-sm);font-weight:600;">Number of workstations</label>
+                                        <input type="number" name="ws_units" min="1" value="1" style="max-width:100px;">
+                                    </div>
+                                    <div id="netOptions" style="display:none;margin-top:var(--space-3);">
+                                        <label style="font-size:var(--font-size-sm);font-weight:600;">Network scope</label>
+                                        <select name="net_size">
+                                            <option value="assessment">Assessment only ($1,500)</option>
+                                            <option value="small">Small office 5-10 stations ($5,000)</option>
+                                            <option value="medium">Medium office 10-25 stations ($12,500)</option>
+                                            <option value="bim_server">BIM Server configuration ($7,500)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top:var(--space-6);">
+                                <label for="notes">Additional Notes or Special Requirements</label>
+                                <textarea id="notes" name="notes" rows="4" placeholder="Describe any special requirements, phasing, unique conditions, or anything else we should know about your project..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- ========== STEP 5: REVIEW ========== -->
+                        <div class="form-step" data-step="5">
+                            <h2 class="step-title">Review & Submit</h2>
+                            <p class="step-subtitle">Review your information before submitting. Your estimate will be reviewed by Jordan and delivered within 1-2 business days.</p>
+
+                            <div id="reviewContent">
+                                <!-- Populated by JS -->
+                            </div>
+
+                            <div class="form-group" style="margin-top:var(--space-5);">
+                                <label style="display:flex;align-items:flex-start;gap:var(--space-3);cursor:pointer;font-weight:normal;">
+                                    <input type="checkbox" id="agree_terms" name="agree_terms" required style="margin-top:3px;accent-color:var(--color-primary);">
+                                    <span style="font-size:var(--font-size-sm);">I understand that this estimate is subject to final review and may be adjusted. Submitting this form does not constitute a binding agreement.</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Navigation -->
+                        <div class="form-nav">
+                            <button type="button" class="btn-prev" id="prevBtn" style="visibility:hidden;">Previous</button>
+                            <button type="button" class="btn-next" id="nextBtn">Next Step</button>
+                            <button type="submit" class="btn-submit" id="submitBtn" style="display:none;">Submit Estimate Request</button>
+                        </div>
+
+                    </form>
+
+                    <!-- Success Message -->
+                    <div class="success-message" id="successMessage">
+                        <div class="success-icon">[OK]</div>
+                        <h2 style="color:var(--color-primary-dark);margin-bottom:var(--space-4);">Estimate Request Received</h2>
+                        <p style="font-size:var(--font-size-lg);color:var(--color-gray-700);margin-bottom:var(--space-4);">Thank you! We have received your project details and a confirmation email is on its way.</p>
+                        <p>Jordan will review your estimate and send a formal quote within <strong>1-2 business days</strong>.</p>
+                        <p style="margin-top:var(--space-6);"><a href="../index.html" class="btn btn-primary">Back to Home</a></p>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="quote-sidebar">
+                    <div class="sidebar-card">
+                        <h4>How It Works</h4>
+                        <p><strong>1.</strong> Fill out this form (5 min)</p>
+                        <p><strong>2.</strong> Our system generates your estimate</p>
+                        <p><strong>3.</strong> Jordan reviews & sends your quote (1-2 days)</p>
+                        <p><strong>4.</strong> You review, we finalize scope & sign</p>
+                    </div>
+                    <div class="sidebar-card">
+                        <h4>Pricing Notes</h4>
+                        <p>All prices are lump sum based on $/SF. Minimums apply per service. Project type and timeline multipliers are applied automatically.</p>
+                    </div>
+                    <div class="sidebar-card">
+                        <h4>Questions?</h4>
+                        <p>Prefer to talk it through first?</p>
+                        <p style="margin-top:var(--space-3);"><a href="contact.html" class="btn btn-outline" style="display:inline-block;">Contact Us</a></p>
+                        <p style="margin-top:var(--space-2);font-size:var(--font-size-sm);">(407) 234-3445</p>
+                    </div>
+                    <div class="sidebar-card" style="border-color:var(--color-secondary);">
+                        <h4 style="color:var(--color-secondary);">Minimum Project Values</h4>
+                        <p>BIM Modeling: $3,500+</p>
+                        <p>VDC Coordination: $7,500+</p>
+                        <p>Reality Capture: $2,500+</p>
+                        <p>Scan-to-BIM: $5,000+</p>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <img src="../assets/images/logo-main.png" alt="EBIC" class="footer-logo">
+                    <p>Ehrig BIM & IT Consultation, Inc.</p>
+                    <p class="footer-tagline">Transforming the Built Environment</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html#bim">BIM Coordination</a></li>
+                        <li><a href="services.html#reality-capture">Reality Capture</a></li>
+                        <li><a href="services.html#ai-software">AI & Software</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="quote.html">Get a Quote</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Get Started</h4>
+                    <a href="quote.html" class="btn btn-primary" style="display:inline-block;margin-bottom:var(--space-3);">Get a Quote</a>
+                    <br>
+                    <a href="contact.html" class="btn btn-outline" style="display:inline-block;">Contact Us</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EBIC - Ehrig BIM & IT Consultation, Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+    // ============================================================
+    // QUOTE FORM CONTROLLER
+    // ============================================================
+
+    // CONFIGURE: Update this to your n8n webhook URL after deploying
+    const N8N_WEBHOOK_URL = 'http://localhost:5678/webhook/quote-form';
+
+    const TOTAL_STEPS = 5;
+    let currentStep = 1;
+
+    // Step navigation
+    function showStep(step) {
+        document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+        document.querySelector(`[data-step="${step}"]`).classList.add('active');
+
+        // Update progress
+        const pct = (step / TOTAL_STEPS) * 100;
+        document.getElementById('progressBar').style.width = pct + '%';
+
+        // Update step labels
+        document.querySelectorAll('.step-label').forEach(el => {
+            const s = parseInt(el.dataset.step);
+            el.classList.toggle('active', s === step);
+            el.classList.toggle('done',   s < step);
+        });
+
+        // Prev/Next/Submit buttons
+        document.getElementById('prevBtn').style.visibility = step > 1 ? 'visible' : 'hidden';
+        document.getElementById('nextBtn').style.display    = step < TOTAL_STEPS ? 'inline-block' : 'none';
+        document.getElementById('submitBtn').style.display  = step === TOTAL_STEPS ? 'inline-block' : 'none';
+
+        if (step === TOTAL_STEPS) buildReview();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function validateStep(step) {
+        const stepEl = document.querySelector(`[data-step="${step}"]`);
+        const required = stepEl.querySelectorAll('[required]');
+        let valid = true;
+        required.forEach(el => {
+            el.style.borderColor = '';
+            if (!el.value.trim()) {
+                el.style.borderColor = '#cc0000';
+                valid = false;
+            }
+        });
+        if (!valid) alert('Please fill in all required fields before continuing.');
+        return valid;
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+        if (!validateStep(currentStep)) return;
+        currentStep++;
+        showStep(currentStep);
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+        currentStep--;
+        showStep(currentStep);
+    });
+
+    // ---- Section toggles ----
+    function toggleSection(id, forceState) {
+        const section = document.getElementById(id);
+        const checkbox = section.querySelector('.service-check');
+        const newState = forceState !== undefined ? forceState : !checkbox.checked;
+        checkbox.checked = newState;
+        section.classList.toggle('selected', newState);
+    }
+
+    // ---- Discipline card toggles ----
+    document.querySelectorAll('.discipline-card input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', function() {
+            this.closest('.discipline-card').classList.toggle('selected', this.checked);
+        });
+    });
+
+    // ---- LOD button selection ----
+    document.querySelectorAll('.lod-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const disc = this.dataset.disc;
+            document.querySelectorAll(`.lod-btn[data-disc="${disc}"]`).forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelector(`input[name="lod_${disc}"]`).value = this.dataset.lod;
+        });
+    });
+
+    // ---- Conditional field visibility ----
+    document.querySelector('input[name="coordination_enabled"]').addEventListener('change', function() {
+        document.getElementById('tradeCountField').style.display = this.checked ? 'flex' : 'none';
+    });
+    document.querySelector('input[name="clash_detection"]').addEventListener('change', function() {
+        document.getElementById('clashRoundsField').style.display = this.checked ? 'flex' : 'none';
+    });
+    document.getElementById('scanningCheck').addEventListener('change', function() {
+        document.getElementById('scanningOptions').style.display = this.checked ? 'block' : 'none';
+    });
+    document.getElementById('s2bCheck').addEventListener('change', function() {
+        document.getElementById('s2bOptions').style.display = this.checked ? 'block' : 'none';
+    });
+    document.querySelector('input[name="lightning_protection"]').addEventListener('change', function() {
+        document.getElementById('lpOptions').style.display = this.checked ? 'block' : 'none';
+    });
+    document.querySelector('input[name="low_voltage_design"]').addEventListener('change', function() {
+        document.getElementById('lvOptions').style.display = this.checked ? 'block' : 'none';
+    });
+    document.getElementById('mcpCheck').addEventListener('change', function() {
+        document.getElementById('mcpOptions').style.display = this.checked ? 'block' : 'none';
+    });
+    document.getElementById('rvtCheck').addEventListener('change', function() {
+        document.getElementById('rvtOptions').style.display = this.checked ? 'block' : 'none';
+    });
+    document.getElementById('wsCheck').addEventListener('change', function() {
+        document.getElementById('wsOptions').style.display = this.checked ? 'block' : 'none';
+    });
+    document.getElementById('netCheck').addEventListener('change', function() {
+        document.getElementById('netOptions').style.display = this.checked ? 'block' : 'none';
+    });
+
+    // ---- Review builder ----
+    function buildReview() {
+        const get = id => (document.getElementById(id) || {}).value || '';
+        const checked = name => document.querySelector(`input[name="${name}"]`)?.checked;
+        const val = name => document.querySelector(`[name="${name}"]`)?.value || '';
+
+        const disciplines = [];
+        document.querySelectorAll('#disciplineGrid .discipline-card.selected').forEach(card => {
+            const disc = card.dataset.discipline;
+            const lod  = val('lod_' + disc) || '300';
+            disciplines.push(`${disc.replace(/_/g,' ')} LOD ${lod}`);
+        });
+
+        const services = [];
+        if (checked('coordination_enabled')) services.push(`Multi-Trade Coordination (${val('trade_count')} trades)`);
+        if (checked('clash_detection'))      services.push(`Clash Detection (${val('clash_rounds')} rounds)`);
+        if (checked('sequencing_4d'))        services.push('4D Sequencing');
+        if (checked('scanning_enabled'))     services.push(`Scanning (${val('scan_days')} days)`);
+        if (checked('scan_to_bim_enabled'))  services.push(`Scan-to-BIM (${val('s2b_scope').replace(/_/g,' ')})`);
+        if (checked('lightning_protection')) services.push(`Lightning Protection (${val('lp_phase')})`);
+        if (checked('low_voltage_design'))   services.push(`Low Voltage Design (${val('lv_package').replace(/_/g,' ')})`);
+        if (checked('ai_consulting'))        services.push('AI Consulting');
+        if (checked('mcp_dev'))              services.push(`MCP Development (${val('mcp_complexity')})`);
+        if (checked('revit_plugin'))         services.push(`Revit Plugin (${val('rvt_complexity')})`);
+        if (checked('it_workstation'))       services.push(`Workstations (${val('ws_units')} units)`);
+        if (checked('it_network'))           services.push(`Network (${val('net_size').replace(/_/g,' ')})`);
+
+        document.getElementById('reviewContent').innerHTML = `
+            <div class="review-section">
+                <h4>Contact</h4>
+                <div class="review-row"><span class="label">Name</span><span class="value">${get('contact_name')}</span></div>
+                <div class="review-row"><span class="label">Company</span><span class="value">${get('contact_company')}</span></div>
+                <div class="review-row"><span class="label">Email</span><span class="value">${get('contact_email')}</span></div>
+                <div class="review-row"><span class="label">Phone</span><span class="value">${get('contact_phone') || '-'}</span></div>
+                <div class="review-row"><span class="label">Relationship</span><span class="value">${val('relationship')}</span></div>
+            </div>
+            <div class="review-section">
+                <h4>Project</h4>
+                <div class="review-row"><span class="label">Name</span><span class="value">${get('project_name')}</span></div>
+                <div class="review-row"><span class="label">Size</span><span class="value">${Number(get('project_sf')).toLocaleString()} SF</span></div>
+                <div class="review-row"><span class="label">Type</span><span class="value">${val('project_type').replace(/_/g,' ')}</span></div>
+                <div class="review-row"><span class="label">Timeline</span><span class="value">${val('timeline')}</span></div>
+            </div>
+            ${disciplines.length ? `<div class="review-section"><h4>BIM Disciplines</h4>${disciplines.map(d=>`<div class="review-row"><span class="label">[OK]</span><span class="value">${d}</span></div>`).join('')}</div>` : ''}
+            ${services.length ? `<div class="review-section"><h4>Additional Services</h4>${services.map(s=>`<div class="review-row"><span class="label">[OK]</span><span class="value">${s}</span></div>`).join('')}</div>` : ''}
+        `;
+    }
+
+    // ---- Collect form data ----
+    function collectFormData() {
+        const get = id => (document.getElementById(id) || {}).value || '';
+        const val = name => document.querySelector(`[name="${name}"]`)?.value || '';
+        const checked = name => document.querySelector(`input[name="${name}"]`)?.checked || false;
+
+        // BIM modeling disciplines
+        const bim_modeling = [];
+        document.querySelectorAll('#disciplineGrid .discipline-card.selected').forEach(card => {
+            const disc = card.dataset.discipline;
+            bim_modeling.push({ discipline: disc, lod: parseInt(val('lod_' + disc)) || 300 });
+        });
+
+        return {
+            // Contact
+            contact_name:    get('contact_name'),
+            contact_company: get('contact_company'),
+            contact_email:   get('contact_email'),
+            contact_phone:   get('contact_phone'),
+            contact_title:   get('contact_title') || val('contact_title'),
+            relationship:    val('relationship'),
+            referral_source: val('referral_source'),
+
+            // Project
+            project_name:     get('project_name'),
+            project_location: val('project_location'),
+            project_sf:       parseInt(get('project_sf')) || 0,
+            project_type:     val('project_type'),
+            timeline:         val('timeline'),
+            has_bep:          val('has_bep'),
+            has_existing_models: val('has_existing_models'),
+
+            // BIM
+            bim_modeling,
+
+            // VDC
+            vdc_coordination: {
+                enabled:     checked('coordination_enabled'),
+                trade_count: parseInt(val('trade_count')) || 3,
+            },
+            clash_detection: {
+                enabled: checked('clash_detection'),
+                rounds:  parseInt(val('clash_rounds')) || 1,
+            },
+            sequencing_4d: checked('sequencing_4d'),
+
+            // Reality Capture
+            scanning: {
+                enabled:  checked('scanning_enabled'),
+                days:     parseInt(val('scan_days')) || 1,
+                distance: val('scan_distance'),
+            },
+            scan_to_bim: {
+                enabled: checked('scan_to_bim_enabled'),
+                scope:   val('s2b_scope'),
+            },
+
+            // Specialty
+            lightning_protection: {
+                enabled: checked('lightning_protection'),
+                phase:   val('lp_phase'),
+            },
+            low_voltage_design: {
+                enabled:      checked('low_voltage_design'),
+                package_type: val('lv_package'),
+            },
+
+            // AI / Software
+            ai_consulting:  checked('ai_consulting'),
+            mcp_development: {
+                complexity: checked('mcp_dev') ? val('mcp_complexity') : null,
+            },
+            revit_plugin: {
+                complexity: checked('revit_plugin') ? val('rvt_complexity') : null,
+            },
+            it_workstation: {
+                units: checked('it_workstation') ? parseInt(val('ws_units')) : 0,
+            },
+            it_network: {
+                size: checked('it_network') ? val('net_size') : null,
+            },
+
+            notes: val('notes') || (document.getElementById('notes') || {}).value || '',
+        };
+    }
+
+    // ---- Submit ----
+    document.getElementById('quoteForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const agreeEl = document.getElementById('agree_terms');
+        if (!agreeEl.checked) {
+            alert('Please agree to the terms before submitting.');
+            return;
+        }
+
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+
+        const data = collectFormData();
+
+        try {
+            const resp = await fetch(N8N_WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ body: data }),
+            });
+
+            if (resp.ok) {
+                document.getElementById('quoteForm').style.display  = 'none';
+                document.querySelector('.progress-bar-wrap').style.display = 'none';
+                document.querySelector('.step-labels').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+            } else {
+                throw new Error('Server error: ' + resp.status);
+            }
+        } catch (err) {
+            console.error(err);
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Estimate Request';
+            alert('There was an error submitting your request. Please try again or call us at (407) 234-3445.');
+        }
+    });
+    </script>
+</body>
+</html>

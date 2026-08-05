@@ -4,7 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Contact EBIC for BIM coordination, reality capture, and program management services. Professional consultation for AEC projects.">
-    <title>Contact Us | EBIC - BIM & IT Consultation</title>
+    <title>Contact EBIC | BIM, VDC & IT Consulting in Orlando, FL</title>
+    <link rel="canonical" href="https://www.ebicinc.com/pages/contact.html">
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="EBIC - Ehrig BIM &amp; IT Consultation, Inc.">
+    <meta property="og:title" content="Contact EBIC | BIM, VDC &amp; IT Consulting in Orlando, FL">
+    <meta property="og:description" content="Talk to EBIC about BIM coordination, underground utility BIM, reality capture, outsourced BIM management or IT support in Central Florida.">
+    <meta property="og:url" content="https://www.ebicinc.com/pages/contact.html">
+    <meta property="og:image" content="https://www.ebicinc.com/assets/images/logo-main.png">
+    <meta name="twitter:card" content="summary_large_image">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../assets/images/logo-black.png">
@@ -100,8 +110,10 @@
                     <li><a href="../index.html" class="nav-link">Home</a></li>
                     <li><a href="services.html" class="nav-link">Services</a></li>
                     <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="../showcase/index.html" class="nav-link">Showcase</a></li>
                     <li><a href="about.html" class="nav-link">About</a></li>
-                    <li><a href="contact.html" class="nav-link btn-primary active">Contact</a></li>
+                    <li><a href="contact.html" class="nav-link active">Contact</a></li>
+                    <li><a href="quote.html" class="nav-link btn-primary">Get a Quote</a></li>
                 </ul>
             </div>
         </nav>
@@ -119,7 +131,7 @@
             <div class="container contact-container">
                 <div class="contact-form">
                     <h2>Send Us a Message</h2>
-                    <form action="#" method="post" data-validate>
+                    <form id="contactForm" data-validate>
                         <div class="form-group">
                             <label for="name">Full Name <span style="color: var(--color-secondary);">*</span></label>
                             <input type="text" id="name" name="name" required aria-required="true">
@@ -171,13 +183,18 @@
                             <textarea id="message" name="message" required aria-required="true" placeholder="Tell us about your project and how we can help..."></textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;" id="contactSubmitBtn">Send Message</button>
                     </form>
+                    <div id="contactSuccess" style="display:none;text-align:center;padding:var(--space-8);">
+                        <h3 style="color:var(--color-primary);">Message Received</h3>
+                        <p>Thank you! We will be in touch within 24 hours.</p>
+                        <p style="margin-top:var(--space-4);">Need a formal estimate? <a href="quote.html">Get a Quote</a></p>
+                    </div>
                 </div>
 
                 <div class="contact-info">
                     <h2>Contact Information</h2>
-                    
+
                     <div class="info-card">
                         <h3>Business Inquiries</h3>
                         <p>For project consultations, service quotes, and partnership opportunities.</p>
@@ -262,5 +279,44 @@
     </footer>
 
     <script src="../assets/js/main.js"></script>
+    <script>
+    const CONTACT_WEBHOOK = 'http://localhost:5678/webhook/contact-form';
+
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('contactSubmitBtn');
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+
+        const data = {
+            name:             this.name.value,
+            email:            this.email.value,
+            phone:            this.phone.value,
+            company:          this.company.value,
+            service_interest: this.service.value,
+            project_type:     this.project.value,
+            message:          this.message.value,
+            referral_source:  '',
+        };
+
+        try {
+            const resp = await fetch(CONTACT_WEBHOOK, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ body: data }),
+            });
+            if (resp.ok) {
+                this.style.display = 'none';
+                document.getElementById('contactSuccess').style.display = 'block';
+            } else {
+                throw new Error(resp.status);
+            }
+        } catch(err) {
+            btn.disabled = false;
+            btn.textContent = 'Send Message';
+            alert('Error sending message. Please call us at (407) 234-3445.');
+        }
+    });
+    </script>
 </body>
 </html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reality Capture Showcase | Live Point Clouds | EBIC</title>
+    <meta name="description" content="Explore real EBIC reality-capture data as a living particle field. Terrestrial LiDAR scans, BIM models and CAD assemblies from actual projects, rendered in your browser.">
+    <link rel="canonical" href="https://www.ebicinc.com/showcase/">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Reality Capture Showcase | EBIC">
+    <meta property="og:description" content="Real EBIC survey point clouds and BIM geometry, rendered live as a particle field. Hover to materialize the scan.">
+    <meta property="og:url" content="https://www.ebicinc.com/showcase/">
+    <meta property="og:image" content="https://www.ebicinc.com/assets/images/logo-main.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" type="image/png" href="../assets/images/logo-black.png">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/particles.css">
+    <script>document.documentElement.className += " js";</script>
+</head>
+<body>
+
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header & Navigation -->
+    <header class="site-header" role="banner">
+        <nav class="main-nav" role="navigation" aria-label="Main navigation">
+            <div class="container nav-container">
+                <div class="logo">
+                    <a href="../index.html" aria-label="EBIC - Ehrig BIM & IT Consultation, Inc. Home">
+                        <img src="../assets/images/logo-main.png" alt="EBIC - Ehrig BIM & IT Consultation, Inc." class="site-logo">
+                    </a>
+                </div>
+
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
+
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="../pages/services.html" class="nav-link">Services</a></li>
+                    <li><a href="../pages/portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="index.html" class="nav-link active">Showcase</a></li>
+                    <li><a href="../pages/about.html" class="nav-link">About</a></li>
+                    <li><a href="../pages/contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="../pages/quote.html" class="nav-link btn-primary">Get a Quote</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content">
+
+        <!-- Particle stage: real project scans, rendered live -->
+        <section class="pstage pstage--full pstage--interactive" id="stage" role="region" aria-label="Interactive point cloud showcase">
+            <canvas class="p-cloud" aria-hidden="true"></canvas>
+
+            <div class="stage-title">
+                <h1>Point clouds,<br><span>alive.</span></h1>
+                <p>Every particle is real EBIC project data -- survey points and BIM geometry, decimated from billions of measurements to the essence of the building.</p>
+            </div>
+
+            <div class="p-hud">LOADING SCANS</div>
+            <div class="p-hint">
+                <span class="pulse">Hover to materialize</span><br>
+                Click for next scan<br>
+                Scroll to zoom / double-click to reset
+            </div>
+            <div class="p-loading">DECODING POINT CLOUDS</div>
+
+            <!-- Tuning panel: internal tool, enabled with ?lab=1 -->
+            <div class="lab" id="lab" hidden>
+                <div class="lab-head">
+                    <span>Galaxy Lab <em id="fps">-- fps</em></span>
+                    <button id="labToggle" title="collapse">_</button>
+                </div>
+                <div class="lab-body" id="labBody"></div>
+                <div class="lab-foot">
+                    <button id="labCopy">copy settings</button>
+                    <button id="labReset">reset</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Context: what the visitor is actually looking at -->
+        <section class="services-overview" role="region" aria-label="About this showcase">
+            <div class="container">
+                <div class="section-header">
+                    <h2>This Is Real Project Data</h2>
+                    <p>Not a stock animation. Every dataset above came off an EBIC engagement.</p>
+                </div>
+
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h3>Scan-to-BIM</h3>
+                        <p>Terrestrial LiDAR captured on site, registered, and modeled into coordinated Revit deliverables. As-builts you can measure against.</p>
+                        <a href="../pages/services.html#reality-capture" class="service-link">Reality Capture Services</a>
+                    </div>
+
+                    <div class="service-card">
+                        <h3>30+ Capture Projects</h3>
+                        <p>Residences, campuses, airport terminals, industrial plants, mechanical assemblies -- and a 50m yacht. Different scales, same discipline.</p>
+                        <a href="../pages/portfolio.html" class="service-link">View Portfolio</a>
+                    </div>
+
+                    <div class="service-card">
+                        <h3>How It Renders</h3>
+                        <p>Each scan is voxel-decimated to roughly 12,000 representative points, then drawn every frame -- on the GPU where WebGL2 is available, on the CPU where it is not.</p>
+                        <a href="../pages/services.html#software-ai" class="service-link">Software &amp; AI</a>
+                    </div>
+                </div>
+
+                <div class="section-cta" style="text-align: center; margin-top: 2.5rem;">
+                    <a href="../pages/quote.html" class="btn btn-primary">Scan My Project</a>
+                    <a href="../pages/contact.html" class="btn btn-secondary">Talk to Us</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <img src="../assets/images/logo-main.png" alt="EBIC - Ehrig BIM & IT Consultation, Inc." class="footer-logo">
+                    <p>Ehrig BIM &amp; IT Consultation, Inc.</p>
+                    <p class="footer-tagline">Your Trusted Partner in Digital Construction Technology</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">403 South Edgemon Avenue<br>Winter Springs, FL 32708<br>(407) 234-3445</p>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../pages/services.html#bim-vdc">BIM &amp; VDC Services</a></li>
+                        <li><a href="../pages/services.html#reality-capture">Reality Capture</a></li>
+                        <li><a href="../pages/services.html#training">Training &amp; Development</a></li>
+                        <li><a href="../pages/services.html#software-ai">Software &amp; AI</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../pages/about.html">About Us</a></li>
+                        <li><a href="../pages/portfolio.html">Portfolio</a></li>
+                        <li><a href="../pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Connect</h4>
+                    <p>Professional consultation for AEC industry leaders</p>
+                    <a href="../pages/contact.html" class="btn btn-outline">Contact Us</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 EBIC - Ehrig BIM &amp; IT Consultation, Inc. All rights reserved.</p>
+                <p class="footer-meta">Founded March 2020 | 18 Years Industry Experience</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/particles.js"></script>
+    <script>
+    (function () {
+        "use strict";
+        /* The Galaxy Lab is an internal tuning surface, not client-facing
+           chrome. It stays hidden unless explicitly asked for with ?lab=1. */
+        var wantLab = /[?&]lab=1/.test(window.location.search);
+        var lab = document.getElementById("lab");
+        if (wantLab && lab) { lab.removeAttribute("hidden"); }
+
+        window.EBICParticles({
+            root: document.getElementById("stage"),
+            cloudDir: "../assets/clouds/",
+            storageKey: "ebicGalaxy",
+            lab: wantLab,
+            wheelZoom: true
+        });
+    })();
+    </script>
+
+</body>
+</html>
