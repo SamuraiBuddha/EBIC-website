@@ -22,6 +22,7 @@
     <!-- Preload critical resources -->
     <link rel="preload" href="assets/css/styles.css" as="style">
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/particles.css">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/logo-black.png">
@@ -48,6 +49,7 @@
                     <li><a href="index.html" class="nav-link active">Home</a></li>
                     <li><a href="pages/services.html" class="nav-link">Services</a></li>
                     <li><a href="pages/portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="showcase/index.html" class="nav-link">Showcase</a></li>
                     <li><a href="pages/about.html" class="nav-link">About</a></li>
                     <li><a href="pages/contact.html" class="nav-link">Contact</a></li>
                     <li><a href="pages/quote.html" class="nav-link btn-primary">Get a Quote</a></li>
@@ -59,9 +61,14 @@
     <!-- Main Content -->
     <main id="main-content">
 
-        <!-- Hero Section -->
-        <section class="hero" role="region" aria-label="Hero section">
+        <!-- Hero Section: live particle backdrop built from real project scans -->
+        <section class="hero pstage pstage--band" id="hero-stage" role="region" aria-label="Hero section">
+            <canvas class="p-cloud" aria-hidden="true"></canvas>
             <div class="hero-overlay"></div>
+            <div class="pstage-caption">
+                Real EBIC scan data, rendered live<br>
+                <a href="showcase/index.html">Explore the showcase</a>
+            </div>
             <div class="container hero-content">
                 <h1 class="hero-title">
                     Your Trusted Partner in <span class="highlight">Digital Construction Technology</span>
@@ -531,6 +538,27 @@
 
     <!-- JavaScript -->
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/particles.js"></script>
+    <script>
+    (function () {
+        "use strict";
+        /* Hero band: a lighter point budget than the full showcase (this is a
+           backdrop competing with the rest of the page for GPU time), and no
+           wheel-zoom -- capturing the scroll here would trap the visitor at
+           the top of the page. */
+        window.EBICParticles({
+            root: document.getElementById("hero-stage"),
+            cloudDir: "assets/clouds/",
+            /* The showcase tuning blows the core out to near-white, which is
+               correct on a page where the field IS the content. Here the hero
+               copy sits on top of it, so the core is pulled well down to keep
+               the headline and subtitle legible. */
+            params: { points: 14000, glow: 0.5, coreSize: 0.65, hazeReach: 1.25 },
+            lab: false,
+            wheelZoom: false
+        });
+    })();
+    </script>
 
     <script type="application/ld+json">
     {

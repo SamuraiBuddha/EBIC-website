@@ -1,0 +1,318 @@
+/* =====================================================================
+   EBIC particle stage -- shared styles
+   =====================================================================
+   Companion to assets/js/particles.js. Everything is namespaced under
+   .pstage so this can drop onto the homepage alongside styles.css
+   without either sheet reaching into the other: no global resets, no
+   :root variables, no bare element selectors.
+
+   Two variants:
+     .pstage--full  full-viewport stage (the /showcase/ page)
+     .pstage--band  backdrop layer inside an existing hero section
+   ===================================================================== */
+
+.pstage {
+  /* Scoped palette. Declared on .pstage, not :root, so the host page's
+     own custom properties are untouched. */
+  --ps-bg: #07090f;
+  --ps-line: rgba(51, 133, 214, 0.18);
+  --ps-txt: #eef2fa;
+  --ps-dim: #8b98b4;
+  --ps-blue: #3385d6;
+  --ps-orange: #ff6b35;
+  --ps-mono: Consolas, "Cascadia Mono", "Courier New", monospace;
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* The particle field is additive ("lighter" compositing), so it only
+   reads as luminous against a dark ground. This gradient is also the
+   no-JS fallback: with scripting off the stage stays a deliberate dark
+   panel rather than an empty white box. */
+.pstage--full {
+  min-height: 100vh;
+  /* .site-header is position:fixed, so clear it the same way .hero does in
+     styles.css -- without this the stage title renders underneath the nav. */
+  margin-top: var(--header-height);
+  background:
+    radial-gradient(1000px 540px at 72% 30%, rgba(0, 102, 204, 0.22), transparent 62%),
+    var(--ps-bg);
+}
+
+.pstage .p-cloud {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Only a stage that actually responds to the pointer advertises it. */
+.pstage--interactive .p-cloud { cursor: crosshair; }
+
+/* ---------- stage chrome (full variant) ---------- */
+
+.pstage .stage-head {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 2rem;
+  pointer-events: none;
+}
+.pstage .stage-head img { height: 44px; pointer-events: auto; }
+.pstage .stage-head .tag {
+  font-family: var(--ps-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ps-dim);
+}
+
+.pstage .stage-title {
+  position: absolute;
+  left: 2rem;
+  bottom: 7.5rem;
+  z-index: 3;
+  pointer-events: none;
+  max-width: 560px;
+}
+.pstage .stage-title h1 {
+  margin: 0 0 0.6rem;
+  font-size: clamp(2.2rem, 5.4vw, 4.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  text-transform: uppercase;
+  color: var(--ps-txt);
+}
+.pstage .stage-title h1 span { color: var(--ps-orange); }
+.pstage .stage-title p {
+  margin: 0;
+  color: var(--ps-dim);
+  font-size: 1.05rem;
+  max-width: 46ch;
+}
+
+.pstage .p-hud {
+  position: absolute;
+  left: 2rem;
+  bottom: 2rem;
+  z-index: 3;
+  font-family: var(--ps-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  color: var(--ps-dim);
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.pstage .p-hud b { color: var(--ps-orange); font-weight: 400; }
+.pstage .p-hud .pts { color: var(--ps-blue); }
+
+.pstage .p-hint {
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 3;
+  font-family: var(--ps-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ps-dim);
+  pointer-events: none;
+  text-align: right;
+}
+.js .pstage .p-hint .pulse {
+  color: var(--ps-orange);
+  animation: ps-hintpulse 2.4s ease-in-out infinite;
+}
+@keyframes ps-hintpulse { 50% { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) {
+  .js .pstage .p-hint .pulse { animation: none; }
+}
+
+.pstage .p-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ps-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ps-dim);
+  background: var(--ps-bg);
+  transition: opacity 0.6s ease;
+}
+.pstage .p-loading.done { opacity: 0; pointer-events: none; }
+
+@media (max-width: 860px) {
+  .pstage .stage-title { left: 1.2rem; right: 1.2rem; bottom: 8.5rem; }
+  .pstage .p-hud { left: 1.2rem; }
+  .pstage .p-hint { right: 1.2rem; bottom: 4.6rem; }
+}
+
+/* ---------- band variant: backdrop inside an existing hero ---------- */
+
+/* The canvas sits behind the hero's own overlay and content, which carry
+   their own stacking context from styles.css. */
+.pstage--band .p-cloud { z-index: 0; }
+
+/* The field is drawn with additive compositing, so it only reads against a
+   dark ground -- the stock hero gradient is a bright brand blue and would
+   wash the particles out completely. Override it here rather than in
+   styles.css so the change is scoped to a hero that actually has a stage,
+   and so it doubles as the no-JS fallback. */
+.hero.pstage--band {
+  background:
+    radial-gradient(1100px 600px at 68% 34%, rgba(0, 102, 204, 0.28), transparent 64%),
+    linear-gradient(135deg, #0a1020 0%, #07090f 100%);
+}
+
+/* The tiled SVG pattern competes with the particles for the same visual
+   frequency band, so the overlay is repurposed as a legibility scrim: a soft
+   vertical wash that sits between the canvas and the hero copy. Without it the
+   galaxy core burns out to near-white directly behind the subtitle. */
+.hero.pstage--band .hero-overlay {
+  opacity: 1;
+  background:
+    radial-gradient(120% 70% at 50% 52%, rgba(7, 9, 15, 0.62) 0%, rgba(7, 9, 15, 0.18) 55%, transparent 78%);
+}
+
+/* Belt and braces on the text itself, so contrast never depends on where the
+   particles happen to be in the rotation. */
+.hero.pstage--band .hero-title,
+.hero.pstage--band .hero-subtitle {
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* A caption anchored to the band, linking through to the full showcase.
+   pointer-events are restored on the link alone so the rest of the band
+   still passes clicks to the canvas. */
+/* Top-right, not bottom: the hero is a full viewport tall, so anything
+   anchored to its bottom edge sits below the fold and never gets seen. */
+.pstage-caption {
+  position: absolute;
+  right: 2rem;
+  top: 1.5rem;
+  z-index: 2;
+  font-family: var(--ps-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ps-dim);
+  pointer-events: none;
+  text-align: right;
+  line-height: 1.9;
+}
+.pstage-caption a {
+  pointer-events: auto;
+  color: var(--ps-orange);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 107, 53, 0.4);
+}
+.pstage-caption a:hover { border-bottom-color: var(--ps-orange); }
+
+@media (max-width: 860px) {
+  .pstage-caption { right: 1.2rem; top: 1rem; font-size: 0.62rem; }
+}
+
+/* styles.css gives .hero both min-height:100vh AND margin-top:<header>, so the
+   section is always taller than the viewport by exactly the header height --
+   which is why the "Scroll to discover" indicator at its bottom edge was never
+   on screen. Subtract the header so the hero fills the fold precisely. */
+.hero.pstage--band { min-height: calc(100vh - var(--header-height)); }
+
+/* ---------- galaxy lab (tuning panel, ?lab=1 only) ---------- */
+
+.lab {
+  position: absolute;
+  top: 4.6rem;
+  right: 1.2rem;
+  z-index: 6;
+  width: 262px;
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+  background: rgba(10, 14, 24, 0.9);
+  border: 1px solid var(--ps-line);
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+  font-family: var(--ps-mono);
+  color: var(--ps-txt);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.lab-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--ps-line);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+  background: rgba(10, 14, 24, 0.95);
+}
+.lab-head em { color: var(--ps-blue); font-style: normal; margin-left: 0.5rem; }
+.lab-head button, .lab-foot button {
+  font-family: var(--ps-mono);
+  font-size: 0.7rem;
+  color: var(--ps-dim);
+  background: transparent;
+  border: 1px solid var(--ps-line);
+  border-radius: 5px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+}
+.lab-head button:hover, .lab-foot button:hover {
+  color: var(--ps-orange);
+  border-color: var(--ps-orange);
+}
+.lab.hid .lab-body, .lab.hid .lab-foot { display: none; }
+.lab-body { padding: 0.5rem 0.8rem; }
+.lg {
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ps-blue);
+  margin: 0.7rem 0 0.35rem;
+}
+.lr { display: flex; align-items: center; gap: 0.5rem; margin: 0.28rem 0; }
+.ll { flex: 0 0 88px; font-size: 0.68rem; color: var(--ps-dim); }
+.lr input[type=range] { flex: 1; height: 3px; accent-color: var(--ps-orange); }
+.lv { flex: 0 0 34px; text-align: right; font-size: 0.68rem; color: var(--ps-txt); }
+.seg { flex: 1; display: flex; gap: 3px; }
+.seg button {
+  flex: 1;
+  font-family: var(--ps-mono);
+  font-size: 0.64rem;
+  color: var(--ps-dim);
+  background: transparent;
+  border: 1px solid var(--ps-line);
+  border-radius: 4px;
+  padding: 0.22rem 0;
+  cursor: pointer;
+}
+.seg button.on {
+  color: #1a0d00;
+  background: var(--ps-orange);
+  border-color: var(--ps-orange);
+}
+.lab-foot {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  border-top: 1px solid var(--ps-line);
+  position: sticky;
+  bottom: 0;
+  background: rgba(10, 14, 24, 0.95);
+}
+.lab-foot button { flex: 1; }
+@media (max-width: 860px) { .lab { display: none; } }

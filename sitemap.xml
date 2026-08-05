@@ -19,6 +19,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.ebicinc.com/showcase/</loc>
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.ebicinc.com/pages/quote.html</loc>
     <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
