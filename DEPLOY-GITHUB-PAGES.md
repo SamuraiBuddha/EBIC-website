@@ -118,13 +118,18 @@ replace them.
 `sel1._domainkey`. These are email authentication, not website records. Leave
 them exactly alone. Adding the `www` CNAME does not disturb them.
 
-**The good news, and it materially lowers the risk this runbook was built
-around: Wix keeps MX records on a SEPARATE screen.** The domain's `...` menu
-offers "Manage DNS records" and "Manage MX records" as two different entries,
-and the MX records do not appear on the DNS records page at all. So while
-editing A and CNAME records you cannot fat-finger the Google Workspace mail
-records, because they are not on the screen. The warning throughout this
-document still stands, but the UI enforces most of it structurally.
+**MX records ARE on the Manage DNS Records page.** The domain's `...` menu
+offers "Manage DNS records" and "Manage MX records" as separate entries, which
+reads as though MX lives only on the second one. It does not. A, CNAME, TXT,
+SRV and MX are all sections of the one page, with MX below the fold under an
+SRV block that is usually empty.
+
+So the "leave MX alone" warning in this document is doing real work and the UI
+does not enforce it for you. Scroll far enough on the page where you edit the
+A records and you are looking at the Google Workspace mail records. Note also
+that the TXT section holds SPF, DMARC and a Google DKIM record, and the CNAME
+section holds four more DKIM records plus a SendGrid alias -- the `www` record
+you edit sits in the middle of that list.
 
 Not captured: the full CNAME and TXT values, which the dashboard truncates in
 the table and which could not be read programmatically (the records table is
