@@ -99,10 +99,60 @@ samuraibuddha.github.io
 Note there is no repository name and no trailing path in that CNAME value --
 just the account's `github.io` host. Save.
 
+#### 2a. Observed state of the zone, 2026-09-29
+
+Read directly from Manage DNS Records in the Wix Studio dashboard.
+
+**Apex A records currently pointing at Wix -- THREE, not four:**
+
+```
+ebicinc.com   185.230.63.171   TTL 1 Hour
+ebicinc.com   185.230.63.186   TTL 1 Hour
+ebicinc.com   185.230.63.107   TTL 1 Hour
+```
+
+These are the ones step 2 deletes. All three go; the four GitHub addresses
+replace them.
+
+**CNAMEs present include DKIM records** -- `s1._domainkey`, `s2._domainkey`,
+`sel1._domainkey`. These are email authentication, not website records. Leave
+them exactly alone. Adding the `www` CNAME does not disturb them.
+
+**The good news, and it materially lowers the risk this runbook was built
+around: Wix keeps MX records on a SEPARATE screen.** The domain's `...` menu
+offers "Manage DNS records" and "Manage MX records" as two different entries,
+and the MX records do not appear on the DNS records page at all. So while
+editing A and CNAME records you cannot fat-finger the Google Workspace mail
+records, because they are not on the screen. The warning throughout this
+document still stands, but the UI enforces most of it structurally.
+
+Not captured: the full CNAME and TXT values, which the dashboard truncates in
+the table and which could not be read programmatically (the records table is
+an iframe). If you want a complete pre-change snapshot, `dig ebicinc.com ANY`
+or expanding each row by hand will get it. The A records above are what step 2
+actually needs.
+
 #### 2b. Alternative: do step 2 through the Wix API instead of the UI
 
 Added 2026-09-29. Optional, and **safer than the UI for this particular job**,
 for one specific reason given below. Either path is fine; do not do both.
+
+> **BLOCKED as of 2026-09-29 -- read this before spending time on it.**
+> The Domains API scopes are not grantable through the API key UI on this
+> account. The full permissions list was read directly from
+> `manage.wix.com/account/api-keys`: 24 account-level permissions, and the
+> only one mentioning domains is "Manage Premium Subscriptions" (*"Read and
+> manage your account's Wix premium subscriptions, including domains,
+> business email, and digital goods"*) -- that is billing, not DNS zones.
+> There is no Domains permission and no DNS permission anywhere in the list.
+>
+> Confirmed two ways: the API returns `403 DOMAINS_PERMISSION_DENIED` naming
+> `DOMAINS.READ_DNS_ZONES` and `DOMAINS.READ_CONNECTED_DOMAINS`, while the
+> same key succeeds on `site-list` (HTTP 200) -- so the credential is valid
+> and it is the scope that is missing, not the key.
+>
+> This was re-checked after the account reached **Wix Studio Partner,
+> Pioneer level**. Pioneer does not unlock it. Use the UI path in step 2.
 
 `UpdateDnsZone` is a `PATCH` that takes explicit `additions` and `deletions`
 arrays. It is **not** a whole-zone replace -- the docs describe it as "adds DNS
