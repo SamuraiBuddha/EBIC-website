@@ -38,9 +38,14 @@ window.EBICParticles = function (opts) {
   /* Clouds baked by scripts/decimate-pointcloud.py. Fetched in order;
      missing files are skipped, so newly baked buildings join the
      rotation automatically. */
+  /* Published set: EBIC's own objects and concepts, with no third-party
+     claim on the geometry. Anything named after a real client, residence or
+     facility belongs in local/ until clearance is on file -- decimating to
+     12k points is not anonymization, the building stays recognizable, which
+     is the whole point of the effect.
+     scripts/check-cloud-ip.py enforces this; run it before any deploy. */
   var MANIFEST = [
-    "coastalglass", "atlanta", "whitney", "ebko", "homeaddition",
-    "lunarrover", "speakerbox", "polywell", "carproject", "nastybaggers"
+    "lunarrover", "speakerbox", "polywell", "carproject"
   ];
   /* Optional local-only extras (assets/clouds/local/manifest.json, git
      ignored): datasets we may demo but must not publish. Absent in the
