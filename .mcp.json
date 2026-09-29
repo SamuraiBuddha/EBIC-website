@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "Wix MCP server -- docs search, Wix REST spec lookup, and live site/account",
+    "API calls. Used for the Wix-to-Pages cutover (see DEPLOY-GITHUB-PAGES.md).",
+    "",
+    "This is the OAuth variant: no secret lives in this file, which matters",
+    "because this repo is PUBLIC. First use opens a browser to authenticate.",
+    "",
+    "The DNS half of the cutover CANNOT use this config. The Domain DNS API is",
+    "account-level-API-key only and explicitly rejects the standard auth header,",
+    "so it needs the second config documented in DEPLOY-GITHUB-PAGES.md -- which",
+    "carries a key and therefore belongs in the USER-level config, never here.",
+    "",
+    "Requires Node 19.9+."
+  ],
+  "mcpServers": {
+    "wix": {
+      "type": "http",
+      "url": "https://mcp.wix.com/mcp"
+    }
+  }
+}

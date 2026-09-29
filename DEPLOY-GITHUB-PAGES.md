@@ -99,6 +99,117 @@ samuraibuddha.github.io
 Note there is no repository name and no trailing path in that CNAME value --
 just the account's `github.io` host. Save.
 
+#### 2b. Alternative: do step 2 through the Wix API instead of the UI
+
+Added 2026-09-29. Optional, and **safer than the UI for this particular job**,
+for one specific reason given below. Either path is fine; do not do both.
+
+`UpdateDnsZone` is a `PATCH` that takes explicit `additions` and `deletions`
+arrays. It is **not** a whole-zone replace -- the docs describe it as "adds DNS
+records to and removes DNS records from a DNS zone", and records you do not
+name are left alone.
+
+That is exactly the safety property this runbook is built around. The whole
+reason for "leave every MX and TXT record alone" is that Google Workspace mail
+runs on this domain and a slip kills `jordan@ebicinc.com`. Through the API you
+never type the letters M or X: the request names only the A and CNAME records,
+so the mail records cannot be collaterally edited by a misclick in a records
+table. The call is also synchronous and atomic -- it fails whole rather than
+leaving the apex half-pointed.
+
+**The setup is not free, so it is worth knowing before starting.** The Domain
+DNS API is account-level-API-key only:
+
+> This call requires an account level API key and cannot be authenticated with
+> the standard authorization header.
+
+So the default browser-OAuth MCP config in `.mcp.json` will **not** work for
+this, and the failure will look like a permissions error rather than a config
+error. You need:
+
+1. An account-level API key -- <https://manage.wix.com/account/api-keys>.
+2. Your Wix account ID, shown on the same page.
+3. A second MCP entry carrying both. **It holds a secret, so it goes in the
+   user-level config (`~/.claude.json`), never in this public repo:**
+
+```json
+{
+  "mcpServers": {
+    "wix-dns": {
+      "type": "http",
+      "url": "https://mcp.wix.com/mcp",
+      "headers": {
+        "Authorization": "<ACCOUNT LEVEL API KEY>",
+        "wix-account-id": "<WIX ACCOUNT ID>"
+      }
+    }
+  }
+}
+```
+
+The relevant MCP tool is `CallWixSiteAPI` (single REST call). The business
+solutions advertised on the Wix MCP marketing page -- eCommerce, Bookings, CMS
+-- are not the tool surface; it exposes a generic REST passthrough, which is how
+a domains call is reachable at all.
+
+**The order matters, and the first step is not optional.** `deletions` match on
+exact values, so you cannot write the delete until you have read what is
+actually there:
+
+1. **Read the zone first.** Get the current records for `ebicinc.com` and keep
+   the output. This is your rollback source -- it is the only record of the
+   pre-change MX and TXT values, and it costs nothing.
+2. **One PATCH, deleting the Wix A record and adding the GitHub one.**
+
+```bash
+curl -X PATCH 'https://www.wixapis.com/domains/v1/dns-zones/ebicinc.com' \
+  -H 'Authorization: <ACCOUNT LEVEL API KEY>' \
+  -H 'wix-account-id: <WIX ACCOUNT ID>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "deletions": [
+      { "type": "A", "hostName": "ebicinc.com",
+        "values": ["<THE 185.230.63.x VALUES YOU READ IN STEP 1>"] }
+    ],
+    "additions": [
+      { "type": "A", "hostName": "ebicinc.com", "ttl": 3600,
+        "values": ["185.199.108.153", "185.199.109.153",
+                   "185.199.110.153", "185.199.111.153"] },
+      { "type": "CNAME", "hostName": "www.ebicinc.com", "ttl": 3600,
+        "values": ["samuraibuddha.github.io"] }
+    ]
+  }'
+```
+
+**The trap that will bite if you improvise this:** the API allows only ONE
+record object per record type, with multiple values carried in `values`. You
+therefore cannot add the four GitHub addresses as four separate `A` additions,
+and you cannot add them one at a time alongside the existing Wix address. It is
+one delete of the whole A record plus one add of the whole A record, in the same
+request. The docs say so directly:
+
+> You can only set up a single `record` object per DNS record type. If you want
+> to specify multiple values for the same record type, you must save them in the
+> `values` for the relevant type.
+
+If an existing `www` CNAME is present, delete it in the same call rather than
+adding a second one.
+
+Note `dnssecEnabled` is also a field on this endpoint. Do not send it. Leave
+DNSSEC exactly as it is.
+
+**Two things this path does not settle**, both unverified as of writing:
+
+- Wix locks DNS editing in the UI while the domain is connected to a Wix site,
+  which is why step 2 disconnects first. Whether the API enforces the same lock
+  is untested. If the PATCH is rejected, disconnect the Wix site as in step 2
+  and retry.
+- The API-key path has not been exercised on this account. If getting the key
+  turns into a detour, the UI path in step 2 is proven and takes ten minutes.
+
+Verification is unchanged -- use step 5 either way, and treat the `MX` check
+there as the one that must pass before you walk away.
+
 ### 3. Point GitHub at the domain
 
 Once the records are saved:
