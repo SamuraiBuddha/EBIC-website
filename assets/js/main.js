@@ -64,7 +64,7 @@
 
             if (this.toggle && this.nav) {
                 this.toggle.addEventListener('click', this.toggleMenu.bind(this));
-                
+
                 // Close menu when clicking nav links
                 const navLinks = this.nav.querySelectorAll('.nav-link');
                 navLinks.forEach(link => {
@@ -87,7 +87,7 @@
         toggleMenu: function() {
             this.isOpen = !this.isOpen;
             this.toggle.setAttribute('aria-expanded', this.isOpen);
-            
+
             if (this.isOpen) {
                 this.nav.style.display = 'flex';
                 this.nav.style.flexDirection = 'column';
@@ -165,7 +165,31 @@
 
         animate: function() {
             this.counters.forEach(counter => {
-                const target = parseInt(counter.getAttribute('data-target'));
+                const raw = counter.getAttribute('data-target');
+
+                // No data-target means the number is authored directly in the
+                // markup and is not always a plain integer -- "75+", "30+",
+                // "$2.8B". Those are finished values; leave them alone.
+                //
+                // Without this guard parseInt(null) returned NaN, the loop's
+                // "current < target" test was NaN < NaN (false), and the else
+                // branch wrote the string "NaN" straight over the element. It
+                // hit every stat on the portfolio page the moment the section
+                // scrolled fully into view, because that page has a
+                // .stats-section trigger and no data-target attributes.
+                if (raw === null) return;
+
+                const target = parseInt(raw, 10);
+                if (!Number.isFinite(target)) {
+                    // Declared but unparseable is an authoring mistake, not a
+                    // static value. Say so instead of rendering NaN silently.
+                    console.error(
+                        '[statsCounter] data-target is not a number:',
+                        JSON.stringify(raw), counter
+                    );
+                    return;
+                }
+
                 const increment = target / (config.animationDuration / config.statsAnimationSpeed);
                 let current = 0;
 
@@ -297,7 +321,7 @@
 
         init: function() {
             this.images = document.querySelectorAll('img[loading="lazy"]');
-            
+
             if ('IntersectionObserver' in window) {
                 const imageObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
@@ -366,7 +390,7 @@
 
     function initModules() {
         console.log('EBIC Website initialized');
-        
+
         // Initialize all modules
         mobileMenu.init();
         headerScroll.init();
@@ -376,7 +400,7 @@
         formValidation.init();
         lazyLoad.init();
         accessibility.init();
-        
+
         if (window.location.hostname !== 'localhost') {
             performance.init();
         }
