@@ -10,7 +10,7 @@
     --color-primary-light: #3385d6;
     --color-secondary: #ff6b35;
     --color-accent: #00a86b;
-    
+
     /* Neutral Colors */
     --color-dark: #1a1a1a;
     --color-gray-900: #2d2d2d;
@@ -21,11 +21,11 @@
     --color-gray-200: #d0d0d0;
     --color-gray-100: #f5f5f5;
     --color-white: #ffffff;
-    
+
     /* Typography */
     --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     --font-heading: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    
+
     /* Font Sizes - Responsive Scale */
     --font-size-xs: 0.75rem;      /* 12px */
     --font-size-sm: 0.875rem;     /* 14px */
@@ -37,7 +37,7 @@
     --font-size-4xl: 2.25rem;     /* 36px */
     --font-size-5xl: 3rem;        /* 48px */
     --font-size-6xl: 3.75rem;     /* 60px */
-    
+
     /* Spacing Scale */
     --space-1: 0.25rem;   /* 4px */
     --space-2: 0.5rem;    /* 8px */
@@ -48,19 +48,19 @@
     --space-8: 3rem;      /* 48px */
     --space-10: 4rem;     /* 64px */
     --space-12: 6rem;     /* 96px */
-    
+
     /* Layout */
     --max-width: 1280px;
     --header-height: 120px;
     --border-radius: 8px;
     --border-radius-sm: 4px;
     --border-radius-lg: 12px;
-    
+
     /* Transitions */
     --transition-fast: 150ms ease;
     --transition-base: 250ms ease;
     --transition-slow: 350ms ease;
-    
+
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -115,6 +115,19 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
     margin-bottom: var(--space-4);
     color: var(--color-dark);
+}
+
+/* The rule above paints every heading near-black by targeting the elements
+   directly, so a dark-background section setting `color: white` on itself
+   does NOT reach its own heading -- inheritance loses to a direct match.
+   The blue page heroes each hit this: their h1 rendered #1a1a1a on #004c99,
+   a 2.1:1 contrast ratio, which fails AA even at large-text sizes. 404.html
+   already worked around it locally with `.nf h1`; these three did not.
+   Add a new hero here when one is added, or repeat the bug. */
+.services-hero :is(h1, h2, h3, h4, h5, h6),
+.contact-hero :is(h1, h2, h3, h4, h5, h6),
+.quote-hero :is(h1, h2, h3, h4, h5, h6) {
+    color: inherit;
 }
 
 h1 { font-size: var(--font-size-5xl); }
@@ -268,7 +281,7 @@ a:hover {
     .nav-links {
         display: flex;
     }
-    
+
     .mobile-menu-toggle {
         display: none;
     }
@@ -520,7 +533,9 @@ section {
 }
 
 .service-link::after {
-    content: ' →';
+    /* Escape, not a literal glyph: the source stays ASCII and the rendered
+       arrow is identical. Same convention as pages/services.html. */
+    content: ' \2192';
     transition: transform var(--transition-base);
     display: inline-block;
 }
@@ -851,7 +866,7 @@ model-viewer .model-controls {
 }
 
 .feature-list li::before {
-    content: '✓';
+    content: '\2713';
     position: absolute;
     left: 0;
     color: var(--color-accent);
@@ -1069,6 +1084,21 @@ model-viewer .model-controls {
     padding: var(--space-10) 0 var(--space-6);
 }
 
+/* Same defect as the services hero, milder: the shared .btn-outline is
+   primary blue, which is 3.1:1 on the #1a1a1a footer and fails AA for
+   normal-weight text. The footer Contact Us button appears on six pages. */
+.site-footer .btn-outline {
+    color: var(--color-white);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.site-footer .btn-outline:hover,
+.site-footer .btn-outline:focus-visible {
+    background: var(--color-white);
+    color: var(--color-dark);
+    border-color: var(--color-white);
+}
+
 .footer-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -1146,19 +1176,19 @@ model-viewer .model-controls {
         --font-size-4xl: 1.875rem;
         --font-size-3xl: 1.5rem;
     }
-    
+
     .hero {
         min-height: 90vh;
     }
-    
+
     .hero-cta {
         flex-direction: column;
     }
-    
+
     .btn {
         width: 100%;
     }
-    
+
     section {
         padding: var(--space-8) 0;
     }

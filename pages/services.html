@@ -27,6 +27,31 @@
             padding: 8rem 0 4rem;
             margin-top: var(--header-height);
         }
+        /* The shared .btn-outline is primary-blue text on a primary-blue
+           border, which is invisible on this hero: the gradient ends on the
+           exact same #0066cc, so those jump links had a 1.0 contrast ratio
+           against their own background at the right-hand end. Repaint them
+           white-on-blue here (8.4:1 at the dark end, 5.6:1 at the light end)
+           and give them a faint fill so they read as boxes rather than as
+           floating text. Scoped to the hero so light-background outline
+           buttons elsewhere are untouched. */
+        .services-hero .btn-outline {
+            color: var(--color-white);
+            border-color: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .services-hero .btn-outline:hover,
+        .services-hero .btn-outline:focus-visible {
+            color: var(--color-primary-dark);
+            background: var(--color-white);
+            border-color: var(--color-white);
+        }
+        /* The browser default focus ring is a thin dark line and disappears
+           on this background, so state focus explicitly. */
+        .services-hero .btn-outline:focus-visible {
+            outline: 3px solid var(--color-secondary);
+            outline-offset: 2px;
+        }
         .service-detail {
             padding: 6rem 0;
             border-bottom: 1px solid var(--color-gray-200);
