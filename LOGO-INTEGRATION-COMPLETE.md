@@ -99,7 +99,7 @@ Added new logo styles:
 - **Height**:
   - Mobile (<768px): 40px
   - Tablet/Desktop (768px-1023px): 50px
-  - Large Desktop (≥1024px): 60px
+  - Large Desktop (>=1024px): 60px
 - **Behavior**:
   - Smooth opacity transition on hover (0.8)
   - Maintains aspect ratio (width: auto)
@@ -111,7 +111,7 @@ Added new logo styles:
 - **Logo**: logo-main.png
 - **Height**:
   - Mobile (<768px): 35px
-  - Tablet/Desktop (≥768px): 40px
+  - Tablet/Desktop (>=768px): 40px
 - **Spacing**: 1rem margin-bottom
 - **Replaces**: Previous h3 "EBIC" text heading
 
@@ -126,7 +126,7 @@ Added new logo styles:
 |------------|-------------|-------------|
 | Mobile (<768px) | 40px | 35px |
 | Tablet (768px-1023px) | 50px | 40px |
-| Desktop (≥1024px) | 60px | 40px |
+| Desktop (>=1024px) | 60px | 40px |
 
 ## Accessibility Features
 

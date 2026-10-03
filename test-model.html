@@ -48,12 +48,12 @@
         const modelViewer = document.querySelector('model-viewer');
 
         modelViewer.addEventListener('load', () => {
-            console.log('✅ Model loaded successfully!');
+            console.log('[OK] Model loaded successfully!');
             alert('SUCCESS! Model loaded correctly.');
         });
 
         modelViewer.addEventListener('error', (event) => {
-            console.error('❌ Model failed to load:', event);
+            console.error('[X] Model failed to load:', event);
             alert('ERROR! Check console (F12) for details.');
         });
     </script>

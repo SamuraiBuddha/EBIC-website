@@ -35,7 +35,7 @@ is marketing, and it stays.
 Use the conversion guide in the root directory: `BIM_TO_WEB3D_CONVERSION_GUIDE.md`
 
 **Quick conversion options:**
-1. **Revit → FBX → Blender → GLB** (Free)
+1. **Revit -> FBX -> Blender -> GLB** (Free)
 2. **Use online converter:** https://products.aspose.app/3d/conversion/fbx-to-gltf
 3. **Revit GLTF Plugin** from Autodesk App Store
 
@@ -56,11 +56,11 @@ gltf-pipeline -i your-model.glb -o your-model-optimized.glb -d
 ```
 
 **Optimization checklist:**
-- ✅ File size under 50MB
-- ✅ Draco compression applied
-- ✅ Textures reduced to 2K max resolution
-- ✅ Hidden geometry removed
-- ✅ Unnecessary materials merged
+- [OK] File size under 50MB
+- [OK] Draco compression applied
+- [OK] Textures reduced to 2K max resolution
+- [OK] Hidden geometry removed
+- [OK] Unnecessary materials merged
 
 ### Step 3: Copy Model to This Directory
 
@@ -109,18 +109,18 @@ Add your option:
 1. Open `pages/portfolio.html` in your browser
 2. Select your project from the dropdown
 3. Verify:
-   - ✅ Model loads without errors
-   - ✅ Camera controls work (rotate, zoom, pan)
-   - ✅ Model displays at correct scale
-   - ✅ Textures/materials look correct
-   - ✅ Auto-rotate works
-   - ✅ Description updates in info panel
+   - [OK] Model loads without errors
+   - [OK] Camera controls work (rotate, zoom, pan)
+   - [OK] Model displays at correct scale
+   - [OK] Textures/materials look correct
+   - [OK] Auto-rotate works
+   - [OK] Description updates in info panel
 
 ## Example: Adding Orlando Terminal C Model
 
 ### 1. Export from Revit
 ```
-File → Export → FBX
+File -> Export -> FBX
 Settings:
 - Geometry: All elements
 - LOD: Medium (300)
@@ -130,11 +130,11 @@ Settings:
 ### 2. Convert to GLB
 ```bash
 # Open Blender
-File → Import → FBX → Select orlando-terminal.fbx
-File → Export → glTF 2.0
+File -> Import -> FBX -> Select orlando-terminal.fbx
+File -> Export -> glTF 2.0
 Format: GLB
 Compression: Draco
-Export → orlando-terminal-c.glb
+Export -> orlando-terminal-c.glb
 ```
 
 ### 3. Optimize

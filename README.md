@@ -25,22 +25,22 @@ Modern, responsive website built with semantic HTML5, CSS3 (Grid/Flexbox), and v
 
 ```
 EBIC-website/
-├── index.html              # Homepage
-├── .htaccess               # Apache configuration
-├── README.md               # This file
-├── assets/
-│   ├── css/
-│   │   └── styles.css      # Main stylesheet (786 lines)
-│   ├── js/
-│   │   └── main.js         # Interactive features (388 lines)
-│   └── images/             # Image assets
-│       ├── (placeholder files - replace with actual images)
-│       └── favicon.ico
-└── pages/
-    ├── services.html       # Services overview
-    ├── portfolio.html      # Project showcase
-    ├── about.html          # Company information
-    └── contact.html        # Contact form
++-- index.html              # Homepage
++-- .htaccess               # Apache configuration
++-- README.md               # This file
++-- assets/
+|   +-- css/
+|   |   +-- styles.css      # Main stylesheet (786 lines)
+|   +-- js/
+|   |   +-- main.js         # Interactive features (388 lines)
+|   +-- images/             # Image assets
+|       +-- (placeholder files - replace with actual images)
+|       +-- favicon.ico
++-- pages/
+    +-- services.html       # Services overview
+    +-- portfolio.html      # Project showcase
+    +-- about.html          # Company information
+    +-- contact.html        # Contact form
 ```
 
 ## Installation & Deployment
@@ -58,10 +58,10 @@ EBIC-website/
      ```bash
      # Python 3
      python -m http.server 8000
-     
+
      # PHP
      php -S localhost:8000
-     
+
      # Node.js (http-server)
      npx http-server -p 8000
      ```
@@ -111,7 +111,7 @@ LoadModule headers_module modules/mod_headers.so
    ```bash
    # Linux/Mac
    sudo cp -r EBIC-website/* /var/www/html/
-   
+
    # Windows (XAMPP)
    xcopy EBIC-website\* C:\xampp\htdocs\ /E /I /Y
    ```
@@ -128,13 +128,13 @@ LoadModule headers_module modules/mod_headers.so
    <VirtualHost *:80>
        ServerName ebic.yourdomain.com
        DocumentRoot /var/www/html/ebic
-       
+
        <Directory /var/www/html/ebic>
            Options -Indexes +FollowSymLinks
            AllowOverride All
            Require all granted
        </Directory>
-       
+
        ErrorLog ${APACHE_LOG_DIR}/ebic-error.log
        CustomLog ${APACHE_LOG_DIR}/ebic-access.log combined
    </VirtualHost>
@@ -145,7 +145,7 @@ LoadModule headers_module modules/mod_headers.so
    # Linux
    sudo apache2ctl configtest
    sudo systemctl reload apache2
-   
+
    # Windows
    httpd -t
    net stop Apache2.4 && net start Apache2.4
@@ -209,7 +209,7 @@ Before uploading images:
    ```bash
    # Copy from DataPool
    cp "\\adam\DataPool\Design Work\*.jpg" assets/images/
-   
+
    # Rename to match placeholders
    mv image1.jpg placeholder-airport.jpg
    ```
@@ -445,7 +445,7 @@ Copyright 2025 EBIC - Ehrig BIM & IT Consultation, Inc. All rights reserved.
 
 ---
 
-**Version**: 1.0.0  
-**Last Updated**: 2025-10-27  
-**Built By**: CasparCode-002 Agent System  
+**Version**: 1.0.0
+**Last Updated**: 2025-10-27
+**Built By**: CasparCode-002 Agent System
 **Production Ready**: Yes

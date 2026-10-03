@@ -153,24 +153,24 @@ Before going live:
 
 ```
 EBIC-website/
-├── index.html                 # Homepage (358 lines)
-├── .htaccess                  # Apache config (158 lines)
-├── README.md                  # Full documentation (451 lines)
-├── QUICK-START.md            # This file
-│
-├── assets/
-│   ├── css/
-│   │   └── styles.css        # Main stylesheet (786 lines)
-│   ├── js/
-│   │   └── main.js           # Interactivity (388 lines)
-│   └── images/
-│       └── (add images here)
-│
-└── pages/
-    ├── services.html         # Services page (233 lines)
-    ├── contact.html          # Contact form (263 lines)
-    ├── portfolio.html        # (create from template)
-    └── about.html            # (create from template)
++-- index.html                 # Homepage (358 lines)
++-- .htaccess                  # Apache config (158 lines)
++-- README.md                  # Full documentation (451 lines)
++-- QUICK-START.md            # This file
+|
++-- assets/
+|   +-- css/
+|   |   +-- styles.css        # Main stylesheet (786 lines)
+|   +-- js/
+|   |   +-- main.js           # Interactivity (388 lines)
+|   +-- images/
+|       +-- (add images here)
+|
++-- pages/
+    +-- services.html         # Services page (233 lines)
+    +-- contact.html          # Contact form (263 lines)
+    +-- portfolio.html        # (create from template)
+    +-- about.html            # (create from template)
 ```
 
 ## Quick Fixes
@@ -178,7 +178,7 @@ EBIC-website/
 ### Mobile menu not working
 ```javascript
 // Check browser console for errors
-// Verify main.js is loaded: View Source → check script tag
+// Verify main.js is loaded: View Source -> check script tag
 ```
 
 ### CSS not applying

@@ -20,14 +20,14 @@ This guide explains how to convert BIM models (Revit, Navisworks, etc.) to GLTF/
 - Direct export from Revit UI
 - Steps:
   1. Open your Revit model
-  2. Go to Add-Ins → glTF Exporter
+  2. Go to Add-Ins -> glTF Exporter
   3. Select elements/views to export
   4. Choose quality settings (LOD)
-  5. Export → .glb file ready for web
+  5. Export -> .glb file ready for web
 
-### Option B: Revit → FBX → GLTF (Free Method)
+### Option B: Revit -> FBX -> GLTF (Free Method)
 1. **Export from Revit:**
-   - File → Export → FBX
+   - File -> Export -> FBX
    - Set options (geometry, materials)
    - Save as .fbx
 
@@ -36,8 +36,8 @@ This guide explains how to convert BIM models (Revit, Navisworks, etc.) to GLTF/
    # Install Blender from blender.org
    ```
    - Open Blender
-   - File → Import → FBX
-   - File → Export → glTF 2.0 (.glb)
+   - File -> Import -> FBX
+   - File -> Export -> glTF 2.0 (.glb)
    - Settings:
      - Format: GLB (Binary)
      - Include: Selected Objects
@@ -47,15 +47,15 @@ This guide explains how to convert BIM models (Revit, Navisworks, etc.) to GLTF/
 3. **Online Converters (Quick & Easy):**
    - https://products.aspose.app/3d/conversion/fbx-to-gltf
    - https://imagetostl.com/convert/file/fbx/to/gltf
-   - Upload FBX → Download GLB
+   - Upload FBX -> Download GLB
 
 ---
 
 ## Method 2: Navisworks to Web 3D
 
-### Option A: Navisworks → OBJ → GLTF
+### Option A: Navisworks -> OBJ -> GLTF
 1. Export from Navisworks:
-   - File → Export → Wavefront (OBJ)
+   - File -> Export -> Wavefront (OBJ)
    - Set geometry detail level
 
 2. Convert OBJ to GLTF using:
@@ -67,8 +67,8 @@ This guide explains how to convert BIM models (Revit, Navisworks, etc.) to GLTF/
 
    - **Blender** (same process as FBX method)
 
-### Option B: Navisworks → FBX → GLTF
-1. File → Export → FBX
+### Option B: Navisworks -> FBX -> GLTF
+1. File -> Export -> FBX
 2. Follow FBX to GLTF conversion (Method 1B)
 
 ---
@@ -84,9 +84,9 @@ For FARO/Reality Capture projects:
    - CloudCompare (Free)
 
 2. **Create Mesh:**
-   - ReCap Pro → Export as OBJ/FBX
+   - ReCap Pro -> Export as OBJ/FBX
    - CloudCompare:
-     - Plugins → Poisson Surface Reconstruction
+     - Plugins -> Poisson Surface Reconstruction
      - Export as OBJ
 
 3. **Optimize & Convert:**
@@ -146,7 +146,7 @@ For open BIM workflows:
    - Remove hidden geometry
 
 2. **Texture Optimization:**
-   - Compress textures (JPG/PNG → WebP)
+   - Compress textures (JPG/PNG -> WebP)
    - Reduce texture resolution (2K max for web)
    - Use texture atlases
 
@@ -178,8 +178,8 @@ For open BIM workflows:
 
 ### Airport/Commercial Projects:
 ```
-Revit Model → FBX Export → Blender Optimization → GLB Export
-                                ↓
+Revit Model -> FBX Export -> Blender Optimization -> GLB Export
+                                v
                         - Reduce to LOD 200
                         - Remove interior details
                         - Optimize textures
@@ -188,16 +188,16 @@ Revit Model → FBX Export → Blender Optimization → GLB Export
 
 ### MEP Systems Showcase:
 ```
-Navisworks Coordination → OBJ Export → obj2gltf → Model Viewer
-                              ↓
+Navisworks Coordination -> OBJ Export -> obj2gltf -> Model Viewer
+                              v
                     Show systems separately
                     (HVAC, Plumbing, Electrical)
 ```
 
 ### Point Cloud / Reality Capture:
 ```
-FARO Scan → ReCap Pro → Mesh → Blender → GLB
-                                   ↓
+FARO Scan -> ReCap Pro -> Mesh -> Blender -> GLB
+                                   v
                            - Mesh decimation
                            - Texture baking
                            - Color optimization
@@ -222,22 +222,22 @@ Before deploying models to website:
 ## Tools Summary
 
 ### Free Tools:
-✅ Blender (all-in-one solution)
-✅ CloudCompare (point cloud)
-✅ IfcOpenShell (IFC conversion)
-✅ obj2gltf (CLI converter)
-✅ gltf-pipeline (optimizer)
+[OK] Blender (all-in-one solution)
+[OK] CloudCompare (point cloud)
+[OK] IfcOpenShell (IFC conversion)
+[OK] obj2gltf (CLI converter)
+[OK] gltf-pipeline (optimizer)
 
 ### Commercial/Freemium:
-💰 Revit GLTF Exporter plugins
-💰 Modelo.io
-💰 Autodesk Forge API
-💰 ReCap Pro (included with AEC Collection)
+[COST] Revit GLTF Exporter plugins
+[COST] Modelo.io
+[COST] Autodesk Forge API
+[COST] ReCap Pro (included with AEC Collection)
 
 ### Online (No Install):
-🌐 Aspose 3D Converter
-🌐 ImageToSTL converters
-🌐 BIMData.io
+[WEB] Aspose 3D Converter
+[WEB] ImageToSTL converters
+[WEB] BIMData.io
 
 ---
 
