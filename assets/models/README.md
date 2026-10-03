@@ -6,13 +6,27 @@ This directory contains GLTF/GLB 3D models for the Portfolio page Interactive 3D
 
 ```
 assets/models/
-├── README.md (this file)
-├── orlando-terminal-c.glb
-├── universal-epic.glb
-├── tampa-airport.glb
-├── kennedy-space-center.glb
-└── [your-project-name].glb
+    README.md            (this file)
+    arch-framing.glb     light-gauge wall framing assembly
+    HomeAddition.glb     Orlando residential addition
+    Home Addition.gltf   same model, unpacked, with Home Addition.bin
 ```
+
+The viewer's dropdown in `pages/portfolio.html` may list entries whose GLB is
+not here yet; a missing file shows "Load failed" in the viewer rather than
+failing quietly, so the dropdown and this directory must be kept in step.
+
+Pending, source models identified but not yet exported:
+
+    universal-epic.glb   chilled water / hydronic piping assembly
+    tampa-airport.glb    CMU masonry scope
+
+Deliberately NOT coming: a Kennedy Space Center model. That engagement
+scanned visitor-complex exhibits, and an exhibit cannot be generalized the
+way a pipe rack or a framed wall can -- it is recognizable precisely because
+it is one of a kind. The dropdown entry and its `modelData` record were
+removed 2026-10-03. Naming the engagement in page prose is unaffected; that
+is marketing, and it stays.
 
 ## How to Add a New 3D Model
 
